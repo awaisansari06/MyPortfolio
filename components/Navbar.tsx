@@ -146,8 +146,19 @@ export const Navbar = () => {
             </span>
           </div>
 
-          {/* Resume & Direct Contact Quick Actions */}
+          {/* Resume, Ask AI & Direct Contact Quick Actions */}
           <div className="hidden lg:flex items-center gap-4 xl:gap-5 shrink-0">
+            <button
+              onClick={() => window.dispatchEvent(new CustomEvent('open-ask-ai'))}
+              className="inline-flex items-center gap-1.5 text-[11px] font-mono-code tracking-widest text-neutral-900 dark:text-[#F5F3EF] border-b border-neutral-900 dark:border-[#F5F3EF] pb-0.5 hover:opacity-75 transition-opacity cursor-pointer whitespace-nowrap shrink-0"
+              data-cursor="ASK AI"
+              aria-label="Open Ask Awais AI portfolio assistant"
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+              <span>ASK AI</span>
+              <ArrowUpRight className="w-3 h-3 shrink-0" />
+            </button>
+
             <a
               href="/AwaisCV.pdf"
               download="Mohammad-Awais-Ansari-Resume.pdf"
@@ -214,6 +225,20 @@ export const Navbar = () => {
             </ul>
 
             <div className="pt-4 border-t border-neutral-200 dark:border-neutral-800 flex flex-col gap-3">
+              <button
+                onClick={() => {
+                  setMobileOpen(false);
+                  window.dispatchEvent(new CustomEvent('open-ask-ai'));
+                }}
+                className="flex items-center justify-between text-xs font-mono-code text-neutral-950 dark:text-[#F5F3EF] font-bold text-left"
+              >
+                <div className="flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                  <span>ASK AWAIS AI</span>
+                </div>
+                <ArrowUpRight className="w-3.5 h-3.5" />
+              </button>
+
               <a
                 href="/AwaisCV.pdf"
                 download="Mohammad-Awais-Ansari-Resume.pdf"

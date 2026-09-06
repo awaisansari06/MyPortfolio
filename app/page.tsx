@@ -11,6 +11,7 @@ import { EngineeringFoundation } from '@/components/EngineeringFoundation';
 import { About } from '@/components/About';
 import { GitHubContributions } from '@/components/github/GitHubContributions';
 import { Contact } from '@/components/Contact';
+import { AskAwaisChat } from '@/components/ai/AskAwaisChat';
 
 export default function Home() {
   return (
@@ -25,6 +26,7 @@ export default function Home() {
       <About />
       <GitHubContributions />
       <Contact />
+      <AskAwaisChat />
     </main>
   );
 }
