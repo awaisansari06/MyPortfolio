@@ -201,7 +201,7 @@ Open [http://localhost:3000](http://localhost:3000) in your browser to view the 
 *Full-Stack Developer & AI Applications Engineer*  
 Virar, Maharashtra, India
 
-- 🌐 **Portfolio**: [awaisansari06.github.io/MyPortfolio](https://awaisdev-v1.vercel.app/)
+- 🌐 **Portfolio**: [Live Demo](https://awaisdev-v1.vercel.app/)
 - 📧 **Email**: [muhammadavais14@gmail.com](mailto:muhammadavais14@gmail.com)
 - 💼 **LinkedIn**: [linkedin.com/in/mohammad-awais-ansari-0560bb428](https://www.linkedin.com/in/mohammad-awais-ansari-0560bb428/)
 - 🐙 **GitHub**: [@awaisansari06](https://github.com/awaisansari06)
