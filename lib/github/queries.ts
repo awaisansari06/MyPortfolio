@@ -6,6 +6,21 @@ export const GITHUB_CONTRIBUTIONS_QUERY = `
       bio
       avatarUrl
       url
+      pinnedItems(first: 6, types: [REPOSITORY]) {
+        nodes {
+          ... on Repository {
+            name
+            description
+            url
+            stargazerCount
+            primaryLanguage {
+              name
+              color
+            }
+            updatedAt
+          }
+        }
+      }
       repositories(first: 12, privacy: PUBLIC, orderBy: {field: UPDATED_AT, direction: DESC}, isFork: false) {
         nodes {
           name

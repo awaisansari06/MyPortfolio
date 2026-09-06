@@ -4,10 +4,13 @@ export interface ProjectCaseStudy {
   title: string;
   tagline: string;
   category: string;
+  shortDescription?: string;
   description: string;
   liveUrl: string;
   githubUrl?: string;
+  compactTechnologies?: string[];
   technologies: string[];
+  conciseFeatures?: string[];
   features: string[];
   problem: string;
   approach: string;
@@ -84,7 +87,7 @@ export const portfolioData: PortfolioData = {
     "/ AI APPLICATIONS",
     "/ FULL-STACK DEVELOPMENT",
   ],
-  bio: "Full-Stack Developer and Computer Science graduate specializing in AI-powered web applications. Postgraduate student focused on building production-oriented web applications and practical AI systems.",
+  bio: "Graduate student in Computer Science at the University of Mumbai, dedicated to engineering robust, production-oriented software with practical generative AI integrations.",
   location: "Virar, Maharashtra, India",
   email: "muhammadavais14@gmail.com",
   socials: {
@@ -132,9 +135,22 @@ export const portfolioData: PortfolioData = {
       title: "CAREERWISE",
       tagline: "AI-POWERED CAREER INTELLIGENCE PLATFORM",
       category: "FULL-STACK AI APPLICATION",
-      description:
+      shortDescription:
         "AI-powered career platform integrating resume/ATS analysis, mock interview preparation, interactive career roadmaps, AI-driven cover letter generation, and industry salary intelligence.",
+      description:
+        "CareerWise is an end-to-end career intelligence system engineered to bridge the gap between job seekers and competitive technical hiring bars. Rather than treating resume review, interview prep, and career planning as disparate tasks, CareerWise unites them into a cohesive data-driven pipeline powered by Google Gemini and serverless background execution.",
       liveUrl: "https://careerwise-v1.vercel.app/",
+      githubUrl: "https://github.com/awaisansari06",
+      compactTechnologies: [
+        "Next.js 15.5",
+        "React 19",
+        "TypeScript",
+        "PostgreSQL",
+        "Prisma",
+        "Google Gemini",
+        "Clerk",
+        "Inngest",
+      ],
       technologies: [
         "Next.js 15.5",
         "React 19",
@@ -145,6 +161,12 @@ export const portfolioData: PortfolioData = {
         "Google Gemini",
         "Clerk",
         "Inngest",
+      ],
+      conciseFeatures: [
+        "Resume / ATS Analysis & Feedback",
+        "Mock Interview Simulation",
+        "Interactive Career Roadmaps",
+        "Salary & Compensation Intelligence",
       ],
       features: [
         "AI-driven resume parsing with ATS scoring and structural critique",
@@ -159,9 +181,9 @@ export const portfolioData: PortfolioData = {
       approach:
         "Constructed a unified career intelligence system powered by Google Gemini API and background job orchestration via Inngest, ensuring instant UI responses while deep document embeddings and analysis run asynchronously.",
       implementation: [
-        "Engineered full-stack AI career platform with Next.js 15 App Router and React 19.",
+        "Engineered full-stack AI career platform with Next.js 15 App Router, React 19 Server Components, and Streaming SSR.",
         "Integrated Google Gemini API for deep structural resume inspection, personalized role guidance, and dynamic content generation.",
-        "Built persistent database schemas using PostgreSQL and Prisma ORM with Clerk authentication.",
+        "Built persistent database schemas using PostgreSQL and Prisma ORM with Clerk authentication and role-based access control.",
         "Orchestrated resilient background workflows using Inngest to decouple heavy AI inference from the main server response cycle.",
       ],
       metrics: [
@@ -178,9 +200,22 @@ export const portfolioData: PortfolioData = {
       title: "DEVFLOW",
       tagline: "INTELLIGENT AI-POWERED WEB DEVELOPMENT PLATFORM",
       category: "AGENTIC AI & CLOUD SANDBOX",
-      description:
+      shortDescription:
         "Agentic AI development platform generating functional web applications from natural-language prompts using advanced AI agents, sandboxed execution, and live terminal streaming.",
+      description:
+        "DevFlow is an agentic development environment that transforms conversational software specifications into fully running, multi-file full-stack web applications. By pairing multi-step autonomous LLM agent loops with dedicated cloud micro-VM sandboxes, DevFlow compiles, installs packages, runs servers, and streams live application previews in real time.",
       liveUrl: "https://devflow-project.vercel.app/",
+      githubUrl: "https://github.com/awaisansari06",
+      compactTechnologies: [
+        "Next.js 15",
+        "React 19",
+        "TypeScript",
+        "E2B",
+        "tRPC",
+        "PostgreSQL",
+        "Prisma",
+        "Vercel AI SDK",
+      ],
       technologies: [
         "Next.js 15",
         "React 19",
@@ -193,6 +228,12 @@ export const portfolioData: PortfolioData = {
         "Clerk",
         "Inngest",
         "Vercel AI SDK",
+      ],
+      conciseFeatures: [
+        "Natural-Language App Synthesis",
+        "E2B Cloud Micro-VM Sandboxes",
+        "Real-Time Terminal Streaming",
+        "Live Previews with Hot Reload",
       ],
       features: [
         "Natural-language to full-stack web application synthesis",
@@ -222,10 +263,8 @@ export const portfolioData: PortfolioData = {
       flowSteps: [
         "PROMPT",
         "AI AGENT",
-        "CODE SYNTHESIS",
-        "VIRTUAL FILES",
-        "DATABASE",
-        "LIVE APP",
+        "SANDBOX BUILD",
+        "LIVE PREVIEW",
       ],
     },
     {
@@ -234,9 +273,22 @@ export const portfolioData: PortfolioData = {
       title: "SMARTJOURNEY",
       tagline: "AI-DRIVEN PERSONALIZED TRAVEL ASSISTANT",
       category: "GEOSPATIAL AI ASSISTANT",
-      description:
+      shortDescription:
         "AI travel assistant generating personalized day-by-day itineraries based on destination, budget, group size, duration, and user interests with interactive geospatial maps.",
+      description:
+        "SmartJourney is an intelligent itinerary and geospatial exploration platform designed to solve travel fragmentation. By combining large language model reasoning with live Google Places geospatial data and Mapbox interactive visual layers, SmartJourney synthesizes optimized multi-day travel schedules tailored to personal budgets, pacing, and logistics.",
       liveUrl: "https://smartjourney-v2.vercel.app/",
+      githubUrl: "https://github.com/awaisansari06",
+      compactTechnologies: [
+        "Next.js",
+        "React",
+        "TypeScript",
+        "Convex",
+        "OpenRouter",
+        "Google Places API",
+        "Mapbox",
+        "Arcjet",
+      ],
       technologies: [
         "Next.js",
         "React",
@@ -248,6 +300,12 @@ export const portfolioData: PortfolioData = {
         "Mapbox",
         "Clerk",
         "Arcjet",
+      ],
+      conciseFeatures: [
+        "Personalized Day-by-Day Itineraries",
+        "Google Places Discovery & Scoring",
+        "Interactive Geospatial Routing",
+        "Reactive Real-Time Persistence",
       ],
       features: [
         "Dynamic day-by-day itinerary generation with optimized travel pacing",
@@ -276,10 +334,9 @@ export const portfolioData: PortfolioData = {
       ],
       flowSteps: [
         "DESTINATION",
+        "AI PLANNING",
+        "PLACES & MAPS",
         "ITINERARY",
-        "PLACES",
-        "HOTELS",
-        "ROUTE",
       ],
     },
   ],

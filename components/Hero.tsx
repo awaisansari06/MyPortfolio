@@ -15,8 +15,11 @@ export const Hero = () => {
   return (
     <section
       id="hero"
-      className="relative min-h-screen pt-20 sm:pt-24 md:pt-28 pb-0 flex flex-col justify-between border-b border-neutral-300 dark:border-[#2A2A2A] overflow-hidden bg-grid-pattern"
+      className="relative w-full min-h-0 md:min-h-[clamp(540px,80vh,740px)] pt-[clamp(56px,6vw,82px)] pb-0 flex flex-col justify-between border-b border-neutral-300 dark:border-[#2A2A2A] overflow-hidden"
     >
+      {/* Background Architectural Grid (Isolated layer that does not determine document height) */}
+      <div className="absolute inset-0 bg-grid-pattern pointer-events-none z-0" />
+
       {/* Vertical editorial scroll indicator (desktop) */}
       <div className="hidden xl:flex absolute right-8 top-1/2 -translate-y-1/2 flex-col items-center space-y-8 z-20 pointer-events-none select-none">
         <div className="w-[1px] h-28 bg-neutral-300 dark:border-[#2A2A2A] relative overflow-hidden">
@@ -28,9 +31,9 @@ export const Hero = () => {
       </div>
 
       {/* Centered Typography-First Hero Composition */}
-      <div className="max-w-5xl mx-auto px-6 md:px-12 w-full flex-1 flex flex-col justify-center items-center text-center my-auto py-6 sm:py-10 z-10">
+      <div className="relative max-w-5xl mx-auto px-6 md:px-12 w-full flex flex-col items-center text-center pt-2 sm:pt-3 pb-4 sm:pb-6 z-10">
         {/* Editorial Role & Category Badges */}
-        <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-2.5 mb-6">
+        <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-2.5 mb-3 sm:mb-3.5">
           <span className="px-3 py-1 border border-neutral-300 dark:border-[#2A2A2A] rounded-full text-[9px] sm:text-[10px] tracking-widest uppercase font-mono-code text-neutral-900 dark:text-[#F5F3EF]">
             FULL-STACK DEVELOPER
           </span>
@@ -43,25 +46,25 @@ export const Hero = () => {
         </div>
 
         {/* Main Monumental Name Headline */}
-        <div className="space-y-0 text-neutral-950 dark:text-[#F5F3EF] leading-[0.84] select-none mb-6">
-          <h1 className="text-[52px] sm:text-[76px] md:text-[90px] lg:text-[100px] xl:text-[112px] font-bold uppercase tracking-tighter">
+        <div className="space-y-0 text-neutral-950 dark:text-[#F5F3EF] leading-[0.84] select-none mb-2 sm:mb-2.5">
+          <h1 className="text-[50px] sm:text-[72px] md:text-[84px] lg:text-[96px] xl:text-[106px] font-bold uppercase tracking-tighter">
             MOHAMMAD
           </h1>
-          <h1 className="text-[52px] sm:text-[76px] md:text-[90px] lg:text-[100px] xl:text-[112px] font-bold uppercase tracking-tighter text-neutral-900 dark:text-[#F5F3EF]">
+          <h1 className="text-[50px] sm:text-[72px] md:text-[84px] lg:text-[96px] xl:text-[106px] font-bold uppercase tracking-tighter text-neutral-900 dark:text-[#F5F3EF]">
             AWAIS
           </h1>
-          <h1 className="text-[52px] sm:text-[76px] md:text-[90px] lg:text-[100px] xl:text-[112px] font-bold uppercase tracking-tighter text-stroke-editorial text-neutral-900 dark:text-[#F5F3EF]">
+          <h1 className="text-[50px] sm:text-[72px] md:text-[84px] lg:text-[96px] xl:text-[106px] font-bold uppercase tracking-tighter text-stroke-editorial text-neutral-900 dark:text-[#F5F3EF]">
             ANSARI
           </h1>
         </div>
 
-        {/* Editorial Description */}
-        <p className="text-base sm:text-lg md:text-xl text-neutral-600 dark:text-[#A3A3A3] max-w-[620px] leading-relaxed mx-auto mb-8 font-normal">
+        {/* Editorial Description - Tightened relationship to name (small gap above, medium gap below) */}
+        <p className="text-sm sm:text-base md:text-lg text-neutral-600 dark:text-[#A3A3A3] max-w-[580px] leading-relaxed mx-auto mb-4 sm:mb-5 font-normal">
           Building AI-powered full-stack applications and intelligent digital products.
         </p>
 
         {/* Editorial Metadata Columns */}
-        <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-10 md:gap-14 mb-8 pb-6 border-b border-neutral-300 dark:border-[#2A2A2A] w-full max-w-xl mx-auto">
+        <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-10 md:gap-14 mb-5 sm:mb-6 pb-3.5 sm:pb-4 border-b border-neutral-300 dark:border-[#2A2A2A] w-full max-w-xl mx-auto">
           <div className="flex flex-col items-center text-center">
             <span className="text-[10px] tracking-[0.2em] text-neutral-400 dark:text-[#666666] mb-1 uppercase font-mono-code">
               / FOCUS
@@ -94,7 +97,7 @@ export const Hero = () => {
           <button
             onClick={() => scrollTo('work')}
             data-cursor="EXPLORE"
-            className="group inline-flex items-center gap-2.5 px-6 py-3.5 bg-neutral-950 hover:bg-neutral-800 dark:bg-[#F5F3EF] dark:hover:bg-white text-white dark:text-[#0A0A0A] font-mono-code text-xs tracking-wider font-semibold transition-colors duration-200 cursor-pointer"
+            className="group inline-flex items-center gap-2.5 px-6 py-3 bg-neutral-950 hover:bg-neutral-800 dark:bg-[#F5F3EF] dark:hover:bg-white text-white dark:text-[#0A0A0A] font-mono-code text-xs tracking-wider font-semibold transition-colors duration-200 cursor-pointer"
           >
             <span>VIEW ALL WORK</span>
             <ArrowRight className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-1" />
@@ -103,7 +106,7 @@ export const Hero = () => {
           <button
             onClick={() => scrollTo('contact')}
             data-cursor="CONTACT"
-            className="inline-flex items-center gap-2 px-5 py-3.5 border border-neutral-300 dark:border-[#2A2A2A] bg-transparent hover:bg-neutral-200/50 dark:hover:bg-[#181818] text-neutral-900 dark:text-[#F5F3EF] font-mono-code text-xs tracking-wider transition-colors duration-200 cursor-pointer"
+            className="inline-flex items-center gap-2 px-5 py-3 border border-neutral-300 dark:border-[#2A2A2A] bg-transparent hover:bg-neutral-200/50 dark:hover:bg-[#181818] text-neutral-900 dark:text-[#F5F3EF] font-mono-code text-xs tracking-wider transition-colors duration-200 cursor-pointer"
           >
             <span>LET&apos;S CONNECT</span>
             <ArrowUpRight className="w-3.5 h-3.5 opacity-60" />
@@ -111,8 +114,8 @@ export const Hero = () => {
         </div>
       </div>
 
-      {/* Editorial Footer Project Ticker Strip (from Design Theme) */}
-      <footer className="w-full border-t border-neutral-300 dark:border-[#2A2A2A] bg-neutral-100/50 dark:bg-[#0A0A0A] mt-12">
+      {/* Editorial Footer Project Ticker Strip */}
+      <footer className="relative z-10 w-full border-t border-neutral-300 dark:border-[#2A2A2A] bg-neutral-100/50 dark:bg-[#0A0A0A] mt-6 sm:mt-8 md:mt-10 mt-auto">
         <div className="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-2 md:grid-cols-4 items-center py-5 gap-4">
           <div
             onClick={() => scrollTo('work')}

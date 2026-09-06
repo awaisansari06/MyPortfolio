@@ -4,8 +4,43 @@ import React from 'react';
 import { GitHubRepo } from '@/lib/github/types';
 import { ArrowUpRight, FolderGit2, Star } from 'lucide-react';
 
+const FALLBACK_REPOSITORIES: GitHubRepo[] = [
+  {
+    name: 'MyPortfolio',
+    description: 'Modern software engineering portfolio showcasing full-stack systems and technical projects.',
+    url: 'https://github.com/awaisansari06/MyPortfolio',
+    stargazerCount: 0,
+    primaryLanguage: { name: 'TypeScript', color: '#3178c6' },
+    updatedAt: '2026-09-06T12:00:00Z',
+  },
+  {
+    name: 'CareerWise',
+    description: 'AI-powered career intelligence platform with ATS resume optimization and mock interview agents.',
+    url: 'https://github.com/awaisansari06/CareerWise',
+    stargazerCount: 0,
+    primaryLanguage: { name: 'JavaScript', color: '#f1e05a' },
+    updatedAt: '2026-09-05T12:00:00Z',
+  },
+  {
+    name: 'devflow',
+    description: 'Agentic AI development platform generating full-stack web applications with cloud VM sandbox execution.',
+    url: 'https://github.com/awaisansari06/devflow',
+    stargazerCount: 0,
+    primaryLanguage: { name: 'TypeScript', color: '#3178c6' },
+    updatedAt: '2026-09-06T06:00:00Z',
+  },
+  {
+    name: 'smart-journey',
+    description: 'Intelligent personalized travel planning system with dynamic route and place recommendations.',
+    url: 'https://github.com/awaisansari06/smart-journey',
+    stargazerCount: 0,
+    primaryLanguage: { name: 'TypeScript', color: '#3178c6' },
+    updatedAt: '2026-08-31T12:00:00Z',
+  },
+];
+
 interface GitHubRepositoriesProps {
-  repositories: GitHubRepo[];
+  repositories?: GitHubRepo[];
 }
 
 export const GitHubRepositories: React.FC<GitHubRepositoriesProps> = ({ repositories }) => {
@@ -13,6 +48,9 @@ export const GitHubRepositories: React.FC<GitHubRepositoriesProps> = ({ reposito
   const getRepoDescription = (name: string, originalDesc: string | null) => {
     if (originalDesc) return originalDesc;
     const lower = name.toLowerCase();
+    if (lower.includes('portfolio')) {
+      return 'Modern software engineering portfolio showcasing full-stack systems and technical projects.';
+    }
     if (lower.includes('careerwise')) {
       return 'AI-powered career intelligence platform with ATS resume optimization and mock interview agents.';
     }
@@ -34,23 +72,9 @@ export const GitHubRepositories: React.FC<GitHubRepositoriesProps> = ({ reposito
     return 'Full-stack software engineering project and codebase.';
   };
 
-  // Priority ordering prioritizing projects presented in Selected Work:
-  // 1. CareerWise, 2. DevFlow, 3. SmartJourney, followed by other notable repos
-  const PRIORITY_KEYWORDS = ['careerwise', 'devflow', 'smartjourney', 'smart-journey', 'journey'];
-
-  const sortedRepos = [...repositories].sort((a, b) => {
-    const aName = a.name.toLowerCase();
-    const bName = b.name.toLowerCase();
-    const aPriority = PRIORITY_KEYWORDS.findIndex((k) => aName.includes(k));
-    const bPriority = PRIORITY_KEYWORDS.findIndex((k) => bName.includes(k));
-
-    if (aPriority !== -1 && bPriority === -1) return -1;
-    if (aPriority === -1 && bPriority !== -1) return 1;
-    if (aPriority !== -1 && bPriority !== -1) return aPriority - bPriority;
-    return (b.stargazerCount || 0) - (a.stargazerCount || 0);
-  });
-
-  const displayRepos = sortedRepos.slice(0, 4);
+  // Preserve the authoritative GitHub pinned order directly without sorting
+  const sourceRepos = repositories && repositories.length > 0 ? repositories : FALLBACK_REPOSITORIES;
+  const displayRepos = sourceRepos.slice(0, 4);
 
   return (
     <div className="mt-12 pt-10 border-t border-neutral-300 dark:border-[#2A2A2A]">

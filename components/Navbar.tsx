@@ -1,20 +1,18 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useSyncExternalStore } from 'react';
 import { useTheme } from '@/context/ThemeContext';
 import { portfolioData } from '@/data/portfolio';
 import { Menu, X, Sun, Moon, ArrowUpRight } from 'lucide-react';
 
+const emptySubscribe = () => () => {};
+
 export const Navbar = () => {
   const { theme, toggleTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
+  const mounted = useSyncExternalStore(emptySubscribe, () => true, () => false);
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('hero');
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   const navLinks = [
     { label: 'WORK', href: '#work' },
@@ -71,37 +69,33 @@ export const Navbar = () => {
             e.preventDefault();
             scrollTo('#hero');
           }}
-          className="group flex flex-col transition-colors text-left"
+          className="group flex flex-col transition-colors text-left shrink-0"
           data-cursor="HOME"
+          aria-label="Mohammad Awais Ansari - Home"
         >
-          <span className="text-[9px] md:text-[10px] tracking-[0.3em] font-medium text-neutral-500 dark:text-[#A3A3A3] font-mono-code mb-0.5">
+          <span className="text-[9px] md:text-[10px] tracking-[0.3em] font-medium text-neutral-500 dark:text-[#A3A3A3] font-mono-code mb-0.5 whitespace-nowrap">
             / PORTFOLIO 2026
           </span>
-          <div className="flex items-center gap-2">
-            <span className="text-xs md:text-sm font-semibold uppercase tracking-widest text-neutral-950 dark:text-[#F5F3EF]">
-              MOHAMMAD AWAIS ANSARI
-            </span>
-            <span className="hidden lg:inline-block px-1.5 py-0.5 text-[8px] font-mono-code uppercase tracking-widest border border-neutral-300 dark:border-[#2A2A2A] text-neutral-500 dark:text-[#A3A3A3] rounded-full">
-              SWE / AI
-            </span>
-          </div>
+          <span className="text-xs md:text-sm font-semibold uppercase tracking-widest text-neutral-950 dark:text-[#F5F3EF] whitespace-nowrap">
+            A. ANSARI
+          </span>
         </a>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-8">
-          <ul className="flex items-center gap-7">
+        <nav className="hidden md:flex items-center gap-4 lg:gap-6 xl:gap-8 shrink-0">
+          <ul className="flex items-center gap-4 lg:gap-5 xl:gap-7">
             {navLinks.map((link) => {
               const sectionId = link.href.replace('#', '');
               const isActive = activeSection === sectionId;
               return (
-                <li key={link.label}>
+                <li key={link.label} className="shrink-0">
                   <a
                     href={link.href}
                     onClick={(e) => {
                       e.preventDefault();
                       scrollTo(link.href);
                     }}
-                    className={`font-mono-code text-[11px] tracking-[0.2em] uppercase font-medium transition-colors py-1 relative ${
+                    className={`font-mono-code text-[11px] tracking-[0.2em] uppercase font-medium transition-colors py-1 relative whitespace-nowrap ${
                       isActive
                         ? 'text-neutral-950 dark:text-[#F5F3EF] font-semibold'
                         : 'text-neutral-500 dark:text-[#A3A3A3] hover:text-neutral-950 dark:hover:text-[#F5F3EF]'
@@ -118,9 +112,9 @@ export const Navbar = () => {
           </ul>
 
           {/* Theme switcher - Editorial Pill */}
-          <div className="flex items-center space-x-2.5 border-l border-neutral-300 dark:border-[#2A2A2A] pl-8">
+          <div className="flex items-center space-x-2.5 border-l border-neutral-300 dark:border-[#2A2A2A] pl-4 lg:pl-6 xl:pl-8 shrink-0">
             <span
-              className={`text-[10px] font-mono-code transition-colors ${
+              className={`text-[10px] font-mono-code transition-colors whitespace-nowrap ${
                 mounted && theme === 'light'
                   ? 'font-bold text-neutral-950 dark:text-[#F5F3EF]'
                   : 'text-neutral-400 dark:text-[#666666]'
@@ -133,7 +127,7 @@ export const Navbar = () => {
               onClick={toggleTheme}
               aria-label={mounted && theme === 'light' ? 'Switch to dark theme' : 'Switch to light theme'}
               aria-pressed={mounted ? theme === 'dark' : true}
-              className="w-10 h-[20px] bg-neutral-300 dark:bg-[#2A2A2A] rounded-full flex items-center px-1 transition-colors cursor-pointer"
+              className="w-10 h-[20px] bg-neutral-300 dark:bg-[#2A2A2A] rounded-full flex items-center px-1 transition-colors cursor-pointer shrink-0"
             >
               <div
                 className={`w-3 h-3 bg-neutral-950 dark:bg-[#F5F3EF] rounded-full transition-all duration-200 ${
@@ -142,7 +136,7 @@ export const Navbar = () => {
               />
             </button>
             <span
-              className={`text-[10px] font-mono-code transition-colors ${
+              className={`text-[10px] font-mono-code transition-colors whitespace-nowrap ${
                 !mounted || theme === 'dark'
                   ? 'font-bold text-neutral-950 dark:text-[#F5F3EF]'
                   : 'text-neutral-400 dark:text-[#666666]'
@@ -153,25 +147,25 @@ export const Navbar = () => {
           </div>
 
           {/* Resume & Direct Contact Quick Actions */}
-          <div className="hidden lg:flex items-center gap-5">
+          <div className="hidden lg:flex items-center gap-4 xl:gap-5 shrink-0">
             <a
               href="/AwaisCV.pdf"
               download="Mohammad-Awais-Ansari-Resume.pdf"
-              className="inline-flex items-center gap-1.5 text-[11px] font-mono-code tracking-widest text-neutral-900 dark:text-[#F5F3EF] border-b border-neutral-900 dark:border-[#F5F3EF] pb-0.5 hover:opacity-75 transition-opacity cursor-pointer"
+              className="inline-flex items-center gap-1.5 text-[11px] font-mono-code tracking-widest text-neutral-900 dark:text-[#F5F3EF] border-b border-neutral-900 dark:border-[#F5F3EF] pb-0.5 hover:opacity-75 transition-opacity cursor-pointer whitespace-nowrap shrink-0"
               data-cursor="RESUME"
               aria-label="Download resume"
             >
               <span>RESUME</span>
-              <ArrowUpRight className="w-3 h-3" />
+              <ArrowUpRight className="w-3 h-3 shrink-0" />
             </a>
 
             <a
               href={`mailto:${portfolioData.email}`}
-              className="inline-flex items-center gap-1.5 text-[11px] font-mono-code tracking-widest text-neutral-900 dark:text-[#F5F3EF] border-b border-neutral-900 dark:border-[#F5F3EF] pb-0.5 hover:opacity-75 transition-opacity cursor-pointer"
+              className="inline-flex items-center gap-1.5 text-[11px] font-mono-code tracking-widest text-neutral-900 dark:text-[#F5F3EF] border-b border-neutral-900 dark:border-[#F5F3EF] pb-0.5 hover:opacity-75 transition-opacity cursor-pointer whitespace-nowrap shrink-0"
               data-cursor="EMAIL"
             >
               <span>GET IN TOUCH</span>
-              <ArrowUpRight className="w-3 h-3" />
+              <ArrowUpRight className="w-3 h-3 shrink-0" />
             </a>
           </div>
         </nav>

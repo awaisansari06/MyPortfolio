@@ -50,19 +50,19 @@ export const SelectedWork = () => {
                   {careerwise.tagline}
                 </p>
 
-                <p className="mt-6 text-base text-neutral-700 dark:text-[#A3A3A3] leading-relaxed font-normal">
-                  {careerwise.description}
+                <p className="mt-5 text-base text-neutral-700 dark:text-[#A3A3A3] leading-relaxed font-normal">
+                  {careerwise.shortDescription || careerwise.description}
                 </p>
 
-                {/* Flow indicator: DOCUMENT -> ANALYSIS -> INTELLIGENCE -> CAREER PATH */}
-                <div className="mt-8 p-4 border border-neutral-300 dark:border-[#2A2A2A] bg-neutral-100/60 dark:bg-[#111111]">
+                {/* High-Level Architecture Pipeline */}
+                <div className="mt-6 p-4 border border-neutral-300 dark:border-[#2A2A2A] bg-neutral-100/60 dark:bg-[#111111]">
                   <div className="font-mono-code text-[10px] text-neutral-400 dark:text-[#666666] uppercase tracking-wider mb-2.5">
                     PROCESSING ARCHITECTURE
                   </div>
                   <div className="flex flex-wrap items-center gap-2 text-xs font-mono-code">
                     {careerwise.flowSteps.map((step, idx) => (
                       <React.Fragment key={step}>
-                        <span className="px-2 py-1 bg-white dark:bg-[#181818] border border-neutral-300 dark:border-[#2A2A2A] text-neutral-900 dark:text-[#F5F3EF] font-medium">
+                        <span className="px-2.5 py-1 bg-white dark:bg-[#181818] border border-neutral-300 dark:border-[#2A2A2A] text-neutral-900 dark:text-[#F5F3EF] font-medium">
                           {step}
                         </span>
                         {idx < careerwise.flowSteps.length - 1 && (
@@ -73,25 +73,22 @@ export const SelectedWork = () => {
                   </div>
                 </div>
 
-                {/* Key Bullet Highlights */}
-                <ul className="mt-8 space-y-3 font-mono-code text-xs text-neutral-600 dark:text-[#A3A3A3]">
-                  <li className="flex items-start gap-2.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-neutral-950 dark:bg-[#F5F3EF] mt-1.5 shrink-0" />
-                    <span>Engineered full-stack AI career platform integrating resume/ATS analysis, mock interview preparation, interactive career roadmaps, and salary intelligence.</span>
-                  </li>
-                  <li className="flex items-start gap-2.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-neutral-950 dark:bg-[#F5F3EF] mt-1.5 shrink-0" />
-                    <span>Integrated Google Gemini API for AI-powered resume analysis, personalized career guidance, interview preparation, and dynamic content generation.</span>
-                  </li>
-                  <li className="flex items-start gap-2.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-neutral-950 dark:bg-[#F5F3EF] mt-1.5 shrink-0" />
-                    <span>Built persistent application infrastructure using PostgreSQL and Prisma with Clerk authentication and Inngest-powered background workflows.</span>
-                  </li>
-                </ul>
+                {/* Concise Core Capabilities */}
+                <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-2 font-mono-code text-xs">
+                  {(careerwise.conciseFeatures || careerwise.features.slice(0, 4)).map((feat, i) => (
+                    <div
+                      key={i}
+                      className="px-3 py-2 border border-neutral-200 dark:border-[#222222] bg-white dark:bg-[#111111] flex items-center gap-2 text-neutral-700 dark:text-[#A3A3A3]"
+                    >
+                      <span className="w-1.5 h-1.5 rounded-full bg-neutral-950 dark:bg-[#F5F3EF] shrink-0" />
+                      <span className="truncate">{feat}</span>
+                    </div>
+                  ))}
+                </div>
 
-                {/* Tech Badges */}
-                <div className="mt-8 flex flex-wrap gap-2">
-                  {careerwise.technologies.map((t) => (
+                {/* Compact Tech Badges */}
+                <div className="mt-6 flex flex-wrap gap-2">
+                  {(careerwise.compactTechnologies || careerwise.technologies.slice(0, 8)).map((t) => (
                     <span
                       key={t}
                       className="font-mono-code text-[10px] px-2.5 py-1 border border-neutral-300 dark:border-[#2A2A2A] bg-neutral-100/40 dark:bg-[#111111] text-neutral-700 dark:text-[#A3A3A3] inline-flex items-center gap-1.5 hover:border-neutral-400 dark:hover:border-neutral-500 transition-colors"
@@ -104,7 +101,7 @@ export const SelectedWork = () => {
               </div>
 
               {/* Action Buttons */}
-              <div className="mt-10 flex flex-wrap items-center gap-4">
+              <div className="mt-8 flex flex-wrap items-center gap-4">
                 <a
                   href={careerwise.liveUrl}
                   target="_blank"
@@ -274,42 +271,45 @@ export const SelectedWork = () => {
                   {devflow.tagline}
                 </p>
 
-                <p className="mt-6 text-base text-neutral-700 dark:text-[#A3A3A3] leading-relaxed font-normal">
-                  {devflow.description}
+                <p className="mt-5 text-base text-neutral-700 dark:text-[#A3A3A3] leading-relaxed font-normal">
+                  {devflow.shortDescription || devflow.description}
                 </p>
 
-                {/* Features List */}
-                <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-3 font-mono-code text-xs">
-                  {devflow.features.slice(0, 6).map((feat, i) => (
+                {/* High-Level Architecture Pipeline */}
+                <div className="mt-6 p-4 border border-neutral-300 dark:border-[#2A2A2A] bg-neutral-100/60 dark:bg-[#111111]">
+                  <div className="font-mono-code text-[10px] text-neutral-400 dark:text-[#666666] uppercase tracking-wider mb-2.5">
+                    PROCESSING ARCHITECTURE
+                  </div>
+                  <div className="flex flex-wrap items-center gap-2 text-xs font-mono-code">
+                    {devflow.flowSteps.map((step, idx) => (
+                      <React.Fragment key={step}>
+                        <span className="px-2.5 py-1 bg-white dark:bg-[#181818] border border-neutral-300 dark:border-[#2A2A2A] text-neutral-900 dark:text-[#F5F3EF] font-medium">
+                          {step}
+                        </span>
+                        {idx < devflow.flowSteps.length - 1 && (
+                          <span className="text-neutral-400 dark:text-[#666666]">➔</span>
+                        )}
+                      </React.Fragment>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Concise Core Capabilities */}
+                <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-2 font-mono-code text-xs">
+                  {(devflow.conciseFeatures || devflow.features.slice(0, 4)).map((feat, i) => (
                     <div
                       key={i}
-                      className="p-3 border border-neutral-300 dark:border-[#2A2A2A] bg-neutral-100/40 dark:bg-[#111111] flex items-start gap-2 text-neutral-700 dark:text-[#A3A3A3]"
+                      className="px-3 py-2 border border-neutral-200 dark:border-[#222222] bg-white dark:bg-[#111111] flex items-center gap-2 text-neutral-700 dark:text-[#A3A3A3]"
                     >
-                      <Terminal className="w-3.5 h-3.5 text-neutral-400 dark:text-[#666666] mt-0.5 shrink-0" />
-                      <span>{feat}</span>
+                      <span className="w-1.5 h-1.5 rounded-full bg-neutral-950 dark:bg-[#F5F3EF] shrink-0" />
+                      <span className="truncate">{feat}</span>
                     </div>
                   ))}
                 </div>
 
-                {/* Verified Resume Implementations */}
-                <ul className="mt-8 space-y-3 font-mono-code text-xs text-neutral-600 dark:text-[#A3A3A3]">
-                  <li className="flex items-start gap-2.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-neutral-950 dark:bg-[#F5F3EF] mt-1.5 shrink-0" />
-                    <span>Built agentic AI development platform generating functional web applications from natural-language prompts using advanced AI agents.</span>
-                  </li>
-                  <li className="flex items-start gap-2.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-neutral-950 dark:bg-[#F5F3EF] mt-1.5 shrink-0" />
-                    <span>Implemented secure E2B cloud sandbox execution with live application previews, terminal logs, file exploration, project history, and version control.</span>
-                  </li>
-                  <li className="flex items-start gap-2.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-neutral-950 dark:bg-[#F5F3EF] mt-1.5 shrink-0" />
-                    <span>Developed backend APIs and persistent project infrastructure using tRPC, PostgreSQL, Prisma, authentication, and AI model integrations.</span>
-                  </li>
-                </ul>
-
-                {/* Tech Stack */}
-                <div className="mt-8 flex flex-wrap gap-2">
-                  {devflow.technologies.map((t) => (
+                {/* Compact Tech Stack */}
+                <div className="mt-6 flex flex-wrap gap-2">
+                  {(devflow.compactTechnologies || devflow.technologies.slice(0, 8)).map((t) => (
                     <span
                       key={t}
                       className="font-mono-code text-[10px] px-2.5 py-1 border border-neutral-300 dark:border-[#2A2A2A] bg-neutral-100/40 dark:bg-[#111111] text-neutral-700 dark:text-[#A3A3A3] inline-flex items-center gap-1.5 hover:border-neutral-400 dark:hover:border-neutral-500 transition-colors"
@@ -322,7 +322,7 @@ export const SelectedWork = () => {
               </div>
 
               {/* Action Buttons */}
-              <div className="mt-10 flex flex-wrap items-center gap-4">
+              <div className="mt-8 flex flex-wrap items-center gap-4">
                 <a
                   href={devflow.liveUrl}
                   target="_blank"
@@ -366,42 +366,45 @@ export const SelectedWork = () => {
                   {smartjourney.tagline}
                 </p>
 
-                <p className="mt-6 text-base text-neutral-700 dark:text-[#A3A3A3] leading-relaxed font-normal">
-                  {smartjourney.description}
+                <p className="mt-5 text-base text-neutral-700 dark:text-[#A3A3A3] leading-relaxed font-normal">
+                  {smartjourney.shortDescription || smartjourney.description}
                 </p>
 
-                {/* Features Highlights */}
-                <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-3 font-mono-code text-xs">
-                  {smartjourney.features.slice(0, 6).map((feat, i) => (
+                {/* High-Level Architecture Pipeline */}
+                <div className="mt-6 p-4 border border-neutral-300 dark:border-[#2A2A2A] bg-neutral-100/60 dark:bg-[#111111]">
+                  <div className="font-mono-code text-[10px] text-neutral-400 dark:text-[#666666] uppercase tracking-wider mb-2.5">
+                    PROCESSING ARCHITECTURE
+                  </div>
+                  <div className="flex flex-wrap items-center gap-2 text-xs font-mono-code">
+                    {smartjourney.flowSteps.map((step, idx) => (
+                      <React.Fragment key={step}>
+                        <span className="px-2.5 py-1 bg-white dark:bg-[#181818] border border-neutral-300 dark:border-[#2A2A2A] text-neutral-900 dark:text-[#F5F3EF] font-medium">
+                          {step}
+                        </span>
+                        {idx < smartjourney.flowSteps.length - 1 && (
+                          <span className="text-neutral-400 dark:text-[#666666]">➔</span>
+                        )}
+                      </React.Fragment>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Concise Core Capabilities */}
+                <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-2 font-mono-code text-xs">
+                  {(smartjourney.conciseFeatures || smartjourney.features.slice(0, 4)).map((feat, i) => (
                     <div
                       key={i}
-                      className="p-3 border border-neutral-300 dark:border-[#2A2A2A] bg-neutral-100/40 dark:bg-[#111111] flex items-start gap-2 text-neutral-700 dark:text-[#A3A3A3]"
+                      className="px-3 py-2 border border-neutral-200 dark:border-[#222222] bg-white dark:bg-[#111111] flex items-center gap-2 text-neutral-700 dark:text-[#A3A3A3]"
                     >
-                      <MapPin className="w-3.5 h-3.5 text-neutral-400 dark:text-[#666666] mt-0.5 shrink-0" />
-                      <span>{feat}</span>
+                      <span className="w-1.5 h-1.5 rounded-full bg-neutral-950 dark:bg-[#F5F3EF] shrink-0" />
+                      <span className="truncate">{feat}</span>
                     </div>
                   ))}
                 </div>
 
-                {/* Verified Resume Highlights */}
-                <ul className="mt-8 space-y-3 font-mono-code text-xs text-neutral-600 dark:text-[#A3A3A3]">
-                  <li className="flex items-start gap-2.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-neutral-950 dark:bg-[#F5F3EF] mt-1.5 shrink-0" />
-                    <span>Built AI travel assistant generating personalized day-by-day itineraries based on destination, budget, group size, duration, and user interests.</span>
-                  </li>
-                  <li className="flex items-start gap-2.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-neutral-950 dark:bg-[#F5F3EF] mt-1.5 shrink-0" />
-                    <span>Integrated OpenRouter-based AI generation with Google Places API and Mapbox for activity recommendations, hotel discovery, location services, and interactive maps.</span>
-                  </li>
-                  <li className="flex items-start gap-2.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-neutral-950 dark:bg-[#F5F3EF] mt-1.5 shrink-0" />
-                    <span>Implemented user authentication, trip history management, subscription tiers, rate limiting, and security controls using Clerk and Arcjet.</span>
-                  </li>
-                </ul>
-
-                {/* Technologies */}
-                <div className="mt-8 flex flex-wrap gap-2">
-                  {smartjourney.technologies.map((t) => (
+                {/* Compact Tech Stack */}
+                <div className="mt-6 flex flex-wrap gap-2">
+                  {(smartjourney.compactTechnologies || smartjourney.technologies.slice(0, 8)).map((t) => (
                     <span
                       key={t}
                       className="font-mono-code text-[10px] px-2.5 py-1 border border-neutral-300 dark:border-[#2A2A2A] bg-neutral-100/40 dark:bg-[#111111] text-neutral-700 dark:text-[#A3A3A3] inline-flex items-center gap-1.5 hover:border-neutral-400 dark:hover:border-neutral-500 transition-colors"
@@ -414,7 +417,7 @@ export const SelectedWork = () => {
               </div>
 
               {/* Action Buttons */}
-              <div className="mt-10 flex flex-wrap items-center gap-4">
+              <div className="mt-8 flex flex-wrap items-center gap-4">
                 <a
                   href={smartjourney.liveUrl}
                   target="_blank"

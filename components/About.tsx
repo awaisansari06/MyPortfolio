@@ -35,11 +35,11 @@ export const About = () => {
               <h3 className="text-2xl sm:text-3xl font-semibold leading-tight text-neutral-950 dark:text-[#F5F3EF] mb-6">
                 Full-Stack Developer and Computer Science graduate specializing in AI-powered web applications.
               </h3>
-              <p className="text-base text-neutral-600 dark:text-[#A3A3A3] leading-relaxed font-normal mb-6">
+              <p className="text-base text-neutral-600 dark:text-[#A3A3A3] leading-relaxed font-normal mb-4">
                 {portfolioData.bio}
               </p>
               <p className="text-sm text-neutral-500 dark:text-[#888888] leading-relaxed font-normal">
-                Postgraduate student focused on building production-oriented web applications and practical AI systems.
+                Focusing on clean architecture, normalized database schemas, type-safe API communication, and scalable background job orchestration.
               </p>
             </div>
 

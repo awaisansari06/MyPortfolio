@@ -180,9 +180,7 @@ export const GitHubContributions: React.FC = () => {
         </div>
 
         {/* Selected Repositories Grid */}
-        {data && data.repositories && data.repositories.length > 0 && (
-          <GitHubRepositories repositories={data.repositories} />
-        )}
+        <GitHubRepositories repositories={data?.repositories} />
       </div>
     </section>
   );

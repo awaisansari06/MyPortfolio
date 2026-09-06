@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useContext } from 'react';
 import { ThemeProvider as NextThemesProvider, useTheme as useNextTheme } from 'next-themes';
 
 type Theme = 'dark' | 'light';
@@ -21,11 +21,6 @@ const ThemeContext = createContext<ThemeContextType>({
 
 const ThemeSyncProvider = ({ children }: { children: React.ReactNode }) => {
   const { theme, resolvedTheme, setTheme, systemTheme } = useNextTheme();
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   const activeTheme = (resolvedTheme || theme || 'dark') as Theme;
 

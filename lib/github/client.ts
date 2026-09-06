@@ -49,6 +49,9 @@ export async function fetchGitHubContributions(
     const userData = json.data.user;
     const calendar = userData.contributionsCollection?.contributionCalendar;
 
+    const pinnedNodes = (userData.pinnedItems?.nodes || []).filter(Boolean);
+    const repoNodes = pinnedNodes.length > 0 ? pinnedNodes : (userData.repositories?.nodes || []).filter(Boolean);
+
     return {
       profile: {
         name: userData.name || username,
@@ -61,7 +64,7 @@ export async function fetchGitHubContributions(
         totalContributions: calendar?.totalContributions ?? 0,
         weeks: calendar?.weeks ?? [],
       },
-      repositories: (userData.repositories?.nodes || []).map((repo: any) => ({
+      repositories: repoNodes.map((repo: any) => ({
         name: repo.name,
         description: repo.description,
         url: repo.url,

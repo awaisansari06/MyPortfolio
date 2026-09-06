@@ -130,25 +130,6 @@ export const ProjectModal = ({ project, onClose }: ProjectModalProps) => {
           </div>
         </div>
 
-        {/* Process Flow */}
-        <div className="mb-10 p-4 border border-neutral-300 dark:border-[#2A2A2A] bg-neutral-100/60 dark:bg-[#111111]">
-          <div className="font-mono-code text-[10px] text-neutral-500 dark:text-[#A3A3A3] uppercase tracking-widest mb-3">
-            ARCHITECTURAL DATA FLOW PIPELINE
-          </div>
-          <div className="flex flex-wrap items-center gap-2 text-xs font-mono-code">
-            {project.flowSteps.map((step, idx) => (
-              <React.Fragment key={step}>
-                <span className="px-2.5 py-1 border border-neutral-300 dark:border-[#2A2A2A] bg-white dark:bg-[#161616] font-medium text-neutral-900 dark:text-[#F5F3EF]">
-                  {step}
-                </span>
-                {idx < project.flowSteps.length - 1 && (
-                  <ArrowRight className="w-3.5 h-3.5 text-neutral-400 dark:text-[#666666]" />
-                )}
-              </React.Fragment>
-            ))}
-          </div>
-        </div>
-
         {/* Content Columns */}
         <div className="space-y-10">
           {/* Overview */}
@@ -212,6 +193,25 @@ export const ProjectModal = ({ project, onClose }: ProjectModalProps) => {
                     {impl}
                   </span>
                 </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Process Flow Pipeline */}
+          <div className="p-4 border border-neutral-300 dark:border-[#2A2A2A] bg-neutral-100/60 dark:bg-[#111111]">
+            <div className="font-mono-code text-[10px] text-neutral-500 dark:text-[#A3A3A3] uppercase tracking-widest mb-3">
+              ARCHITECTURAL DATA FLOW PIPELINE
+            </div>
+            <div className="flex flex-wrap items-center gap-2 text-xs font-mono-code">
+              {project.flowSteps.map((step, idx) => (
+                <React.Fragment key={step}>
+                  <span className="px-2.5 py-1 border border-neutral-300 dark:border-[#2A2A2A] bg-white dark:bg-[#161616] font-medium text-neutral-900 dark:text-[#F5F3EF]">
+                    {step}
+                  </span>
+                  {idx < project.flowSteps.length - 1 && (
+                    <ArrowRight className="w-3.5 h-3.5 text-neutral-400 dark:text-[#666666]" />
+                  )}
+                </React.Fragment>
               ))}
             </div>
           </div>
