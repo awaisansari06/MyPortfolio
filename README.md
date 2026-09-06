@@ -25,24 +25,6 @@ This repository houses the personal software engineering portfolio of **Mohammad
 
 Designed under the philosophy of **"Static Composition + Dynamic Behavior"**, the portfolio rejects noisy 3D gimmicks and neon aesthetics in favor of a restrained, high-contrast monochrome editorial layout, precise micro-animations powered by GSAP, and a ground-truth-grounded conversational AI assistant powered by **Google Gemini 3.5 Flash Lite**.
 
-```
-┌─────────────────────────────────────────────────────────────────────────────┐
-│  / PORTFOLIO 2026                 A. ANSARI                                 │
-│                   WORK   STACK   ABOUT   ACTIVITY   CONTACT    [ ◑ ]        │
-├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                             │
-│                            M O H A M M A D                                  │
-│                                A W A I S                                    │
-│                            A N S A R I                                      │
-│                                                                             │
-│        Full-stack engineer building AI-powered digital products,            │
-│         scalable web architectures, and production-ready systems.           │
-│                                                                             │
-│          [ VIEW ALL WORK → ]   [ LET'S CONNECT ↗ ]   [ RESUME ↗ ]           │
-│                                                                             │
-└─────────────────────────────────────────────────────────────────────────────┘
-```
-
 ---
 
 ## ⚡ Key Highlights
@@ -219,7 +201,7 @@ Open [http://localhost:3000](http://localhost:3000) in your browser to view the 
 *Full-Stack Developer & AI Applications Engineer*  
 Virar, Maharashtra, India
 
-- 🌐 **Portfolio**: [awaisansari06.github.io/MyPortfolio](https://awaisansari06.github.io/MyPortfolio/)
+- 🌐 **Portfolio**: [awaisansari06.github.io/MyPortfolio](https://github.com/awaisansari06/MyPortfolio)
 - 📧 **Email**: [muhammadavais14@gmail.com](mailto:muhammadavais14@gmail.com)
 - 💼 **LinkedIn**: [linkedin.com/in/mohammad-awais-ansari-0560bb428](https://www.linkedin.com/in/mohammad-awais-ansari-0560bb428/)
 - 🐙 **GitHub**: [@awaisansari06](https://github.com/awaisansari06)
