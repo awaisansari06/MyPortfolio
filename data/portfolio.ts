@@ -140,7 +140,7 @@ export const portfolioData: PortfolioData = {
       description:
         "CareerWise is an end-to-end career intelligence system engineered to bridge the gap between job seekers and competitive technical hiring bars. Rather than treating resume review, interview prep, and career planning as disparate tasks, CareerWise unites them into a cohesive data-driven pipeline powered by Google Gemini and serverless background execution.",
       liveUrl: "https://careerwise-v1.vercel.app/",
-      githubUrl: "https://github.com/awaisansari06",
+      githubUrl: "https://github.com/awaisansari06/CareerWise",
       compactTechnologies: [
         "Next.js 15.5",
         "React 19",
@@ -205,7 +205,7 @@ export const portfolioData: PortfolioData = {
       description:
         "DevFlow is an agentic development environment that transforms conversational software specifications into fully running, multi-file full-stack web applications. By pairing multi-step autonomous LLM agent loops with dedicated cloud micro-VM sandboxes, DevFlow compiles, installs packages, runs servers, and streams live application previews in real time.",
       liveUrl: "https://devflow-project.vercel.app/",
-      githubUrl: "https://github.com/awaisansari06",
+      githubUrl: "https://github.com/awaisansari06/devflow",
       compactTechnologies: [
         "Next.js 15",
         "React 19",
@@ -278,7 +278,7 @@ export const portfolioData: PortfolioData = {
       description:
         "SmartJourney is an intelligent itinerary and geospatial exploration platform designed to solve travel fragmentation. By combining large language model reasoning with live Google Places geospatial data and Mapbox interactive visual layers, SmartJourney synthesizes optimized multi-day travel schedules tailored to personal budgets, pacing, and logistics.",
       liveUrl: "https://smartjourney-v2.vercel.app/",
-      githubUrl: "https://github.com/awaisansari06",
+      githubUrl: "https://github.com/awaisansari06/smart-journey",
       compactTechnologies: [
         "Next.js",
         "React",
