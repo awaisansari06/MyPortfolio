@@ -13,7 +13,7 @@
 [![Google Gemini](https://img.shields.io/badge/Google_Gemini-3.5_Flash_Lite-4285F4?style=for-the-badge&logo=google&logoColor=white)](https://ai.google.dev/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-black?style=for-the-badge)](LICENSE)
 
-[Live Demo](https://awaisansari06.github.io/MyPortfolio/) · [Ask Awais AI](#-ask-awais-ai-assistant) · [Report Bug](https://github.com/awaisansari06/MyPortfolio/issues) · [LinkedIn](https://www.linkedin.com/in/mohammad-awais-ansari-0560bb428/)
+[Live Demo](https://awaisdev-v1.vercel.app/) · [Ask Awais AI](#-ask-awais-ai-assistant) · [Report Bug](https://github.com/awaisansari06/MyPortfolio/issues) · [LinkedIn](https://www.linkedin.com/in/mohammad-awais-ansari-0560bb428/)
 
 </div>
 
