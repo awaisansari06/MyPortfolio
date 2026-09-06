@@ -1,8 +1,9 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { portfolioData } from '@/data/portfolio';
 import { TechIcon } from './TechIcon';
+import { gsap, isReducedMotion, MOTION_EASE } from '@/lib/motion';
 
 // Relational map linking technologies to interconnected concepts
 const TECH_RELATIONS: Record<string, string[]> = {
@@ -27,7 +28,52 @@ const TECH_RELATIONS: Record<string, string[]> = {
 };
 
 export const TechStack = () => {
+  const containerRef = useRef<HTMLElement>(null);
   const [hoveredSkill, setHoveredSkill] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    if (isReducedMotion()) return;
+
+    const ctx = gsap.context(() => {
+      // Header reveal
+      gsap.fromTo(
+        '.stack-header',
+        { opacity: 0, y: 20 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          ease: MOTION_EASE.out,
+          scrollTrigger: {
+            trigger: '.stack-header',
+            start: 'top 85%',
+            once: true,
+          },
+        }
+      );
+
+      // Staggered cards reveal
+      gsap.fromTo(
+        '.stack-card',
+        { opacity: 0, y: 24 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.55,
+          stagger: 0.06,
+          ease: MOTION_EASE.out,
+          scrollTrigger: {
+            trigger: '.stack-grid',
+            start: 'top 80%',
+            once: true,
+          },
+        }
+      );
+    }, containerRef);
+
+    return () => ctx.revert();
+  }, []);
 
   const isRelated = (skill: string) => {
     if (!hoveredSkill) return false;
@@ -37,10 +83,14 @@ export const TechStack = () => {
   };
 
   return (
-    <section id="stack" className="py-24 md:py-36 border-b border-neutral-300 dark:border-[#2A2A2A] bg-neutral-50/40 dark:bg-[#0A0A0A] relative">
+    <section
+      ref={containerRef}
+      id="stack"
+      className="py-24 md:py-36 border-b border-neutral-300 dark:border-[#2A2A2A] bg-neutral-50/40 dark:bg-[#0A0A0A] relative"
+    >
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between pb-8 mb-12 border-b border-neutral-300 dark:border-[#2A2A2A]">
+        <div className="stack-header flex flex-col md:flex-row md:items-end justify-between pb-8 mb-12 border-b border-neutral-300 dark:border-[#2A2A2A]">
           <div>
             <div className="font-mono-code text-[11px] text-neutral-500 dark:text-[#A3A3A3] tracking-[0.25em] uppercase mb-2">
               03 / TECHNOLOGIES & TOOLS
@@ -55,12 +105,12 @@ export const TechStack = () => {
         </div>
 
         {/* Categorized Matrix with pure CSS card hover */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="stack-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {portfolioData.techCategories.map((category) => {
             return (
               <div
                 key={category.title}
-                className="p-6 border border-neutral-300 dark:border-[#2A2A2A] bg-white/50 dark:bg-[#111111]/30 hover:border-neutral-950 dark:hover:border-[#F5F3EF] hover:bg-white dark:hover:bg-[#151515] transition-colors duration-200 flex flex-col justify-between"
+                className="stack-card p-6 border border-neutral-300 dark:border-[#2A2A2A] bg-white/50 dark:bg-[#111111]/30 hover:border-neutral-950 dark:hover:border-[#F5F3EF] hover:bg-white dark:hover:bg-[#151515] transition-colors duration-200 flex flex-col justify-between"
               >
                 <div>
                   {/* Category Header */}

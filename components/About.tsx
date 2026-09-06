@@ -1,16 +1,103 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { portfolioData } from '@/data/portfolio';
 import { TechIcon } from './TechIcon';
 import { Award, GraduationCap, CheckCircle2, ArrowDownToLine, ArrowUpRight } from 'lucide-react';
+import { gsap, isReducedMotion, MOTION_EASE } from '@/lib/motion';
 
 export const About = () => {
+  const containerRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    if (isReducedMotion()) return;
+
+    const ctx = gsap.context(() => {
+      // Header reveal
+      gsap.fromTo(
+        '.about-header',
+        { opacity: 0, y: 20 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          ease: MOTION_EASE.out,
+          scrollTrigger: {
+            trigger: '.about-header',
+            start: 'top 85%',
+            once: true,
+          },
+        }
+      );
+
+      // Bio and Profile Cards
+      gsap.fromTo(
+        '.about-profile-card',
+        { opacity: 0, y: 24 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          stagger: 0.08,
+          ease: MOTION_EASE.out,
+          scrollTrigger: {
+            trigger: '.about-profile-grid',
+            start: 'top 80%',
+            once: true,
+          },
+        }
+      );
+
+      // Education cards
+      gsap.fromTo(
+        '.about-edu-card',
+        { opacity: 0, y: 20 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.55,
+          stagger: 0.07,
+          ease: MOTION_EASE.out,
+          scrollTrigger: {
+            trigger: '.about-edu-container',
+            start: 'top 80%',
+            once: true,
+          },
+        }
+      );
+
+      // Certifications cards
+      gsap.fromTo(
+        '.about-cert-card',
+        { opacity: 0, y: 16 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.5,
+          stagger: 0.05,
+          ease: MOTION_EASE.out,
+          scrollTrigger: {
+            trigger: '.about-cert-grid',
+            start: 'top 82%',
+            once: true,
+          },
+        }
+      );
+    }, containerRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section id="about" className="py-24 md:py-36 border-b border-neutral-300 dark:border-[#2A2A2A] bg-neutral-50/30 dark:bg-[#0A0A0A] relative">
+    <section
+      ref={containerRef}
+      id="about"
+      className="py-24 md:py-36 border-b border-neutral-300 dark:border-[#2A2A2A] bg-neutral-50/30 dark:bg-[#0A0A0A] relative"
+    >
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between pb-8 mb-16 border-b border-neutral-300 dark:border-[#2A2A2A]">
+        <div className="about-header flex flex-col md:flex-row md:items-end justify-between pb-8 mb-16 border-b border-neutral-300 dark:border-[#2A2A2A]">
           <div>
             <div className="font-mono-code text-[11px] text-neutral-500 dark:text-[#A3A3A3] tracking-[0.25em] uppercase mb-2">
               05 / BACKGROUND & PEDIGREE
@@ -25,9 +112,9 @@ export const About = () => {
         </div>
 
         {/* Editorial Bio & Profile Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-20 items-stretch">
+        <div className="about-profile-grid grid grid-cols-1 lg:grid-cols-12 gap-12 mb-20 items-stretch">
           {/* Main Statement (Left) */}
-          <div className="lg:col-span-7 flex flex-col justify-between p-8 border border-neutral-300 dark:border-[#2A2A2A] bg-white dark:bg-[#111111]">
+          <div className="about-profile-card lg:col-span-7 flex flex-col justify-between p-8 border border-neutral-300 dark:border-[#2A2A2A] bg-white dark:bg-[#111111]">
             <div>
               <div className="font-mono-code text-[10px] text-neutral-400 dark:text-[#666666] uppercase tracking-widest mb-4">
                 DEVELOPER PROFILE & BACKGROUND
@@ -84,7 +171,7 @@ export const About = () => {
           </div>
 
           {/* Right: Engineering Profile Card */}
-          <div className="lg:col-span-5 p-8 border border-neutral-300 dark:border-[#2A2A2A] bg-white dark:bg-[#111111] space-y-6 flex flex-col justify-between">
+          <div className="about-profile-card lg:col-span-5 p-8 border border-neutral-300 dark:border-[#2A2A2A] bg-white dark:bg-[#111111] space-y-6 flex flex-col justify-between">
             <div>
               <div className="flex items-center justify-between pb-4 border-b border-neutral-200 dark:border-[#2A2A2A] mb-6">
                 <span className="font-mono-code text-xs font-bold uppercase tracking-wider text-neutral-950 dark:text-[#F5F3EF]">
@@ -145,7 +232,7 @@ export const About = () => {
             {portfolioData.education.map((edu, index) => (
               <div
                 key={edu.degree}
-                className="p-6 sm:p-8 border border-neutral-300 dark:border-[#2A2A2A] bg-white/70 dark:bg-[#111111]/50 flex flex-col md:flex-row md:items-center justify-between gap-6 hover:border-neutral-500 dark:hover:border-neutral-500 transition-colors"
+                className="about-edu-card p-6 sm:p-8 border border-neutral-300 dark:border-[#2A2A2A] bg-white/70 dark:bg-[#111111]/50 flex flex-col md:flex-row md:items-center justify-between gap-6 hover:border-neutral-500 dark:hover:border-neutral-500 transition-colors"
               >
                 <div className="space-y-1">
                   <div className="flex items-center gap-3">
@@ -192,7 +279,7 @@ export const About = () => {
             {portfolioData.certifications.map((cert, i) => (
               <div
                 key={i}
-                className="p-5 border border-neutral-300 dark:border-[#2A2A2A] bg-white/50 dark:bg-[#111111]/30 flex flex-col justify-between"
+                className="about-cert-card p-5 border border-neutral-300 dark:border-[#2A2A2A] bg-white/50 dark:bg-[#111111]/30 flex flex-col justify-between"
               >
                 <div>
                   <div className="flex items-center justify-between font-mono-code text-[10px] text-neutral-400 dark:text-[#666666] mb-2">

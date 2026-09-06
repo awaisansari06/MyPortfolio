@@ -1,23 +1,100 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { portfolioData, ProjectCaseStudy } from '@/data/portfolio';
 import { ProjectModal } from './ProjectModal';
 import { TechIcon } from './TechIcon';
 import { ArrowUpRight, ArrowRight, ExternalLink, Sparkles, Check, Database, Server, Layers, MapPin, FileText, Code2, Terminal } from 'lucide-react';
+import { gsap, isReducedMotion, MOTION_EASE } from '@/lib/motion';
 
 export const SelectedWork = () => {
+  const containerRef = useRef<HTMLElement>(null);
   const [activeModalProject, setActiveModalProject] = useState<ProjectCaseStudy | null>(null);
 
   const careerwise = portfolioData.projects[0];
   const devflow = portfolioData.projects[1];
   const smartjourney = portfolioData.projects[2];
 
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    if (isReducedMotion()) return;
+
+    const ctx = gsap.context(() => {
+      // Header reveal
+      gsap.fromTo(
+        '.work-header',
+        { opacity: 0, y: 20 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          ease: MOTION_EASE.out,
+          scrollTrigger: {
+            trigger: '.work-header',
+            start: 'top 85%',
+            once: true,
+          },
+        }
+      );
+
+      // Project blocks reveal
+      const projectBlocks = gsap.utils.toArray<HTMLElement>('.project-block');
+      projectBlocks.forEach((block) => {
+        const info = block.querySelector('.project-info');
+        const visual = block.querySelector('.project-visual');
+
+        if (info) {
+          gsap.fromTo(
+            info,
+            { opacity: 0, y: 24 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.65,
+              ease: MOTION_EASE.out,
+              scrollTrigger: {
+                trigger: block,
+                start: 'top 78%',
+                once: true,
+              },
+            }
+          );
+        }
+
+        if (visual) {
+          gsap.fromTo(
+            visual,
+            { opacity: 0, y: 24, scale: 0.985 },
+            {
+              opacity: 1,
+              y: 0,
+              scale: 1,
+              duration: 0.7,
+              delay: 0.08,
+              ease: MOTION_EASE.out,
+              scrollTrigger: {
+                trigger: block,
+                start: 'top 78%',
+                once: true,
+              },
+            }
+          );
+        }
+      });
+    }, containerRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section id="work" className="py-24 md:py-36 border-b border-neutral-300 dark:border-[#2A2A2A] relative">
+    <section
+      ref={containerRef}
+      id="work"
+      className="py-24 md:py-36 border-b border-neutral-300 dark:border-[#2A2A2A] relative"
+    >
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between pb-8 mb-20 border-b border-neutral-300 dark:border-[#2A2A2A]">
+        <div className="work-header flex flex-col md:flex-row md:items-end justify-between pb-8 mb-20 border-b border-neutral-300 dark:border-[#2A2A2A]">
           <div>
             <div className="font-mono-code text-[11px] text-neutral-500 dark:text-[#A3A3A3] tracking-[0.25em] uppercase mb-2">
               02 / PRODUCTION PORTFOLIO
@@ -32,10 +109,10 @@ export const SelectedWork = () => {
         </div>
 
         {/* ---------------- PROJECT 01: CAREERWISE ---------------- */}
-        <div className="mb-32 pb-24 border-b border-neutral-300 dark:border-[#2A2A2A]">
+        <div className="project-block mb-32 pb-24 border-b border-neutral-300 dark:border-[#2A2A2A]">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-start">
             {/* Left: Project Editorial Details */}
-            <div className="lg:col-span-6 flex flex-col justify-between">
+            <div className="project-info lg:col-span-6 flex flex-col justify-between">
               <div>
                 <div className="flex items-center gap-3 font-mono-code text-xs text-neutral-400 dark:text-[#666666] mb-3">
                   <span className="font-semibold text-neutral-900 dark:text-[#F5F3EF]">01</span>
@@ -125,7 +202,7 @@ export const SelectedWork = () => {
             </div>
 
             {/* Right: Actual Product Interface & Editorial Frame */}
-            <div className="lg:col-span-6">
+            <div className="project-visual lg:col-span-6">
               <div className="relative rounded-2xl border border-neutral-300 dark:border-[#2A2A2A] bg-neutral-100/50 dark:bg-[#111111]/60 p-4 sm:p-6 backdrop-blur-xs overflow-hidden group">
                 <div className="absolute top-3 right-3 w-4 h-4 border-t border-r border-neutral-400 dark:border-[#3A3A3A] pointer-events-none z-10" />
                 <div className="absolute bottom-3 left-3 w-4 h-4 border-b border-l border-neutral-400 dark:border-[#3A3A3A] pointer-events-none z-10" />
@@ -191,10 +268,10 @@ export const SelectedWork = () => {
         </div>
 
         {/* ---------------- PROJECT 02: DEVFLOW ---------------- */}
-        <div className="mb-32 pb-24 border-b border-neutral-300 dark:border-[#2A2A2A]">
+        <div className="project-block mb-32 pb-24 border-b border-neutral-300 dark:border-[#2A2A2A]">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-start">
             {/* Left: Product Interface & Editorial Frame */}
-            <div className="lg:col-span-6 order-2 lg:order-1 relative rounded-2xl border border-neutral-300 dark:border-[#2A2A2A] bg-neutral-100/50 dark:bg-[#111111]/60 p-4 sm:p-6 overflow-hidden group">
+            <div className="project-visual lg:col-span-6 order-2 lg:order-1 relative rounded-2xl border border-neutral-300 dark:border-[#2A2A2A] bg-neutral-100/50 dark:bg-[#111111]/60 p-4 sm:p-6 overflow-hidden group">
               <div className="absolute top-3 right-3 w-4 h-4 border-t border-r border-neutral-400 dark:border-[#3A3A3A] pointer-events-none z-10" />
               <div className="absolute bottom-3 left-3 w-4 h-4 border-b border-l border-neutral-400 dark:border-[#3A3A3A] pointer-events-none z-10" />
 
@@ -256,7 +333,7 @@ export const SelectedWork = () => {
             </div>
 
             {/* Right: Technical Spec & Architecture */}
-            <div className="lg:col-span-6 order-1 lg:order-2 flex flex-col justify-between">
+            <div className="project-info lg:col-span-6 order-1 lg:order-2 flex flex-col justify-between">
               <div>
                 <div className="flex items-center gap-3 font-mono-code text-xs text-neutral-400 dark:text-[#666666] mb-3">
                   <span className="font-semibold text-neutral-900 dark:text-[#F5F3EF]">02</span>
@@ -348,10 +425,10 @@ export const SelectedWork = () => {
         </div>
 
         {/* ---------------- PROJECT 03: SMARTJOURNEY ---------------- */}
-        <div>
+        <div className="project-block">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-start">
             {/* Left: Editorial Details */}
-            <div className="lg:col-span-6 flex flex-col justify-between">
+            <div className="project-info lg:col-span-6 flex flex-col justify-between">
               <div>
                 <div className="flex items-center gap-3 font-mono-code text-xs text-neutral-400 dark:text-[#666666] mb-3">
                   <span className="font-semibold text-neutral-900 dark:text-[#F5F3EF]">03</span>
@@ -441,7 +518,7 @@ export const SelectedWork = () => {
             </div>
 
             {/* Right: Product Interface & Editorial Frame */}
-            <div className="lg:col-span-6 relative rounded-2xl border border-neutral-300 dark:border-[#2A2A2A] bg-neutral-100/50 dark:bg-[#111111]/60 p-4 sm:p-6 overflow-hidden group">
+            <div className="project-visual lg:col-span-6 relative rounded-2xl border border-neutral-300 dark:border-[#2A2A2A] bg-neutral-100/50 dark:bg-[#111111]/60 p-4 sm:p-6 overflow-hidden group">
               <div className="absolute top-3 right-3 w-4 h-4 border-t border-r border-neutral-400 dark:border-[#3A3A3A] pointer-events-none z-10" />
               <div className="absolute bottom-3 left-3 w-4 h-4 border-b border-l border-neutral-400 dark:border-[#3A3A3A] pointer-events-none z-10" />
 

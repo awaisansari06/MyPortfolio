@@ -1,21 +1,68 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { portfolioData } from '@/data/portfolio';
 import { TechIcon } from './TechIcon';
 import { ArrowUpRight, Layers, Cpu, Globe, Sparkles } from 'lucide-react';
+import { gsap, isReducedMotion, MOTION_EASE } from '@/lib/motion';
 
 export const WhatIBuild = () => {
+  const containerRef = useRef<HTMLElement>(null);
   const icons = [Layers, Cpu, Globe, Sparkles];
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    if (isReducedMotion()) return;
+
+    const ctx = gsap.context(() => {
+      // Header reveal
+      gsap.fromTo(
+        '.wib-header',
+        { opacity: 0, y: 20 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          ease: MOTION_EASE.out,
+          scrollTrigger: {
+            trigger: '.wib-header',
+            start: 'top 85%',
+            once: true,
+          },
+        }
+      );
+
+      // Staggered cards reveal
+      gsap.fromTo(
+        '.wib-card',
+        { opacity: 0, y: 24 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.55,
+          stagger: 0.07,
+          ease: MOTION_EASE.out,
+          scrollTrigger: {
+            trigger: '.wib-grid',
+            start: 'top 80%',
+            once: true,
+          },
+        }
+      );
+    }, containerRef);
+
+    return () => ctx.revert();
+  }, []);
 
   return (
     <section
+      ref={containerRef}
       id="what-i-build"
       className="py-24 md:py-32 border-b border-neutral-300 dark:border-[#2A2A2A] relative bg-neutral-50/50 dark:bg-[#0A0A0A]"
     >
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 pb-6 border-b border-neutral-300 dark:border-[#2A2A2A]">
+        <div className="wib-header flex flex-col md:flex-row md:items-end justify-between mb-16 pb-6 border-b border-neutral-300 dark:border-[#2A2A2A]">
           <div>
             <div className="font-mono-code text-[11px] text-neutral-500 dark:text-[#A3A3A3] tracking-[0.25em] uppercase mb-2">
               01 / DOMAIN OF EXPERTISE
@@ -30,14 +77,14 @@ export const WhatIBuild = () => {
         </div>
 
         {/* Categories Grid - Editorial Layout with pure CSS hover */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="wib-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {portfolioData.whatIBuild.map((item, index) => {
             const Icon = icons[index % icons.length];
 
             return (
               <div
                 key={item.number}
-                className="group relative p-8 transition-colors duration-200 border border-neutral-300 dark:border-[#2A2A2A] bg-transparent hover:border-neutral-950 dark:hover:border-[#F5F3EF] hover:bg-white dark:hover:bg-[#111111] flex flex-col justify-between min-h-[360px]"
+                className="wib-card group relative p-8 transition-colors duration-200 border border-neutral-300 dark:border-[#2A2A2A] bg-transparent hover:border-neutral-950 dark:hover:border-[#F5F3EF] hover:bg-white dark:hover:bg-[#111111] flex flex-col justify-between min-h-[360px]"
               >
                 <div>
                   {/* Category Number & Icon */}

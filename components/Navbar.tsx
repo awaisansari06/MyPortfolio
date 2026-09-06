@@ -11,6 +11,7 @@ export const Navbar = () => {
   const { theme, toggleTheme } = useTheme();
   const mounted = useSyncExternalStore(emptySubscribe, () => true, () => false);
   const [scrolled, setScrolled] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('hero');
 
@@ -24,6 +25,10 @@ export const Navbar = () => {
 
   useEffect(() => {
     const handleScroll = () => {
+      const totalScroll = document.documentElement.scrollHeight - window.innerHeight;
+      if (totalScroll > 0) {
+        setScrollProgress(Math.min(1, Math.max(0, window.scrollY / totalScroll)));
+      }
       setScrolled(window.scrollY > 40);
 
       // Section spy
@@ -82,8 +87,8 @@ export const Navbar = () => {
         </a>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-4 lg:gap-6 xl:gap-8 shrink-0">
-          <ul className="flex items-center gap-4 lg:gap-5 xl:gap-7">
+        <nav className="hidden md:flex items-center gap-5 lg:gap-7 xl:gap-8 shrink-0">
+          <ul className="flex items-center gap-4 lg:gap-5 xl:gap-6">
             {navLinks.map((link) => {
               const sectionId = link.href.replace('#', '');
               const isActive = activeSection === sectionId;
@@ -111,74 +116,19 @@ export const Navbar = () => {
             })}
           </ul>
 
-          {/* Theme switcher - Editorial Pill */}
-          <div className="flex items-center space-x-2.5 border-l border-neutral-300 dark:border-[#2A2A2A] pl-4 lg:pl-6 xl:pl-8 shrink-0">
-            <span
-              className={`text-[10px] font-mono-code transition-colors whitespace-nowrap ${
-                mounted && theme === 'light'
-                  ? 'font-bold text-neutral-950 dark:text-[#F5F3EF]'
-                  : 'text-neutral-400 dark:text-[#666666]'
-              }`}
-            >
-              LIGHT
-            </span>
-            <button
-              id="theme-toggle-desktop"
-              onClick={toggleTheme}
-              aria-label={mounted && theme === 'light' ? 'Switch to dark theme' : 'Switch to light theme'}
-              aria-pressed={mounted ? theme === 'dark' : true}
-              className="w-10 h-[20px] bg-neutral-300 dark:bg-[#2A2A2A] rounded-full flex items-center px-1 transition-colors cursor-pointer shrink-0"
-            >
-              <div
-                className={`w-3 h-3 bg-neutral-950 dark:bg-[#F5F3EF] rounded-full transition-all duration-200 ${
-                  mounted && theme === 'light' ? 'mr-auto' : 'ml-auto'
-                }`}
-              />
-            </button>
-            <span
-              className={`text-[10px] font-mono-code transition-colors whitespace-nowrap ${
-                !mounted || theme === 'dark'
-                  ? 'font-bold text-neutral-950 dark:text-[#F5F3EF]'
-                  : 'text-neutral-400 dark:text-[#666666]'
-              }`}
-            >
-              DARK
-            </span>
-          </div>
-
-          {/* Resume, Ask AI & Direct Contact Quick Actions */}
-          <div className="hidden lg:flex items-center gap-4 xl:gap-5 shrink-0">
-            <button
-              onClick={() => window.dispatchEvent(new CustomEvent('open-ask-ai'))}
-              className="inline-flex items-center gap-1.5 text-[11px] font-mono-code tracking-widest text-neutral-900 dark:text-[#F5F3EF] border-b border-neutral-900 dark:border-[#F5F3EF] pb-0.5 hover:opacity-75 transition-opacity cursor-pointer whitespace-nowrap shrink-0"
-              data-cursor="ASK AI"
-              aria-label="Open Ask Awais AI portfolio assistant"
-            >
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-              <span>ASK AI</span>
-              <ArrowUpRight className="w-3 h-3 shrink-0" />
-            </button>
-
-            <a
-              href="/AwaisCV.pdf"
-              download="Mohammad-Awais-Ansari-Resume.pdf"
-              className="inline-flex items-center gap-1.5 text-[11px] font-mono-code tracking-widest text-neutral-900 dark:text-[#F5F3EF] border-b border-neutral-900 dark:border-[#F5F3EF] pb-0.5 hover:opacity-75 transition-opacity cursor-pointer whitespace-nowrap shrink-0"
-              data-cursor="RESUME"
-              aria-label="Download resume"
-            >
-              <span>RESUME</span>
-              <ArrowUpRight className="w-3 h-3 shrink-0" />
-            </a>
-
-            <a
-              href={`mailto:${portfolioData.email}`}
-              className="inline-flex items-center gap-1.5 text-[11px] font-mono-code tracking-widest text-neutral-900 dark:text-[#F5F3EF] border-b border-neutral-900 dark:border-[#F5F3EF] pb-0.5 hover:opacity-75 transition-opacity cursor-pointer whitespace-nowrap shrink-0"
-              data-cursor="EMAIL"
-            >
-              <span>GET IN TOUCH</span>
-              <ArrowUpRight className="w-3 h-3 shrink-0" />
-            </a>
-          </div>
+          {/* Compact Icon-Only Theme Toggle */}
+          <button
+            id="theme-toggle-desktop"
+            onClick={toggleTheme}
+            aria-label={mounted && theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+            className="w-9 h-9 flex items-center justify-center border border-neutral-300 dark:border-[#2A2A2A] hover:border-neutral-950 dark:hover:border-[#F5F3EF] bg-transparent text-neutral-800 dark:text-[#F5F3EF] transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-neutral-950 dark:focus-visible:ring-white shrink-0 ml-1"
+          >
+            {mounted && theme === 'dark' ? (
+              <Sun className="w-3.5 h-3.5" />
+            ) : (
+              <Moon className="w-3.5 h-3.5" />
+            )}
+          </button>
         </nav>
 
         {/* Mobile menu trigger */}
@@ -285,6 +235,13 @@ export const Navbar = () => {
           </nav>
         </div>
       )}
+
+      {/* 1px Minimal Scroll Progress Indicator */}
+      <div
+        className="absolute bottom-0 left-0 h-[1px] bg-neutral-900/40 dark:bg-[#F5F3EF]/40 transition-[width] duration-75 ease-out pointer-events-none"
+        style={{ width: `${(scrollProgress * 100).toFixed(2)}%` }}
+        aria-hidden="true"
+      />
     </header>
   );
 };

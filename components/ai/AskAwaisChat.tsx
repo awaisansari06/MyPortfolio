@@ -414,9 +414,13 @@ export const AskAwaisChat: React.FC = () => {
                   ) : (
                     isStreaming &&
                     idx === messages.length - 1 && (
-                      <div className="flex items-center gap-2 text-xs font-mono-code text-neutral-400">
-                        <Loader2 className="w-3.5 h-3.5 animate-spin" />
-                        <span>Synthesizing response...</span>
+                      <div className="flex items-center gap-2 py-1 text-xs font-mono-code text-neutral-500 dark:text-[#A3A3A3]">
+                        <span className="tracking-widest uppercase text-[11px] font-semibold">Thinking</span>
+                        <span className="flex items-center gap-1">
+                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse [animation-delay:200ms]" />
+                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse [animation-delay:400ms]" />
+                        </span>
                       </div>
                     )
                   )}

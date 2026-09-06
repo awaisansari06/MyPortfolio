@@ -1,13 +1,69 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { portfolioData } from '@/data/portfolio';
 import { Mail, Github, Linkedin, MapPin, ArrowUp, Send, Check, Copy, ArrowUpRight } from 'lucide-react';
+import { gsap, isReducedMotion } from '@/lib/motion';
 
 export const Contact = () => {
   const [copied, setCopied] = useState(false);
   const [formState, setFormState] = useState({ name: '', email: '', message: '' });
   const [submitted, setSubmitted] = useState(false);
+  const containerRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    if (isReducedMotion()) return;
+    const ctx = gsap.context(() => {
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: 'top 82%',
+          toggleActions: 'play none none none',
+        },
+      });
+
+      tl.from('.contact-header', {
+        y: 20,
+        opacity: 0,
+        duration: 0.6,
+        ease: 'power2.out',
+      })
+        .from(
+          '.contact-statement',
+          {
+            y: 24,
+            opacity: 0,
+            duration: 0.65,
+            ease: 'power2.out',
+          },
+          '-=0.3'
+        )
+        .from(
+          '.contact-info',
+          {
+            y: 20,
+            opacity: 0,
+            duration: 0.55,
+            ease: 'power2.out',
+            clearProps: 'all',
+          },
+          '-=0.25'
+        )
+        .from(
+          '.contact-form',
+          {
+            y: 20,
+            opacity: 0,
+            duration: 0.55,
+            ease: 'power2.out',
+            clearProps: 'all',
+          },
+          '-=0.35'
+        );
+    }, containerRef);
+
+    return () => ctx.revert();
+  }, []);
 
   const copyEmail = () => {
     navigator.clipboard.writeText(portfolioData.email);
@@ -31,10 +87,10 @@ export const Contact = () => {
   };
 
   return (
-    <section id="contact" className="pt-24 md:pt-36 bg-neutral-100/60 dark:bg-[#070707] relative">
+    <section ref={containerRef} id="contact" className="pt-24 md:pt-36 bg-neutral-100/60 dark:bg-[#070707] relative">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between pb-8 mb-16 border-b border-neutral-300 dark:border-[#2A2A2A]">
+        <div className="contact-header flex flex-col md:flex-row md:items-end justify-between pb-8 mb-16 border-b border-neutral-300 dark:border-[#2A2A2A]">
           <div>
             <div className="font-mono-code text-[11px] text-neutral-500 dark:text-[#A3A3A3] tracking-[0.25em] uppercase mb-2">
               07 / DIRECT INQUIRIES
@@ -49,7 +105,7 @@ export const Contact = () => {
         </div>
 
         {/* Big Editorial Statement */}
-        <div className="mb-20">
+        <div className="contact-statement mb-20">
           <h3 className="text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-neutral-950 dark:text-[#F5F3EF] uppercase leading-[0.95] max-w-4xl">
             LET&apos;S BUILD SOMETHING TOGETHER.
           </h3>
@@ -61,7 +117,7 @@ export const Contact = () => {
         {/* Contact Layout: Left Info, Right Minimal Form */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 pb-24 border-b border-neutral-300 dark:border-[#2A2A2A]">
           {/* Left Contact Options */}
-          <div className="lg:col-span-5 space-y-6">
+          <div className="contact-info lg:col-span-5 space-y-6">
             {/* Email Card with Copy Trigger */}
             <div className="p-6 border border-neutral-300 dark:border-[#2A2A2A] bg-white dark:bg-[#111111]">
               <div className="flex items-center justify-between font-mono-code text-[10px] text-neutral-400 dark:text-[#666666] uppercase mb-2">
@@ -141,7 +197,7 @@ export const Contact = () => {
           </div>
 
           {/* Right Contact Form */}
-          <div className="lg:col-span-7">
+          <div className="contact-form lg:col-span-7">
             <div className="p-8 border border-neutral-300 dark:border-[#2A2A2A] bg-white dark:bg-[#111111]">
               <div className="font-mono-code text-xs font-bold text-neutral-950 dark:text-[#F5F3EF] uppercase tracking-wider pb-4 mb-6 border-b border-neutral-200 dark:border-[#2A2A2A]">
                 SEND AN INQUIRY

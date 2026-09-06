@@ -1,9 +1,10 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { portfolioData } from '@/data/portfolio';
 import { TechIcon } from './TechIcon';
 import { BookOpen, Cpu, Database, Network, Binary, ShieldCheck } from 'lucide-react';
+import { gsap, isReducedMotion, MOTION_EASE } from '@/lib/motion';
 
 const FOUNDATION_TOOLS: Record<string, string> = {
   'Data Structures & Algorithms': 'C++',
@@ -14,13 +15,62 @@ const FOUNDATION_TOOLS: Record<string, string> = {
 };
 
 export const EngineeringFoundation = () => {
+  const containerRef = useRef<HTMLElement>(null);
   const icons = [Binary, ShieldCheck, Database, Cpu, BookOpen];
 
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    if (isReducedMotion()) return;
+
+    const ctx = gsap.context(() => {
+      // Header reveal
+      gsap.fromTo(
+        '.eng-header',
+        { opacity: 0, y: 20 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          ease: MOTION_EASE.out,
+          scrollTrigger: {
+            trigger: '.eng-header',
+            start: 'top 85%',
+            once: true,
+          },
+        }
+      );
+
+      // Staggered cards reveal
+      gsap.fromTo(
+        '.eng-card',
+        { opacity: 0, y: 24 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.55,
+          stagger: 0.06,
+          ease: MOTION_EASE.out,
+          scrollTrigger: {
+            trigger: '.eng-grid',
+            start: 'top 80%',
+            once: true,
+          },
+        }
+      );
+    }, containerRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section id="engineering" className="py-24 md:py-36 border-b border-neutral-300 dark:border-[#2A2A2A] relative">
+    <section
+      ref={containerRef}
+      id="engineering"
+      className="py-24 md:py-36 border-b border-neutral-300 dark:border-[#2A2A2A] relative"
+    >
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between pb-8 mb-16 border-b border-neutral-300 dark:border-[#2A2A2A]">
+        <div className="eng-header flex flex-col md:flex-row md:items-end justify-between pb-8 mb-16 border-b border-neutral-300 dark:border-[#2A2A2A]">
           <div>
             <div className="font-mono-code text-[11px] text-neutral-500 dark:text-[#A3A3A3] tracking-[0.25em] uppercase mb-2">
               04 / CORE COMPUTER SCIENCE
@@ -35,7 +85,7 @@ export const EngineeringFoundation = () => {
         </div>
 
         {/* Foundations Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="eng-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {portfolioData.engineeringFoundations.map((foundation, index) => {
             const Icon = icons[index % icons.length];
             const associatedTool = foundation.tool || FOUNDATION_TOOLS[foundation.name];
@@ -43,7 +93,7 @@ export const EngineeringFoundation = () => {
             return (
               <div
                 key={foundation.name}
-                className="bg-white dark:bg-[#111111] p-8 border border-neutral-300 dark:border-[#2A2A2A] flex flex-col justify-between hover:border-neutral-500 dark:hover:border-neutral-500 transition-colors duration-200 group"
+                className="eng-card bg-white dark:bg-[#111111] p-8 border border-neutral-300 dark:border-[#2A2A2A] flex flex-col justify-between hover:border-neutral-500 dark:hover:border-neutral-500 transition-colors duration-200 group"
               >
                 <div>
                   <div className="flex items-center justify-between pb-4 mb-6 border-b border-neutral-200 dark:border-[#2A2A2A]">
