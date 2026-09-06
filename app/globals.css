@@ -1,0 +1,167 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  :root {
+    --background: #F7F6F3;
+    --foreground: #111111;
+    --surface: #FFFFFF;
+    --surface-elevated: #FFFFFF;
+    --muted: #EFECE6;
+    --muted-foreground: #555555;
+    --border: #E2E0DC;
+    --border-subtle: #ECEAE5;
+    --input: #FFFFFF;
+    --button: #111111;
+    --button-foreground: #FFFFFF;
+    --accent: #111111;
+    --accent-muted: #737373;
+    --grid: rgba(120, 120, 120, 0.06);
+    --selection: #111111;
+    --selection-foreground: #FFFFFF;
+
+    /* Legacy tokens for backward compatibility */
+    --bg-primary: #F7F6F3;
+    --bg-secondary: #EFECE6;
+    --bg-surface: #FFFFFF;
+    --text-primary: #111111;
+    --text-secondary: #555555;
+    --text-muted: #888888;
+    --border-color: #E2E0DC;
+    --card-hover: rgba(0, 0, 0, 0.03);
+  }
+
+  .dark {
+    --background: #0A0A0A;
+    --foreground: #F5F3EF;
+    --surface: #111111;
+    --surface-elevated: #181818;
+    --muted: #1A1A1A;
+    --muted-foreground: #A3A3A3;
+    --border: #2A2A2A;
+    --border-subtle: #1C1C1C;
+    --input: #111111;
+    --button: #F5F3EF;
+    --button-foreground: #0A0A0A;
+    --accent: #F5F3EF;
+    --accent-muted: #D4D4D4;
+    --grid: rgba(255, 255, 255, 0.03);
+    --selection: #F5F3EF;
+    --selection-foreground: #0A0A0A;
+
+    /* Legacy tokens for backward compatibility */
+    --bg-primary: #0A0A0A;
+    --bg-secondary: #111111;
+    --bg-surface: #181818;
+    --text-primary: #F5F3EF;
+    --text-secondary: #A3A3A3;
+    --text-muted: #666666;
+    --border-color: #2A2A2A;
+    --card-hover: rgba(255, 255, 255, 0.03);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    overflow-x: hidden;
+  }
+}
+
+/* Monospace font utility for engineering/metadata labels */
+.font-mono-code {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.font-display {
+  font-family: 'Space Grotesk', 'Plus Jakarta Sans', sans-serif;
+  letter-spacing: -0.03em;
+}
+
+/* Editorial hollow text stroke typography */
+.text-stroke-editorial {
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: 1.5px currentColor;
+}
+
+/* Architectural corner crosshair marks */
+.editorial-corners {
+  position: relative;
+}
+.editorial-corners::before {
+  content: '';
+  position: absolute;
+  top: -1px;
+  right: -1px;
+  width: 14px;
+  height: 14px;
+  border-top: 1px solid currentColor;
+  border-right: 1px solid currentColor;
+  pointer-events: none;
+}
+.editorial-corners::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: -1px;
+  width: 14px;
+  height: 14px;
+  border-bottom: 1px solid currentColor;
+  border-left: 1px solid currentColor;
+  pointer-events: none;
+}
+
+/* Subtle architectural grid lines */
+.bg-grid-pattern {
+  background-size: 48px 48px;
+  background-image: 
+    linear-gradient(to right, rgba(120, 120, 120, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(120, 120, 120, 0.06) 1px, transparent 1px);
+}
+
+.dark .bg-grid-pattern {
+  background-size: 48px 48px;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+}
+
+/* Custom minimal scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(120, 120, 120, 0.3);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(120, 120, 120, 0.5);
+}
+
+/* Hide default cursor on desktop when custom cursor is active */
+@media (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  body.has-custom-cursor,
+  body.has-custom-cursor a,
+  body.has-custom-cursor button,
+  body.has-custom-cursor [role="button"] {
+    cursor: none !important;
+  }
+
+  body.has-custom-cursor input,
+  body.has-custom-cursor textarea,
+  body.has-custom-cursor select {
+    cursor: text !important;
+  }
+}
+
