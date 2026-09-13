@@ -151,6 +151,7 @@ export const AskAwaisChat: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const messagesContainerRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const chatContainerRef = useRef<HTMLDivElement>(null);
 
@@ -177,10 +178,13 @@ export const AskAwaisChat: React.FC = () => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isOpen]);
 
-  // Scroll to bottom when messages update
+  // Scroll to bottom when messages update — scroll inside the chat container directly to prevent outer page scroll
   useEffect(() => {
-    if (isOpen) {
-      messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    if (isOpen && messagesContainerRef.current) {
+      messagesContainerRef.current.scrollTo({
+        top: messagesContainerRef.current.scrollHeight,
+        behavior: 'smooth',
+      });
     }
   }, [messages, isStreaming, isOpen]);
 
@@ -310,7 +314,15 @@ export const AskAwaisChat: React.FC = () => {
           role="dialog"
           aria-modal="true"
           aria-labelledby="ask-awais-ai-title"
-          className="fixed inset-x-3 bottom-3 top-20 sm:inset-auto sm:bottom-6 sm:right-6 sm:w-[440px] sm:h-[620px] max-h-[calc(100vh-2rem)] z-50 flex flex-col overflow-hidden font-sans liquid-glass-modal"
+          style={{
+            position: 'fixed',
+            bottom: 'max(16px, env(safe-area-inset-bottom, 16px))',
+            right: 'max(16px, env(safe-area-inset-right, 16px))',
+            width: 'min(440px, calc(100vw - 24px))',
+            height: 'min(620px, calc(100dvh - 32px))',
+            maxHeight: 'calc(100dvh - 32px)',
+          }}
+          className="!fixed z-50 flex flex-col overflow-hidden font-sans liquid-glass-modal shadow-2xl transition-all duration-200 ease-out"
         >
           {/* Header */}
           <div className="p-4 border-b border-neutral-200 dark:border-[#222222] bg-[#F1F0EC]/80 dark:bg-[#141414] flex items-start justify-between gap-3 shrink-0">
@@ -356,7 +368,10 @@ export const AskAwaisChat: React.FC = () => {
           </div>
 
           {/* Conversation Body */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-4 text-neutral-800 dark:text-[#E0DFDC]">
+          <div
+            ref={messagesContainerRef}
+            className="flex-1 min-h-0 overflow-y-auto p-4 space-y-4 text-neutral-800 dark:text-[#E0DFDC] overscroll-contain"
+          >
             {/* Empty State */}
             {messages.length === 0 && (
               <div className="py-6 space-y-6">
@@ -455,7 +470,12 @@ export const AskAwaisChat: React.FC = () => {
           </div>
 
           {/* Input Footer */}
-          <div className="p-3 border-t border-neutral-200 dark:border-[#222222] bg-[#F1F0EC]/60 dark:bg-[#141414] shrink-0">
+          <div
+            className="p-3 border-t border-neutral-200 dark:border-[#222222] bg-[#F1F0EC]/80 dark:bg-[#141414] shrink-0"
+            style={{
+              paddingBottom: 'max(12px, env(safe-area-inset-bottom, 12px))',
+            }}
+          >
             <form
               onSubmit={(e) => {
                 e.preventDefault();

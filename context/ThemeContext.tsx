@@ -31,7 +31,13 @@ const ThemeContext = createContext<ThemeContextType>({
 const ThemeSyncProvider = ({ children }: { children: React.ReactNode }) => {
   const { theme, resolvedTheme, setTheme, systemTheme } = useNextTheme();
 
-  const activeTheme = (resolvedTheme || theme || 'dark') as ColorMode;
+  // Synchronize immediately with pre-hydration class on documentElement if available
+  const isClientDark =
+    typeof window !== 'undefined'
+      ? document.documentElement.classList.contains('dark')
+      : false;
+
+  const activeTheme = (resolvedTheme || (typeof window !== 'undefined' ? (isClientDark ? 'dark' : 'light') : theme) || 'dark') as ColorMode;
 
   const toggleTheme = () => {
     setTheme(activeTheme === 'dark' ? 'light' : 'dark');
@@ -58,9 +64,9 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
   return (
     <NextThemesProvider
       attribute="class"
-      defaultTheme="dark"
+      defaultTheme="system"
       enableSystem={true}
-      disableTransitionOnChange={false}
+      disableTransitionOnChange={true}
     >
       <ThemeSyncProvider>{children}</ThemeSyncProvider>
     </NextThemesProvider>

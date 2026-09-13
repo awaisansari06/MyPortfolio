@@ -174,6 +174,7 @@ export const Hero = () => {
           <RefractiveButton
             href="/AwaisCV.pdf"
             target="_blank"
+            rel="noopener noreferrer"
             data-cursor="RESUME"
             className="hero-cta-btn"
           >
