@@ -4,48 +4,48 @@
 
 @layer base {
   :root {
-    --background: #F7F6F3;
-    --foreground: #111111;
-    --surface: #FFFFFF;
-    --surface-elevated: #FFFFFF;
-    --muted: #EFECE6;
-    --muted-foreground: #555555;
-    --border: #E2E0DC;
-    --border-subtle: #ECEAE5;
-    --input: #FFFFFF;
-    --button: #111111;
-    --button-foreground: #FFFFFF;
-    --accent: #111111;
-    --accent-muted: #737373;
-    --grid: rgba(30, 26, 20, 0.08);
-    --selection: #111111;
-    --selection-foreground: #FFFFFF;
+    --background: #F1F0EC;
+    --foreground: #171717;
+    --surface: rgba(255, 255, 255, 0.62);
+    --surface-elevated: rgba(255, 255, 255, 0.72);
+    --muted: #E8E6E0;
+    --muted-foreground: #62615D;
+    --border: rgba(40, 38, 34, 0.14);
+    --border-subtle: rgba(40, 38, 34, 0.09);
+    --input: rgba(255, 255, 255, 0.70);
+    --button: #171717;
+    --button-foreground: #F1F0EC;
+    --accent: #171717;
+    --accent-muted: #85827C;
+    --grid: rgba(40, 36, 30, 0.075);
+    --selection: #171717;
+    --selection-foreground: #F1F0EC;
 
     /* Legacy tokens */
-    --bg-primary: #F7F6F3;
-    --bg-secondary: #EFECE6;
-    --bg-surface: #FFFFFF;
-    --text-primary: #111111;
-    --text-secondary: #555555;
-    --text-muted: #888888;
-    --border-color: #E2E0DC;
-    --card-hover: rgba(0, 0, 0, 0.03);
+    --bg-primary: #F1F0EC;
+    --bg-secondary: #E8E6E0;
+    --bg-surface: rgba(255, 255, 255, 0.62);
+    --text-primary: #171717;
+    --text-secondary: #62615D;
+    --text-muted: #85827C;
+    --border-color: rgba(40, 38, 34, 0.14);
+    --card-hover: rgba(40, 38, 34, 0.03);
 
     /* ── LIQUID GLASS: Light Mode — Warm Architectural Clear Glass ─── */
-    --glass-surface-tint: rgba(255, 255, 255, 0.55);
-    --glass-surface-strong: rgba(255, 255, 255, 0.75);
-    --glass-surface-weak: rgba(255, 255, 255, 0.40);
-    --glass-surface-card: rgba(255, 255, 255, 0.60);
-    --glass-edge-highlight: rgba(255, 255, 255, 0.96);
-    --glass-rim: rgba(0, 0, 0, 0.085);
-    --glass-rim-strong: rgba(0, 0, 0, 0.16);
-    --glass-shadow-sm: rgba(35, 30, 25, 0.04);
-    --glass-shadow: rgba(35, 30, 25, 0.08);
-    --glass-shadow-lg: rgba(30, 25, 20, 0.14);
-    --glass-shadow-near: rgba(0, 0, 0, 0.03);
-    --glass-shadow-inner: rgba(0, 0, 0, 0.03);
-    --glass-specular-glow: rgba(255, 255, 255, 0.75);
-    --glass-active-ring: rgba(17, 17, 17, 0.12);
+    --glass-surface-tint: rgba(255, 255, 255, 0.58);
+    --glass-surface-strong: rgba(255, 255, 255, 0.72);
+    --glass-surface-weak: rgba(255, 255, 255, 0.36);
+    --glass-surface-card: rgba(255, 255, 255, 0.62);
+    --glass-edge-highlight: rgba(255, 255, 255, 0.92);
+    --glass-rim: rgba(40, 38, 34, 0.14);
+    --glass-rim-strong: rgba(40, 38, 34, 0.22);
+    --glass-shadow-sm: rgba(30, 28, 24, 0.03);
+    --glass-shadow: rgba(30, 28, 24, 0.06);
+    --glass-shadow-lg: rgba(30, 28, 24, 0.10);
+    --glass-shadow-near: rgba(30, 28, 24, 0.02);
+    --glass-shadow-inner: rgba(30, 28, 24, 0.03);
+    --glass-specular-glow: rgba(255, 255, 255, 0.65);
+    --glass-active-ring: rgba(23, 23, 23, 0.14);
     /* Radii */
     --glass-radius-pill: 9999px;
     --glass-radius-lg: 20px;
@@ -54,9 +54,9 @@
     --glass-radius-chip: 8px;
     --glass-radius-badge: 9999px;
     /* Refraction */
-    --glass-blur: 18px;
+    --glass-blur: 16px;
     --glass-blur-sm: 10px;
-    --glass-saturate: 1.25;
+    --glass-saturate: 1.2;
   }
 
   .dark {
@@ -647,7 +647,7 @@
   width: 65%;
   height: 55%;
   background: radial-gradient(ellipse at 30% 20%,
-      rgba(240, 238, 232, 0.12) 0%,
+      rgba(255, 248, 235, 0.18) 0%,
       transparent 70%);
   pointer-events: none;
 }
@@ -683,8 +683,8 @@
 .bg-grid-pattern {
   background-size: 48px 48px;
   background-image:
-    linear-gradient(to right, rgba(120, 120, 120, 0.06) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(120, 120, 120, 0.06) 1px, transparent 1px);
+    linear-gradient(to right, rgba(40, 36, 30, 0.075) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(40, 36, 30, 0.075) 1px, transparent 1px);
 }
 
 .dark .bg-grid-pattern {

@@ -110,7 +110,7 @@ export const GitHubContributions: React.FC = () => {
     <section
       ref={containerRef}
       id="activity"
-      className="py-24 md:py-36 border-b border-neutral-300 dark:border-[#2A2A2A] bg-[#F7F6F3]/50 dark:bg-[#0A0A0A] relative"
+      className="py-24 md:py-36 border-b border-neutral-300 dark:border-[#2A2A2A] bg-transparent dark:bg-[#0A0A0A] relative"
     >
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         {/* Section Header */}

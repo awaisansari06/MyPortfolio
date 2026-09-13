@@ -96,7 +96,7 @@ export const EngineeringFoundation = () => {
                 className="eng-card p-8 flex flex-col justify-between transition-colors duration-200 group liquid-glass-card"
               >
                 <div>
-                  <div className="flex items-center justify-between pb-4 mb-6 border-b border-white/10 dark:border-white/10">
+                  <div className="flex items-center justify-between pb-4 mb-6 border-b border-neutral-300/60 dark:border-white/10">
                     <span className="font-mono-code text-xs font-semibold text-neutral-600 dark:text-neutral-400">
                       FOUNDATION 0{index + 1}
                     </span>

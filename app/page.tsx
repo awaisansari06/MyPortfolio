@@ -15,7 +15,7 @@ import { AskAwaisChat } from '@/components/ai/AskAwaisChat';
 
 export default function Home() {
   return (
-    <main className="relative min-h-screen bg-[#F7F6F3] dark:bg-[#0A0A0A] text-neutral-900 dark:text-[#F5F3EF] selection:bg-neutral-900 selection:text-white dark:selection:bg-neutral-100 dark:selection:text-neutral-950 font-sans overflow-x-hidden">
+    <main className="relative min-h-screen bg-[#F1F0EC] dark:bg-[#0A0A0A] text-[#171717] dark:text-[#F5F3EF] selection:bg-[#171717] selection:text-white dark:selection:bg-neutral-100 dark:selection:text-neutral-950 font-sans overflow-x-hidden">
       {/* Subtle Environmental Ambient Light */}
       <div className="liquid-env-light" aria-hidden="true" />
       {/* Subtle Architectural Grid Pattern */}

@@ -51,7 +51,7 @@ Designed under the philosophy of **"Static Composition + Dynamic Behavior"**, th
 - **Interactive Specs Modal**: Comprehensive architectural breakdowns covering system problems, engineering approaches, runtime execution flows, and key metrics.
 
 ### 5. 🎨 Quiet Luxury Monochrome Design System
-- High-contrast, tailored typography paired with curated monochrome color palettes (Off-white `#F7F6F3` / Pitch-black `#0A0A0A`).
+- High-contrast, tailored typography paired with curated monochrome color palettes (Warm ivory `#F1F0EC` / Pitch-black `#0A0A0A`).
 - Fast theme switcher toggling between light and dark modes with persistent local storage.
 
 ---

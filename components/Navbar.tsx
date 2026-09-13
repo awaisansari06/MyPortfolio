@@ -94,6 +94,8 @@ export const Navbar = () => {
   const reactId = useId().replace(/:/g, '');
   const filterId = `navbar-${reactId}`;
   const [navGlassMap, setNavGlassMap] = useState<DisplacementMapData | null>(null);
+  const [navPillMap, setNavPillMap] = useState<DisplacementMapData | null>(null);
+  const [hoverIdx, setHoverIdx] = useState<number | null>(null);
   const headerRef = useRef<HTMLElement>(null);
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   // ── Active sliding glass pill ──────────────────────────────────────────────
@@ -101,11 +103,29 @@ export const Navbar = () => {
   const linkRefs = useRef<(HTMLAnchorElement | null)[]>([]);
   const [pillStyle, setPillStyle] = useState({ left: 0, width: 0, visible: false });
 
+  // Dedicated lens configuration for the moving navigation glass pill
+  const NAV_PILL_LENS = useRef<LensConfig>({
+    width: 120,
+    height: 28,
+    borderRadius: 14,
+    depth: 0.30,
+    curvature: 1.3,
+    scale: 8,
+    chroma: 0,
+    glow: 0.08,
+    edgeHighlight: 0.38,
+    specularAngle: 45,
+  }).current;
+
   // Deterministic mount to avoid hydration mismatch
   useEffect(() => {
-    const id = requestAnimationFrame(() => setMounted(true));
+    const id = requestAnimationFrame(() => {
+      setMounted(true);
+      const pillMap = generateDisplacementMap(NAV_PILL_LENS);
+      if (pillMap) setNavPillMap(pillMap);
+    });
     return () => cancelAnimationFrame(id);
-  }, []);
+  }, [NAV_PILL_LENS]);
 
   const regenerateNavbarMap = useCallback(() => {
     if (typeof window === 'undefined') return;
@@ -175,13 +195,16 @@ export const Navbar = () => {
   // ── Compute active glass pill position ────────────────────────────────────
   useEffect(() => {
     const updatePill = () => {
-      const activeIdx = navLinks.findIndex(l => l.href.replace('#', '') === activeSection);
-      if (activeIdx < 0) {
+      const effectiveIdx = hoverIdx !== null
+        ? hoverIdx
+        : navLinks.findIndex(l => l.href.replace('#', '') === activeSection);
+
+      if (effectiveIdx < 0) {
         setPillStyle(p => ({ ...p, visible: false }));
         return;
       }
 
-      const linkEl = linkRefs.current[activeIdx];
+      const linkEl = linkRefs.current[effectiveIdx];
       const listEl = navListRef.current;
       if (!linkEl || !listEl) return;
 
@@ -197,7 +220,7 @@ export const Navbar = () => {
     const id = requestAnimationFrame(updatePill);
     return () => cancelAnimationFrame(id);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeSection]);
+  }, [activeSection, hoverIdx]);
 
   const scrollTo = (href: string) => {
     setMobileOpen(false);
@@ -222,6 +245,15 @@ export const Navbar = () => {
     >
       {/* ── Liquid Glass backing layer ────────────────────────────────────── */}
       <NavbarGlassBacking filterId={filterId} mapData={navGlassMap} borderRadius="9999px" />
+
+      {/* ── Optical Glass Filter for moving Navigation Pill ───────────────── */}
+      {navPillMap && (
+        <LiquidGlassFilter
+          surfaceId="nav-pill"
+          mapData={navPillMap}
+          config={NAV_PILL_LENS}
+        />
+      )}
 
       {/* ── Navbar content ────────────────────────────────────────────────── */}
       <div className="w-full flex items-center justify-between" style={{ position: 'relative', zIndex: 1 }}>
@@ -248,23 +280,66 @@ export const Navbar = () => {
         <nav className="hidden md:flex items-center gap-5 lg:gap-7 xl:gap-8 shrink-0">
           {/* Relative container so the glass pill can be absolutely positioned */}
           <div style={{ position: 'relative' }}>
-            {/* Sliding active glass pill */}
+            {/* Sliding active optical refractive glass pill */}
             <div
               aria-hidden="true"
-              className="liquid-glass-nav-pill pointer-events-none"
+              className="liquid-glass-nav-pill pointer-events-none overflow-hidden"
               style={{
                 position: 'absolute',
                 top: '50%',
                 transform: 'translateY(-50%)',
                 left: pillStyle.left,
                 width: pillStyle.width,
-                height: '24px',
+                height: '26px',
+                borderRadius: '9999px',
                 opacity: pillStyle.visible ? 1 : 0,
                 transition:
-                  'left 0.38s cubic-bezier(0.16,1,0.3,1), width 0.32s cubic-bezier(0.16,1,0.3,1), opacity 0.2s ease',
+                  'left 0.36s cubic-bezier(0.16,1,0.3,1), width 0.30s cubic-bezier(0.16,1,0.3,1), opacity 0.2s ease',
+                background: 'var(--glass-surface-weak)',
+                border: '0.5px solid var(--glass-rim-strong)',
+                boxShadow:
+                  'inset 0 1px 0 var(--glass-edge-highlight), 0 2px 8px var(--glass-shadow-sm)',
+                backdropFilter: 'blur(1.5px) saturate(1.15)',
+                WebkitBackdropFilter: 'blur(1.5px) saturate(1.15)',
+                zIndex: 10,
               }}
-            />
-            <ul ref={navListRef} className="flex items-center gap-3 lg:gap-4 xl:gap-5">
+            >
+              {/* Synchronized Refraction Target: translated inversely so text aligns perfectly under the lens */}
+              <div
+                style={{
+                  position: 'absolute',
+                  top: '50%',
+                  left: 0,
+                  transform: `translate(${-pillStyle.left}px, -50%)`,
+                  transition: 'transform 0.36s cubic-bezier(0.16,1,0.3,1)',
+                  filter: navPillMap ? getFilterUrl('nav-pill', navPillMap.version) : undefined,
+                  pointerEvents: 'none',
+                  whiteSpace: 'nowrap',
+                }}
+              >
+                <ul className="flex items-center gap-3 lg:gap-4 xl:gap-5">
+                  {navLinks.map((link) => (
+                    <li key={link.label} className="shrink-0">
+                      <span className="font-mono-code text-[11px] tracking-[0.18em] uppercase font-semibold py-1 px-2 inline-block text-neutral-950 dark:text-[#F5F3EF]">
+                        {link.label}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Specular top catch rim */}
+              <div
+                className="absolute top-0 inset-x-2 h-[1px] bg-white/90 dark:bg-white/60 rounded-full opacity-80 pointer-events-none"
+                aria-hidden="true"
+              />
+            </div>
+
+            <ul
+              ref={navListRef}
+              onMouseLeave={() => setHoverIdx(null)}
+              className="flex items-center gap-3 lg:gap-4 xl:gap-5"
+            >
               {navLinks.map((link, idx) => {
                 const sectionId = link.href.replace('#', '');
                 const isActive = activeSection === sectionId;
@@ -273,6 +348,7 @@ export const Navbar = () => {
                     <a
                       ref={el => { linkRefs.current[idx] = el; }}
                       href={link.href}
+                      onMouseEnter={() => setHoverIdx(idx)}
                       onClick={(e) => {
                         e.preventDefault();
                         scrollTo(link.href);

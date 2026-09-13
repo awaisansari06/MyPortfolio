@@ -41,7 +41,7 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   themeColor: [
     { media: '(prefers-color-scheme: dark)', color: '#0A0A0A' },
-    { media: '(prefers-color-scheme: light)', color: '#F7F6F3' },
+    { media: '(prefers-color-scheme: light)', color: '#F1F0EC' },
   ],
 };
 
@@ -66,7 +66,7 @@ export default function RootLayout({
       </head>
       <body
         suppressHydrationWarning
-        className="min-h-screen bg-[#F7F6F3] dark:bg-[#0A0A0A] text-neutral-950 dark:text-[#F5F3EF] antialiased selection:bg-neutral-900 selection:text-white dark:selection:bg-[#F5F3EF] dark:selection:text-neutral-950 transition-colors duration-300"
+        className="min-h-screen bg-[#F1F0EC] dark:bg-[#0A0A0A] text-[#171717] dark:text-[#F5F3EF] antialiased selection:bg-[#171717] selection:text-white dark:selection:bg-[#F5F3EF] dark:selection:text-neutral-950 transition-colors duration-300"
       >
         <ThemeProvider>{children}</ThemeProvider>
       </body>

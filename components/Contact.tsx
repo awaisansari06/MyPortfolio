@@ -199,7 +199,7 @@ export const Contact = () => {
           {/* Right Contact Form */}
           <div className="contact-form lg:col-span-7">
             <div className="p-8 transition-all duration-300 liquid-glass-card-frame">
-              <div className="font-mono-code text-xs font-bold text-neutral-950 dark:text-[#F5F3EF] uppercase tracking-wider pb-4 mb-6 border-b border-white/10 dark:border-white/10">
+              <div className="font-mono-code text-xs font-bold text-neutral-950 dark:text-[#F5F3EF] uppercase tracking-wider pb-4 mb-6 border-b border-neutral-300/60 dark:border-white/10">
                 SEND AN INQUIRY
               </div>
 

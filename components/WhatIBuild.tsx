@@ -58,7 +58,7 @@ export const WhatIBuild = () => {
     <section
       ref={containerRef}
       id="what-i-build"
-      className="py-24 md:py-32 border-b border-neutral-300 dark:border-[#2A2A2A] relative bg-neutral-50/50 dark:bg-[#0A0A0A]"
+      className="py-24 md:py-32 border-b border-neutral-300 dark:border-[#2A2A2A] relative bg-transparent dark:bg-[#0A0A0A]"
     >
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         {/* Section Header */}
@@ -88,7 +88,7 @@ export const WhatIBuild = () => {
               >
                 <div>
                   {/* Category Number & Icon */}
-                  <div className="flex items-center justify-between pb-6 border-b border-white/10 dark:border-white/10">
+                  <div className="flex items-center justify-between pb-6 border-b border-neutral-300/60 dark:border-white/10">
                     <span className="font-mono-code text-xs font-semibold tracking-wider text-neutral-400 dark:text-[#666666]">
                       {item.number}
                     </span>
@@ -112,7 +112,7 @@ export const WhatIBuild = () => {
                 </div>
 
                 {/* Tech Tags */}
-                <div className="mt-8 pt-6 border-t border-white/10 dark:border-white/10">
+                <div className="mt-8 pt-6 border-t border-neutral-300/60 dark:border-white/10">
                   <div className="flex flex-wrap gap-1.5">
                     {item.tags.map((tag) => (
                       <span

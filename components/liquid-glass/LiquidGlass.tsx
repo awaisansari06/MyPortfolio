@@ -8,6 +8,9 @@ export { LiquidGlassSurface } from './LiquidGlassSurface';
 export { LiquidGlassFilter, getFilterUrl } from './LiquidGlassFilter';
 export { generateDisplacementMap, clearDisplacementMapCache } from './displacement-map';
 export { DEFAULT_LENS_CONFIG, computeLensHash, lensShapeEqual, adaptLensConfig } from './lens';
+export { RefractiveProcessNode } from './RefractiveProcessNode';
+export { RefractiveProcessFlow } from './RefractiveProcessFlow';
+export { RefractiveButton } from './RefractiveButton';
 export type { LensConfig, DisplacementMapData, LiquidGlassProps } from './types';
 
 // ─────────────────────────────────────────────────────────────────────────────

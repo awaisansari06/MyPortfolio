@@ -4,6 +4,7 @@ import React, { useEffect, useRef } from 'react';
 import { portfolioData } from '@/data/portfolio';
 import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import { gsap, isReducedMotion, MOTION_EASE } from '@/lib/motion';
+import { RefractiveButton } from '@/components/liquid-glass/LiquidGlass';
 
 export const Hero = () => {
   const containerRef = useRef<HTMLElement>(null);
@@ -161,25 +162,24 @@ export const Hero = () => {
             <ArrowRight className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-1" />
           </button>
 
-          <button
+          <RefractiveButton
             onClick={() => scrollTo('contact')}
             data-cursor="CONTACT"
-            className="hero-cta-btn liquid-glass-btn-secondary inline-flex items-center gap-2 px-5 py-3 font-mono-code text-xs tracking-wider cursor-pointer text-neutral-900 dark:text-[#F5F3EF]"
+            className="hero-cta-btn"
           >
             <span>LET&apos;S CONNECT</span>
             <ArrowUpRight className="w-3.5 h-3.5 opacity-60" />
-          </button>
+          </RefractiveButton>
 
-          <a
+          <RefractiveButton
             href="/AwaisCV.pdf"
-            download="Mohammad-Awais-Ansari-Resume.pdf"
+            target="_blank"
             data-cursor="RESUME"
-            aria-label="Download resume PDF"
-            className="hero-cta-btn liquid-glass-btn-secondary inline-flex items-center gap-2 px-5 py-3 font-mono-code text-xs tracking-wider cursor-pointer text-neutral-900 dark:text-[#F5F3EF]"
+            className="hero-cta-btn"
           >
             <span>RESUME</span>
             <ArrowUpRight className="w-3.5 h-3.5 opacity-60" />
-          </a>
+          </RefractiveButton>
         </div>
       </div>
 

@@ -313,7 +313,7 @@ export const AskAwaisChat: React.FC = () => {
           className="fixed inset-x-3 bottom-3 top-20 sm:inset-auto sm:bottom-6 sm:right-6 sm:w-[440px] sm:h-[620px] max-h-[calc(100vh-2rem)] z-50 flex flex-col overflow-hidden font-sans liquid-glass-modal"
         >
           {/* Header */}
-          <div className="p-4 border-b border-neutral-200 dark:border-[#222222] bg-[#F7F6F3]/70 dark:bg-[#141414] flex items-start justify-between gap-3 shrink-0">
+          <div className="p-4 border-b border-neutral-200 dark:border-[#222222] bg-[#F1F0EC]/80 dark:bg-[#141414] flex items-start justify-between gap-3 shrink-0">
             <div>
               <div className="flex items-center gap-2 font-mono-code text-[10px] uppercase tracking-wider text-neutral-500 dark:text-[#A3A3A3] mb-1">
                 <span className="inline-flex items-center gap-1.5 px-2 py-0.5 border border-neutral-300 dark:border-[#2A2A2A] bg-white dark:bg-[#181818]">
@@ -360,7 +360,7 @@ export const AskAwaisChat: React.FC = () => {
             {/* Empty State */}
             {messages.length === 0 && (
               <div className="py-6 space-y-6">
-                <div className="p-4 border border-neutral-200 dark:border-[#222222] bg-[#F7F6F3]/50 dark:bg-[#161616] space-y-2">
+                <div className="p-4 border border-neutral-200 dark:border-[#222222] bg-[#F1F0EC]/60 dark:bg-[#161616] space-y-2">
                   <div className="flex items-center gap-2 font-mono-code text-[11px] font-semibold uppercase text-neutral-950 dark:text-[#F5F3EF]">
                     <Sparkles className="w-3.5 h-3.5 text-emerald-500" />
                     <span>CURIOUS ABOUT SOMETHING?</span>
@@ -455,7 +455,7 @@ export const AskAwaisChat: React.FC = () => {
           </div>
 
           {/* Input Footer */}
-          <div className="p-3 border-t border-neutral-200 dark:border-[#222222] bg-[#F7F6F3]/50 dark:bg-[#141414] shrink-0">
+          <div className="p-3 border-t border-neutral-200 dark:border-[#222222] bg-[#F1F0EC]/60 dark:bg-[#141414] shrink-0">
             <form
               onSubmit={(e) => {
                 e.preventDefault();

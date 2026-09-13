@@ -114,7 +114,7 @@ export const TechStack = () => {
               >
                 <div>
                   {/* Category Header */}
-                  <div className="flex items-center justify-between pb-4 mb-4 border-b border-white/10 dark:border-white/10">
+                  <div className="flex items-center justify-between pb-4 mb-4 border-b border-neutral-300/60 dark:border-white/10">
                     <span className="font-mono-code text-xs font-bold tracking-widest text-neutral-950 dark:text-[#F5F3EF] uppercase">
                       {category.title}
                     </span>

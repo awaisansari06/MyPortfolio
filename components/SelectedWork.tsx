@@ -7,6 +7,7 @@ import { TechIcon } from './TechIcon';
 import { ArrowUpRight, ArrowRight, ExternalLink } from 'lucide-react';
 import { gsap, isReducedMotion, MOTION_EASE } from '@/lib/motion';
 import { useGlassHoverLens } from '@/hooks/useGlassHoverLens';
+import { RefractiveProcessFlow, RefractiveButton } from '@/components/liquid-glass/LiquidGlass';
 
 export const SelectedWork = () => {
   const containerRef = useRef<HTMLElement>(null);
@@ -141,18 +142,7 @@ export const SelectedWork = () => {
                   <div className="font-mono-code text-[10px] text-neutral-400 dark:text-[#666666] uppercase tracking-wider mb-2.5">
                     PROCESSING ARCHITECTURE
                   </div>
-                  <div className="flex flex-wrap items-center gap-2 text-xs font-mono-code">
-                    {careerwise.flowSteps.map((step, idx) => (
-                      <React.Fragment key={step}>
-                        <span className="px-2.5 py-1 font-medium transition-all duration-200 liquid-glass-badge text-neutral-900 dark:text-[#F5F3EF]">
-                          {step}
-                        </span>
-                        {idx < careerwise.flowSteps.length - 1 && (
-                          <span className="text-neutral-400 dark:text-[#666666]">➔</span>
-                        )}
-                      </React.Fragment>
-                    ))}
-                  </div>
+                  <RefractiveProcessFlow steps={careerwise.flowSteps} />
                 </div>
 
                 {/* Concise Core Capabilities */}
@@ -195,14 +185,13 @@ export const SelectedWork = () => {
                   <ExternalLink className="w-3.5 h-3.5" />
                 </a>
 
-                <button
+                <RefractiveButton
                   onClick={() => setActiveModalProject(careerwise)}
                   data-cursor="VIEW"
-                  className="inline-flex items-center gap-2 px-5 py-3 font-mono-code text-xs tracking-wider cursor-pointer liquid-glass-btn-secondary text-neutral-900 dark:text-[#F5F3EF]"
                 >
                   <span>CASE STUDY & SPECS</span>
                   <ArrowRight className="w-3.5 h-3.5 opacity-70" />
-                </button>
+                </RefractiveButton>
               </div>
             </div>
 
@@ -364,18 +353,7 @@ export const SelectedWork = () => {
                   <div className="font-mono-code text-[10px] text-neutral-400 dark:text-[#666666] uppercase tracking-wider mb-2.5">
                     PROCESSING ARCHITECTURE
                   </div>
-                  <div className="flex flex-wrap items-center gap-2 text-xs font-mono-code">
-                    {devflow.flowSteps.map((step, idx) => (
-                      <React.Fragment key={step}>
-                        <span className="px-2.5 py-1 font-medium transition-all duration-200 liquid-glass-badge text-neutral-900 dark:text-[#F5F3EF]">
-                          {step}
-                        </span>
-                        {idx < devflow.flowSteps.length - 1 && (
-                          <span className="text-neutral-400 dark:text-[#666666]">➔</span>
-                        )}
-                      </React.Fragment>
-                    ))}
-                  </div>
+                  <RefractiveProcessFlow steps={devflow.flowSteps} />
                 </div>
 
                 {/* Concise Core Capabilities */}
@@ -418,14 +396,13 @@ export const SelectedWork = () => {
                   <ExternalLink className="w-3.5 h-3.5" />
                 </a>
 
-                <button
+                <RefractiveButton
                   onClick={() => setActiveModalProject(devflow)}
                   data-cursor="VIEW"
-                  className="inline-flex items-center gap-2 px-5 py-3 font-mono-code text-xs tracking-wider cursor-pointer liquid-glass-btn-secondary text-neutral-900 dark:text-[#F5F3EF]"
                 >
                   <span>CASE STUDY &amp; SPECS</span>
                   <ArrowRight className="w-3.5 h-3.5 opacity-70" />
-                </button>
+                </RefractiveButton>
               </div>
             </div>
           </div>
@@ -459,18 +436,7 @@ export const SelectedWork = () => {
                   <div className="font-mono-code text-[10px] text-neutral-400 dark:text-[#666666] uppercase tracking-wider mb-2.5">
                     PROCESSING ARCHITECTURE
                   </div>
-                  <div className="flex flex-wrap items-center gap-2 text-xs font-mono-code">
-                    {smartjourney.flowSteps.map((step, idx) => (
-                      <React.Fragment key={step}>
-                        <span className="px-2.5 py-1 font-medium transition-all duration-200 liquid-glass-badge text-neutral-900 dark:text-[#F5F3EF]">
-                          {step}
-                        </span>
-                        {idx < smartjourney.flowSteps.length - 1 && (
-                          <span className="text-neutral-400 dark:text-[#666666]">➔</span>
-                        )}
-                      </React.Fragment>
-                    ))}
-                  </div>
+                  <RefractiveProcessFlow steps={smartjourney.flowSteps} />
                 </div>
 
                 {/* Concise Core Capabilities */}
@@ -513,14 +479,13 @@ export const SelectedWork = () => {
                   <ExternalLink className="w-3.5 h-3.5" />
                 </a>
 
-                <button
+                <RefractiveButton
                   onClick={() => setActiveModalProject(smartjourney)}
                   data-cursor="VIEW"
-                  className="inline-flex items-center gap-2 px-5 py-3 font-mono-code text-xs tracking-wider cursor-pointer liquid-glass-btn-secondary text-neutral-900 dark:text-[#F5F3EF]"
                 >
                   <span>CASE STUDY &amp; SPECS</span>
                   <ArrowRight className="w-3.5 h-3.5 opacity-70" />
-                </button>
+                </RefractiveButton>
               </div>
             </div>
 

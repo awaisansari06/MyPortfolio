@@ -437,7 +437,7 @@ export const portfolioData: PortfolioData = {
       year: "2023",
       degree: "HSC — SCIENCE",
       institution: "Maharashtra State Board",
-      details: "Higher secondary education in Physics, Chemistry, and Mathematics.",
+      details: "Higher secondary education in Computer Science, Physics, Chemistry, and Mathematics.",
       score: "71.33%",
     },
   ],
