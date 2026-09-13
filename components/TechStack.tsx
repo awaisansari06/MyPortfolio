@@ -86,7 +86,7 @@ export const TechStack = () => {
     <section
       ref={containerRef}
       id="stack"
-      className="py-24 md:py-36 border-b border-neutral-300 dark:border-[#2A2A2A] bg-neutral-50/40 dark:bg-[#0A0A0A] relative"
+      className="py-24 md:py-36 border-b border-neutral-300 dark:border-[#2A2A2A] relative"
     >
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         {/* Section Header */}
@@ -110,11 +110,11 @@ export const TechStack = () => {
             return (
               <div
                 key={category.title}
-                className="stack-card p-6 border border-neutral-300 dark:border-[#2A2A2A] bg-white/50 dark:bg-[#111111]/30 hover:border-neutral-950 dark:hover:border-[#F5F3EF] hover:bg-white dark:hover:bg-[#151515] transition-colors duration-200 flex flex-col justify-between"
+                className="stack-card p-6 flex flex-col justify-between transition-all duration-200 liquid-glass-card"
               >
                 <div>
                   {/* Category Header */}
-                  <div className="flex items-center justify-between pb-4 mb-4 border-b border-neutral-200 dark:border-[#2A2A2A]">
+                  <div className="flex items-center justify-between pb-4 mb-4 border-b border-white/10 dark:border-white/10">
                     <span className="font-mono-code text-xs font-bold tracking-widest text-neutral-950 dark:text-[#F5F3EF] uppercase">
                       {category.title}
                     </span>
@@ -134,15 +134,15 @@ export const TechStack = () => {
                           key={skill}
                           onMouseEnter={() => setHoveredSkill(skill)}
                           onMouseLeave={() => setHoveredSkill(null)}
-                          className={`font-mono-code text-xs px-3 py-1.5 border transition-colors duration-150 text-left cursor-pointer inline-flex items-center gap-2 group/skill ${
+                          className={`font-mono-code text-xs px-3 py-1.5 text-left cursor-pointer inline-flex items-center gap-2 group/skill rounded-md border transition-all duration-200 ${
                             isHovered
-                              ? 'bg-neutral-950 dark:bg-[#F5F3EF] text-white dark:text-[#0A0A0A] border-neutral-950 dark:border-[#F5F3EF] font-semibold shadow-xs'
+                              ? 'border-neutral-400 dark:border-white/30 bg-neutral-900/[0.06] dark:bg-white/[0.10] backdrop-blur-sm text-neutral-950 dark:text-[#F5F3EF] font-medium shadow-[inset_0_1px_0_var(--glass-edge-highlight),0_2px_8px_var(--glass-shadow-sm)]'
                               : highlighted
-                              ? 'bg-neutral-200 dark:bg-[#1F1F1F] text-neutral-950 dark:text-[#F5F3EF] border-neutral-400 dark:border-neutral-500 font-medium'
-                              : 'bg-transparent text-neutral-700 dark:text-[#A3A3A3] border-neutral-300 dark:border-[#2A2A2A] hover:border-neutral-500 dark:hover:border-neutral-600'
+                              ? 'border-neutral-300 dark:border-white/20 bg-neutral-900/[0.03] dark:bg-white/[0.05] text-neutral-950 dark:text-[#F5F3EF] font-normal shadow-[inset_0_1px_0_var(--glass-edge-highlight)]'
+                              : 'border-neutral-300/60 dark:border-[#2A2A2A] bg-transparent text-neutral-700 dark:text-[#A3A3A3] hover:border-neutral-400 dark:hover:border-white/30 hover:bg-neutral-900/[0.06] dark:hover:bg-white/[0.10] hover:backdrop-blur-sm hover:text-neutral-950 dark:hover:text-[#F5F3EF] hover:shadow-[inset_0_1px_0_var(--glass-edge-highlight),0_2px_8px_var(--glass-shadow-sm)]'
                           }`}
                         >
-                          <TechIcon name={skill} className="w-3.5 h-3.5 shrink-0 transition-transform duration-200 group-hover/skill:scale-110" />
+                          <TechIcon name={skill} className="w-3.5 h-3.5 shrink-0 opacity-80 group-hover/skill:opacity-100 transition-opacity duration-200" />
                           <span>{skill}</span>
                         </button>
                       );

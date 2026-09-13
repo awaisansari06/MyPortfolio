@@ -56,21 +56,21 @@ export const About = () => {
         {
           opacity: 1,
           y: 0,
-          duration: 0.55,
-          stagger: 0.07,
+          duration: 0.5,
+          stagger: 0.06,
           ease: MOTION_EASE.out,
           scrollTrigger: {
-            trigger: '.about-edu-container',
+            trigger: '[data-gsap-id="about-edu-container"]',
             start: 'top 80%',
             once: true,
           },
         }
       );
 
-      // Certifications cards
+      // Certification cards
       gsap.fromTo(
         '.about-cert-card',
-        { opacity: 0, y: 16 },
+        { opacity: 0, y: 20 },
         {
           opacity: 1,
           y: 0,
@@ -78,8 +78,8 @@ export const About = () => {
           stagger: 0.05,
           ease: MOTION_EASE.out,
           scrollTrigger: {
-            trigger: '.about-cert-grid',
-            start: 'top 82%',
+            trigger: '[data-gsap-id="about-cert-grid"]',
+            start: 'top 80%',
             once: true,
           },
         }
@@ -93,7 +93,7 @@ export const About = () => {
     <section
       ref={containerRef}
       id="about"
-      className="py-24 md:py-36 border-b border-neutral-300 dark:border-[#2A2A2A] bg-neutral-50/30 dark:bg-[#0A0A0A] relative"
+      className="py-24 md:py-36 border-b border-neutral-300 dark:border-[#2A2A2A] relative"
     >
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         {/* Section Header */}
@@ -111,10 +111,10 @@ export const About = () => {
           </p>
         </div>
 
-        {/* Editorial Bio & Profile Section */}
+        {/* Bio & Profile Section */}
         <div className="about-profile-grid grid grid-cols-1 lg:grid-cols-12 gap-12 mb-20 items-stretch">
           {/* Main Statement (Left) */}
-          <div className="about-profile-card lg:col-span-7 flex flex-col justify-between p-8 border border-neutral-300 dark:border-[#2A2A2A] bg-white dark:bg-[#111111]">
+          <div className="about-profile-card lg:col-span-7 flex flex-col justify-between p-8 liquid-glass-card">
             <div>
               <div className="font-mono-code text-[10px] text-neutral-400 dark:text-[#666666] uppercase tracking-widest mb-4">
                 DEVELOPER PROFILE & BACKGROUND
@@ -149,7 +149,7 @@ export const About = () => {
                   download="Mohammad-Awais-Ansari-Resume.pdf"
                   data-cursor="RESUME"
                   aria-label="Download resume as PDF"
-                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-neutral-950 hover:bg-neutral-800 dark:bg-[#F5F3EF] dark:hover:bg-white text-white dark:text-[#0A0A0A] font-mono-code text-xs font-semibold tracking-wider transition-colors duration-200 cursor-pointer"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 font-mono-code text-xs font-semibold tracking-wider cursor-pointer liquid-glass-btn-primary bg-neutral-950 dark:bg-[#F5F3EF] text-white dark:text-[#0A0A0A]"
                 >
                   <span>DOWNLOAD RESUME</span>
                   <ArrowDownToLine className="w-3.5 h-3.5" />
@@ -161,7 +161,7 @@ export const About = () => {
                   rel="noopener noreferrer"
                   data-cursor="VIEW"
                   aria-label="View resume in a new tab"
-                  className="inline-flex items-center gap-1.5 px-4 py-2.5 border border-neutral-300 dark:border-[#2A2A2A] bg-transparent hover:bg-neutral-200/60 dark:hover:bg-[#181818] text-neutral-900 dark:text-[#F5F3EF] font-mono-code text-xs tracking-wider transition-colors duration-200 cursor-pointer"
+                  className="inline-flex items-center gap-1.5 px-4 py-2.5 font-mono-code text-xs tracking-wider cursor-pointer liquid-glass-btn-secondary text-neutral-900 dark:text-[#F5F3EF]"
                 >
                   <span>VIEW RESUME</span>
                   <ArrowUpRight className="w-3.5 h-3.5 opacity-70" />
@@ -171,7 +171,7 @@ export const About = () => {
           </div>
 
           {/* Right: Engineering Profile Card */}
-          <div className="about-profile-card lg:col-span-5 p-8 border border-neutral-300 dark:border-[#2A2A2A] bg-white dark:bg-[#111111] space-y-6 flex flex-col justify-between">
+          <div className="about-profile-card lg:col-span-5 p-8 space-y-6 flex flex-col justify-between liquid-glass-card">
             <div>
               <div className="flex items-center justify-between pb-4 border-b border-neutral-200 dark:border-[#2A2A2A] mb-6">
                 <span className="font-mono-code text-xs font-bold uppercase tracking-wider text-neutral-950 dark:text-[#F5F3EF]">
@@ -196,7 +196,7 @@ export const About = () => {
                   <span className="text-neutral-400 dark:text-[#666666] text-[10px] uppercase block mb-2">CORE STACK</span>
                   <div className="flex flex-wrap gap-1.5">
                     {['Next.js 15', 'React 19', 'TypeScript', 'Node.js', 'PostgreSQL'].map((s) => (
-                      <span key={s} className="inline-flex items-center gap-1.5 text-[11px] px-2 py-0.5 border border-neutral-300 dark:border-[#2A2A2A] bg-neutral-50 dark:bg-[#181818] text-neutral-900 dark:text-[#F5F3EF]">
+                      <span key={s} className="inline-flex items-center gap-1.5 text-[11px] px-2 py-0.5 liquid-glass-chip text-neutral-900 dark:text-[#F5F3EF]">
                         <TechIcon name={s} className="w-3 h-3 shrink-0" />
                         <span>{s}</span>
                       </span>
@@ -228,15 +228,15 @@ export const About = () => {
             </h3>
           </div>
 
-          <div className="space-y-6">
-            {portfolioData.education.map((edu, index) => (
+          <div className="space-y-6" data-gsap-id="about-edu-container">
+            {portfolioData.education.map((edu) => (
               <div
                 key={edu.degree}
-                className="about-edu-card p-6 sm:p-8 border border-neutral-300 dark:border-[#2A2A2A] bg-white/70 dark:bg-[#111111]/50 flex flex-col md:flex-row md:items-center justify-between gap-6 hover:border-neutral-500 dark:hover:border-neutral-500 transition-colors"
+                className="about-edu-card p-6 sm:p-8 flex flex-col md:flex-row md:items-center justify-between gap-6 transition-all duration-300 liquid-glass-card"
               >
                 <div className="space-y-1">
                   <div className="flex items-center gap-3">
-                    <span className="font-mono-code text-xs px-2 py-0.5 border border-neutral-300 dark:border-[#2A2A2A] bg-neutral-100 dark:bg-[#181818] font-semibold text-neutral-900 dark:text-[#F5F3EF]">
+                    <span className="font-mono-code text-xs px-2 py-0.5 rounded-md border border-neutral-300/80 dark:border-[#2A2A2A] bg-neutral-100/80 dark:bg-[#181818] font-semibold text-neutral-900 dark:text-[#F5F3EF]">
                       {edu.year}
                     </span>
                     <span className="font-mono-code text-xs text-neutral-500 dark:text-[#A3A3A3]">
@@ -252,7 +252,7 @@ export const About = () => {
                 </div>
 
                 {edu.score && (
-                  <div className="shrink-0 p-3 sm:text-right border border-neutral-300 dark:border-[#2A2A2A] bg-neutral-50 dark:bg-[#0A0A0A]">
+                  <div className="shrink-0 p-3 sm:text-right rounded-lg border border-neutral-300/80 dark:border-[#2A2A2A] bg-white/40 dark:bg-[#0A0A0A]/40">
                     <span className="font-mono-code text-[10px] text-neutral-400 dark:text-[#666666] uppercase block">
                       GRADE / CGPA
                     </span>
@@ -275,11 +275,11 @@ export const About = () => {
             </h3>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" data-gsap-id="about-cert-grid">
             {portfolioData.certifications.map((cert, i) => (
               <div
                 key={i}
-                className="about-cert-card p-5 border border-neutral-300 dark:border-[#2A2A2A] bg-white/50 dark:bg-[#111111]/30 flex flex-col justify-between"
+                className="about-cert-card p-5 flex flex-col justify-between transition-all duration-300 liquid-glass-card"
               >
                 <div>
                   <div className="flex items-center justify-between font-mono-code text-[10px] text-neutral-400 dark:text-[#666666] mb-2">

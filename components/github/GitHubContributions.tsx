@@ -131,7 +131,7 @@ export const GitHubContributions: React.FC = () => {
         {/* Top Highlight Metric & Profile Card */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-12 items-stretch">
           {/* Left: Total Contributions Highlight */}
-          <div className="github-metric-card lg:col-span-4 p-8 border border-neutral-300 dark:border-[#2A2A2A] bg-white dark:bg-[#111111] flex flex-col justify-between">
+          <div className="github-metric-card lg:col-span-4 p-8 flex flex-col justify-between liquid-glass-card rounded-2xl">
             <div>
               <div className="flex items-center justify-between font-mono-code text-[10px] text-neutral-400 dark:text-[#666666] uppercase mb-4">
                 <div className="flex items-center gap-1.5">
@@ -159,15 +159,15 @@ export const GitHubContributions: React.FC = () => {
               </div>
             </div>
 
-            <div className="mt-6 pt-4 border-t border-neutral-200 dark:border-[#222222] font-mono-code text-[11px] text-neutral-500 dark:text-[#777777]">
+            <div className="mt-6 pt-4 border-t border-[var(--glass-rim)] font-mono-code text-[11px] text-neutral-500 dark:text-[#777777]">
               A record of consistent development activity across the past year.
             </div>
           </div>
 
           {/* Right: GitHub Identity & Action */}
-          <div className="github-metric-card lg:col-span-8 p-8 border border-neutral-300 dark:border-[#2A2A2A] bg-white dark:bg-[#111111] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+          <div className="github-metric-card lg:col-span-8 p-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 liquid-glass-card rounded-2xl">
             <div className="space-y-3 max-w-lg">
-              <div className="inline-flex items-center gap-2 px-2.5 py-1 border border-neutral-300 dark:border-[#2A2A2A] bg-neutral-50 dark:bg-[#181818] font-mono-code text-[10px] uppercase tracking-wider text-neutral-900 dark:text-[#F5F3EF]">
+              <div className="inline-flex items-center gap-2 px-3 py-1 liquid-glass-chip rounded-md font-mono-code text-[10px] uppercase tracking-wider text-neutral-900 dark:text-[#F5F3EF]">
                 <Github className="w-3.5 h-3.5" />
                 <span>GITHUB PROFILE · awaisansari06</span>
               </div>
@@ -184,7 +184,7 @@ export const GitHubContributions: React.FC = () => {
               target="_blank"
               rel="noreferrer"
               data-cursor="GITHUB"
-              className="shrink-0 px-6 py-3.5 bg-neutral-950 hover:bg-neutral-800 dark:bg-[#F5F3EF] dark:hover:bg-white text-white dark:text-[#0A0A0A] font-mono-code text-xs font-semibold tracking-widest uppercase transition-colors flex items-center gap-2 cursor-pointer"
+              className="shrink-0 px-6 py-3.5 liquid-glass-btn-primary bg-neutral-950 dark:bg-[#F5F3EF] text-white dark:text-[#0A0A0A] font-mono-code text-xs font-semibold tracking-widest uppercase transition-all flex items-center gap-2 cursor-pointer"
             >
               <span>VIEW GITHUB</span>
               <ArrowUpRight className="w-4 h-4" />
@@ -193,13 +193,13 @@ export const GitHubContributions: React.FC = () => {
         </div>
 
         {/* Contribution Calendar Heatmap Card */}
-        <div className="github-calendar-card p-6 sm:p-8 border border-neutral-300 dark:border-[#2A2A2A] bg-white dark:bg-[#111111]">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 mb-4 border-b border-neutral-200 dark:border-[#222222] gap-2">
+        <div className="github-calendar-card p-6 sm:p-8 liquid-glass-card-frame rounded-2xl">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 mb-4 border-b border-[var(--glass-rim)] gap-2">
             <div className="flex items-center gap-3">
               <span className="font-mono-code text-xs font-bold uppercase tracking-wider text-neutral-950 dark:text-[#F5F3EF]">
                 CONTRIBUTION CALENDAR
               </span>
-              <span className="font-mono-code text-[10px] px-2.5 py-0.5 border border-neutral-300 dark:border-[#2A2A2A] bg-neutral-100 dark:bg-[#181818] text-neutral-700 dark:text-[#A3A3A3] font-medium">
+              <span className="font-mono-code text-[10px] px-2.5 py-0.5 liquid-glass-chip rounded-md text-neutral-700 dark:text-[#A3A3A3] font-medium">
                 {getDateRangeLabel()}
               </span>
             </div>
@@ -210,7 +210,7 @@ export const GitHubContributions: React.FC = () => {
           </div>
 
           {loading ? (
-            /* Genuine editorial monochrome heatmap skeleton */
+            /* Activity heatmap skeleton */
             <div className="py-6 space-y-4 animate-pulse">
               <div className="flex items-center justify-between font-mono-code text-[10px] text-neutral-400 dark:text-[#666666]">
                 <div className="flex items-center gap-2">

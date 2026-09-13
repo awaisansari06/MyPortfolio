@@ -3,7 +3,7 @@
 import React, { useEffect, useRef } from 'react';
 import { portfolioData } from '@/data/portfolio';
 import { TechIcon } from './TechIcon';
-import { BookOpen, Cpu, Database, Network, Binary, ShieldCheck } from 'lucide-react';
+import { BookOpen, Cpu, Database, Binary, ShieldCheck } from 'lucide-react';
 import { gsap, isReducedMotion, MOTION_EASE } from '@/lib/motion';
 
 const FOUNDATION_TOOLS: Record<string, string> = {
@@ -93,21 +93,21 @@ export const EngineeringFoundation = () => {
             return (
               <div
                 key={foundation.name}
-                className="eng-card bg-white dark:bg-[#111111] p-8 border border-neutral-300 dark:border-[#2A2A2A] flex flex-col justify-between hover:border-neutral-500 dark:hover:border-neutral-500 transition-colors duration-200 group"
+                className="eng-card p-8 flex flex-col justify-between transition-colors duration-200 group liquid-glass-card"
               >
                 <div>
-                  <div className="flex items-center justify-between pb-4 mb-6 border-b border-neutral-200 dark:border-[#2A2A2A]">
-                    <span className="font-mono-code text-xs font-semibold text-neutral-400 dark:text-[#666666]">
+                  <div className="flex items-center justify-between pb-4 mb-6 border-b border-white/10 dark:border-white/10">
+                    <span className="font-mono-code text-xs font-semibold text-neutral-600 dark:text-neutral-400">
                       FOUNDATION 0{index + 1}
                     </span>
                     <div className="flex items-center gap-2.5">
                       {associatedTool && (
-                        <span className="font-mono-code text-[10px] px-2 py-0.5 border border-neutral-300 dark:border-[#2A2A2A] bg-neutral-50 dark:bg-[#181818] text-neutral-700 dark:text-[#A3A3A3] inline-flex items-center gap-1.5 shadow-2xs">
+                        <span className="font-mono-code text-[10px] px-2 py-0.5 inline-flex items-center gap-1.5 shadow-2xs liquid-glass-chip text-neutral-800 dark:text-neutral-200">
                           <TechIcon name={associatedTool} className="w-3 h-3 shrink-0" />
                           <span>{associatedTool}</span>
                         </span>
                       )}
-                      <Icon className="w-4 h-4 text-neutral-400 dark:text-[#666666]" />
+                      <Icon className="w-4 h-4 text-neutral-500 dark:text-neutral-400" />
                     </div>
                   </div>
 

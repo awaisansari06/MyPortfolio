@@ -3,6 +3,7 @@
 import React from 'react';
 import { GitHubRepo } from '@/lib/github/types';
 import { ArrowUpRight, FolderGit2, Star } from 'lucide-react';
+import { useGlassHoverLens } from '@/hooks/useGlassHoverLens';
 
 const FALLBACK_REPOSITORIES: GitHubRepo[] = [
   {
@@ -43,8 +44,65 @@ interface GitHubRepositoriesProps {
   repositories?: GitHubRepo[];
 }
 
+/** A single repo card with interactive glass hover lens effect */
+const RepoCard: React.FC<{ repo: GitHubRepo; description: string }> = ({
+  repo,
+  description,
+}) => {
+  const lensRef = useGlassHoverLens<HTMLAnchorElement>();
+
+  return (
+    <a
+      ref={lensRef}
+      key={repo.name}
+      href={repo.url}
+      target="_blank"
+      rel="noreferrer"
+      className="p-6 flex flex-col justify-between group transition-all duration-300 liquid-glass-card"
+    >
+      <div>
+        <div className="flex items-center justify-between font-mono-code text-[10px] text-neutral-400 dark:text-[#666666] mb-3">
+          <div className="flex items-center gap-1.5">
+            <FolderGit2 className="w-3.5 h-3.5 text-neutral-500" />
+            <span className="uppercase">PUBLIC REPO</span>
+          </div>
+          <ArrowUpRight className="w-3.5 h-3.5 text-neutral-400 group-hover:text-neutral-900 dark:group-hover:text-[#F5F3EF] transition-colors" />
+        </div>
+
+        <h4 className="font-mono-code text-sm sm:text-base font-bold text-neutral-950 dark:text-[#F5F3EF] mb-2 group-hover:underline">
+          {repo.name}
+        </h4>
+
+        <p className="text-xs text-neutral-600 dark:text-[#A3A3A3] leading-relaxed line-clamp-2">
+          {description}
+        </p>
+      </div>
+
+      <div className="mt-6 pt-4 flex items-center justify-between font-mono-code text-[11px] text-neutral-500 dark:text-[#777777] border-t border-[var(--glass-rim)]">
+        {repo.primaryLanguage ? (
+          <span className="inline-flex items-center gap-1.5">
+            <span
+              className="w-2 h-2 rounded-full"
+              style={{ backgroundColor: repo.primaryLanguage.color || '#888888' }}
+            />
+            <span>{repo.primaryLanguage.name}</span>
+          </span>
+        ) : (
+          <span>Full-Stack</span>
+        )}
+
+        {repo.stargazerCount > 0 && (
+          <span className="inline-flex items-center gap-1">
+            <Star className="w-3 h-3" />
+            <span>{repo.stargazerCount}</span>
+          </span>
+        )}
+      </div>
+    </a>
+  );
+};
+
 export const GitHubRepositories: React.FC<GitHubRepositoriesProps> = ({ repositories }) => {
-  // Curated descriptions for repos that might not have a GitHub description set
   const getRepoDescription = (name: string, originalDesc: string | null) => {
     if (originalDesc) return originalDesc;
     const lower = name.toLowerCase();
@@ -72,7 +130,6 @@ export const GitHubRepositories: React.FC<GitHubRepositoriesProps> = ({ reposito
     return 'Full-stack software engineering project and codebase.';
   };
 
-  // Preserve the authoritative GitHub pinned order directly without sorting
   const sourceRepos = repositories && repositories.length > 0 ? repositories : FALLBACK_REPOSITORIES;
   const displayRepos = sourceRepos.slice(0, 4);
 
@@ -81,7 +138,7 @@ export const GitHubRepositories: React.FC<GitHubRepositoriesProps> = ({ reposito
       <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-6 gap-4">
         <div>
           <span className="font-mono-code text-[10px] text-neutral-400 dark:text-[#666666] uppercase tracking-widest block">
-            SOURCE CODE & ARTIFACTS
+            SOURCE CODE &amp; ARTIFACTS
           </span>
           <h3 className="font-mono-code text-sm sm:text-base font-bold text-neutral-950 dark:text-[#F5F3EF] uppercase">
             SELECTED REPOSITORIES
@@ -92,7 +149,7 @@ export const GitHubRepositories: React.FC<GitHubRepositoriesProps> = ({ reposito
           href="https://github.com/awaisansari06?tab=repositories"
           target="_blank"
           rel="noreferrer"
-          className="inline-flex items-center gap-1.5 font-mono-code text-xs text-neutral-700 dark:text-[#A3A3A3] hover:text-neutral-950 dark:hover:text-[#F5F3EF] hover:underline uppercase transition-colors"
+          className="inline-flex items-center gap-1.5 font-mono-code text-xs uppercase transition-colors liquid-glass-badge px-3 py-1.5 text-neutral-700 dark:text-[#A3A3A3]"
         >
           <span>VIEW ALL REPOSITORIES</span>
           <ArrowUpRight className="w-3.5 h-3.5" />
@@ -101,52 +158,11 @@ export const GitHubRepositories: React.FC<GitHubRepositoriesProps> = ({ reposito
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {displayRepos.map((repo) => (
-          <a
+          <RepoCard
             key={repo.name}
-            href={repo.url}
-            target="_blank"
-            rel="noreferrer"
-            className="p-6 border border-neutral-300 dark:border-[#2A2A2A] bg-white dark:bg-[#111111] flex flex-col justify-between hover:border-neutral-500 dark:hover:border-[#444444] transition-colors group"
-          >
-            <div>
-              <div className="flex items-center justify-between font-mono-code text-[10px] text-neutral-400 dark:text-[#666666] mb-3">
-                <div className="flex items-center gap-1.5">
-                  <FolderGit2 className="w-3.5 h-3.5 text-neutral-500" />
-                  <span className="uppercase">PUBLIC REPO</span>
-                </div>
-                <ArrowUpRight className="w-3.5 h-3.5 text-neutral-400 group-hover:text-neutral-900 dark:group-hover:text-[#F5F3EF] transition-colors" />
-              </div>
-
-              <h4 className="font-mono-code text-sm sm:text-base font-bold text-neutral-950 dark:text-[#F5F3EF] mb-2 group-hover:underline">
-                {repo.name}
-              </h4>
-
-              <p className="text-xs text-neutral-600 dark:text-[#A3A3A3] leading-relaxed line-clamp-2">
-                {getRepoDescription(repo.name, repo.description)}
-              </p>
-            </div>
-
-            <div className="mt-6 pt-4 border-t border-neutral-200 dark:border-[#222222] flex items-center justify-between font-mono-code text-[11px] text-neutral-500 dark:text-[#777777]">
-              {repo.primaryLanguage ? (
-                <span className="inline-flex items-center gap-1.5">
-                  <span
-                    className="w-2 h-2 rounded-full"
-                    style={{ backgroundColor: repo.primaryLanguage.color || '#888888' }}
-                  />
-                  <span>{repo.primaryLanguage.name}</span>
-                </span>
-              ) : (
-                <span>Full-Stack</span>
-              )}
-
-              {repo.stargazerCount > 0 && (
-                <span className="inline-flex items-center gap-1">
-                  <Star className="w-3 h-3" />
-                  <span>{repo.stargazerCount}</span>
-                </span>
-              )}
-            </div>
-          </a>
+            repo={repo}
+            description={getRepoDescription(repo.name, repo.description)}
+          />
         ))}
       </div>
     </div>

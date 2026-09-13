@@ -17,11 +17,11 @@
     --button-foreground: #FFFFFF;
     --accent: #111111;
     --accent-muted: #737373;
-    --grid: rgba(120, 120, 120, 0.06);
+    --grid: rgba(30, 26, 20, 0.08);
     --selection: #111111;
     --selection-foreground: #FFFFFF;
 
-    /* Legacy tokens for backward compatibility */
+    /* Legacy tokens */
     --bg-primary: #F7F6F3;
     --bg-secondary: #EFECE6;
     --bg-surface: #FFFFFF;
@@ -30,6 +30,33 @@
     --text-muted: #888888;
     --border-color: #E2E0DC;
     --card-hover: rgba(0, 0, 0, 0.03);
+
+    /* ── LIQUID GLASS: Light Mode — Warm Architectural Clear Glass ─── */
+    --glass-surface-tint: rgba(255, 255, 255, 0.55);
+    --glass-surface-strong: rgba(255, 255, 255, 0.75);
+    --glass-surface-weak: rgba(255, 255, 255, 0.40);
+    --glass-surface-card: rgba(255, 255, 255, 0.60);
+    --glass-edge-highlight: rgba(255, 255, 255, 0.96);
+    --glass-rim: rgba(0, 0, 0, 0.085);
+    --glass-rim-strong: rgba(0, 0, 0, 0.16);
+    --glass-shadow-sm: rgba(35, 30, 25, 0.04);
+    --glass-shadow: rgba(35, 30, 25, 0.08);
+    --glass-shadow-lg: rgba(30, 25, 20, 0.14);
+    --glass-shadow-near: rgba(0, 0, 0, 0.03);
+    --glass-shadow-inner: rgba(0, 0, 0, 0.03);
+    --glass-specular-glow: rgba(255, 255, 255, 0.75);
+    --glass-active-ring: rgba(17, 17, 17, 0.12);
+    /* Radii */
+    --glass-radius-pill: 9999px;
+    --glass-radius-lg: 20px;
+    --glass-radius-md: 14px;
+    --glass-radius-sm: 10px;
+    --glass-radius-chip: 8px;
+    --glass-radius-badge: 9999px;
+    /* Refraction */
+    --glass-blur: 18px;
+    --glass-blur-sm: 10px;
+    --glass-saturate: 1.25;
   }
 
   .dark {
@@ -50,7 +77,7 @@
     --selection: #F5F3EF;
     --selection-foreground: #0A0A0A;
 
-    /* Legacy tokens for backward compatibility */
+    /* Legacy tokens */
     --bg-primary: #0A0A0A;
     --bg-secondary: #111111;
     --bg-surface: #181818;
@@ -59,6 +86,33 @@
     --text-muted: #666666;
     --border-color: #2A2A2A;
     --card-hover: rgba(255, 255, 255, 0.03);
+
+    /* ── LIQUID GLASS: Dark Mode — Smoked Graphite Glass ────────── */
+    --glass-surface-tint: rgba(8, 8, 8, 0.76);
+    --glass-surface-strong: rgba(4, 4, 4, 0.90);
+    --glass-surface-weak: rgba(14, 14, 14, 0.55);
+    --glass-surface-card: rgba(11, 11, 11, 0.78);
+    --glass-edge-highlight: rgba(255, 255, 255, 0.24);
+    --glass-rim: rgba(255, 255, 255, 0.08);
+    --glass-rim-strong: rgba(255, 255, 255, 0.18);
+    --glass-shadow-sm: rgba(0, 0, 0, 0.32);
+    --glass-shadow: rgba(0, 0, 0, 0.48);
+    --glass-shadow-lg: rgba(0, 0, 0, 0.68);
+    --glass-shadow-near: rgba(0, 0, 0, 0.24);
+    --glass-shadow-inner: rgba(0, 0, 0, 0.32);
+    --glass-specular-glow: rgba(255, 255, 255, 0.07);
+    --glass-active-ring: rgba(245, 243, 239, 0.18);
+    /* Radii (same) */
+    --glass-radius-pill: 9999px;
+    --glass-radius-lg: 20px;
+    --glass-radius-md: 14px;
+    --glass-radius-sm: 10px;
+    --glass-radius-chip: 8px;
+    --glass-radius-badge: 9999px;
+    /* Refraction */
+    --glass-blur: 20px;
+    --glass-blur-sm: 12px;
+    --glass-saturate: 1.2;
   }
 
   html {
@@ -73,7 +127,543 @@
   }
 }
 
-/* Monospace font utility for engineering/metadata labels */
+/* ═══════════════════════════════════════════════════════════════════
+   LIQUID GLASS — CORE SURFACE ENGINE
+   
+   The feDisplacementMap SVG filter provides the actual optical
+   refraction. The glass-surface-backing div sits behind content and
+   applies: translucency + refraction + edge highlight + depth shadow.
+   The ::before and ::after pseudo-elements add specular layers.
+═══════════════════════════════════════════════════════════════════ */
+
+.glass-surface-backing {
+  backdrop-filter: blur(var(--glass-blur, 16px)) saturate(var(--glass-saturate, 1.2));
+  -webkit-backdrop-filter: blur(var(--glass-blur, 16px)) saturate(var(--glass-saturate, 1.2));
+  transition:
+    border-radius 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.4s ease,
+    background 0.45s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glass-surface-backing {
+    transition: none !important;
+  }
+}
+
+/* ─── Interactive specular overlay (driven by JS CSS custom props) ── */
+.glass-specular-layer {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(circle at var(--spec-x, 50%) var(--spec-y, 50%),
+      var(--glass-specular-glow, rgba(255, 255, 255, 0.1)) 0%,
+      transparent 65%);
+  opacity: var(--spec-opacity, 0);
+  pointer-events: none;
+  z-index: 4;
+  transition: opacity 0.5s ease;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════
+   LIQUID GLASS — CARD SURFACE
+   
+   Used for: project frames, contact cards, GitHub section container,
+   About bio cards, engineering cards, AI launcher panel.
+   The ::before draws the top specular rim.
+   The ::after is the interactive pointer-driven specular highlight.
+═══════════════════════════════════════════════════════════════════ */
+
+.liquid-glass-card,
+[data-material="liquid"] .liquid-glass-card {
+  position: relative;
+  border-radius: var(--glass-radius-lg) !important;
+  border: 0.5px solid var(--glass-rim) !important;
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  background: var(--glass-surface-card) !important;
+  box-shadow:
+    inset 0 1.5px 0 var(--glass-edge-highlight),
+    inset 0 0 0 0.5px var(--glass-rim),
+    0 1px 2px var(--glass-shadow-near),
+    0 8px 28px var(--glass-shadow),
+    0 28px 56px var(--glass-shadow-lg) !important;
+  overflow: hidden;
+  transition:
+    box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.3s ease !important;
+}
+
+/* Top specular rim — the single brightest edge of the glass */
+.liquid-glass-card::before,
+[data-material="liquid"] .liquid-glass-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 8%;
+  right: 8%;
+  height: 1px;
+  background: var(--glass-edge-highlight);
+  opacity: 0.8;
+  pointer-events: none;
+  z-index: 10;
+  border-radius: 0 0 50% 50%;
+}
+
+/* Pointer-driven interactive specular highlight */
+.liquid-glass-card::after,
+[data-material="liquid"] .liquid-glass-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(circle at var(--spec-x, 50%) var(--spec-y, 50%),
+      var(--glass-specular-glow) 0%,
+      transparent 65%);
+  opacity: var(--spec-opacity, 0);
+  pointer-events: none;
+  z-index: 5;
+}
+
+.liquid-glass-card:hover,
+[data-material="liquid"] .liquid-glass-card:hover {
+  box-shadow:
+    inset 0 1.5px 0 var(--glass-edge-highlight),
+    inset 0 0 0 0.5px var(--glass-rim-strong),
+    0 2px 4px var(--glass-shadow-near),
+    0 16px 40px var(--glass-shadow),
+    0 36px 72px var(--glass-shadow-lg) !important;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════
+   LIQUID GLASS — BADGE / PILL
+   
+   Used for: hero tags, status indicators, flow step pills,
+   nav active selection indicator.
+═══════════════════════════════════════════════════════════════════ */
+
+.liquid-glass-badge,
+[data-material="liquid"] .liquid-glass-badge {
+  position: relative;
+  border-radius: var(--glass-radius-badge) !important;
+  border: 0.5px solid var(--glass-rim) !important;
+  backdrop-filter: blur(var(--glass-blur-sm)) saturate(1.15);
+  -webkit-backdrop-filter: blur(var(--glass-blur-sm)) saturate(1.15);
+  background: var(--glass-surface-tint) !important;
+  box-shadow:
+    inset 0 1px 0 var(--glass-edge-highlight),
+    inset 0 0 0 0.5px var(--glass-rim),
+    0 2px 6px var(--glass-shadow-sm),
+    0 6px 20px var(--glass-shadow) !important;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.liquid-glass-badge::before,
+[data-material="liquid"] .liquid-glass-badge::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 20%;
+  right: 20%;
+  height: 1px;
+  background: var(--glass-edge-highlight);
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.liquid-glass-badge:hover,
+[data-material="liquid"] .liquid-glass-badge:hover {
+  box-shadow:
+    inset 0 1.5px 0 var(--glass-edge-highlight),
+    inset 0 0 0 0.5px var(--glass-rim-strong),
+    0 4px 12px var(--glass-shadow),
+    0 12px 32px var(--glass-shadow-lg) !important;
+  transform: translateY(-1px);
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════
+   LIQUID GLASS — CHIP (small rounded rect)
+   
+   Used for: technology chips, filter tags, compact metadata
+═══════════════════════════════════════════════════════════════════ */
+
+.liquid-glass-chip,
+[data-material="liquid"] .liquid-glass-chip {
+  position: relative;
+  border-radius: var(--glass-radius-chip) !important;
+  border: 0.5px solid var(--glass-rim) !important;
+  backdrop-filter: blur(var(--glass-blur-sm)) saturate(1.12);
+  -webkit-backdrop-filter: blur(var(--glass-blur-sm)) saturate(1.12);
+  background: var(--glass-surface-weak) !important;
+  box-shadow:
+    inset 0 1px 0 var(--glass-edge-highlight),
+    inset 0 0 0 0.5px var(--glass-rim),
+    0 2px 6px var(--glass-shadow-sm),
+    0 4px 12px var(--glass-shadow) !important;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.liquid-glass-chip:hover,
+[data-material="liquid"] .liquid-glass-chip:hover {
+  box-shadow:
+    inset 0 1px 0 var(--glass-edge-highlight),
+    inset 0 0 0 0.5px var(--glass-rim-strong),
+    0 4px 10px var(--glass-shadow),
+    0 8px 20px var(--glass-shadow-lg) !important;
+  transform: translateY(-1px);
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════
+   LIQUID GLASS — CARD FRAME (strong, for project/contact frames)
+   
+   More depth than card — used for project visual containers,
+   primary contact panel, and GitHub calendar container.
+═══════════════════════════════════════════════════════════════════ */
+
+.liquid-glass-card-frame,
+[data-material="liquid"] .liquid-glass-card-frame {
+  position: relative;
+  border-radius: var(--glass-radius-lg) !important;
+  border: 0.5px solid var(--glass-rim) !important;
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  background: var(--glass-surface-card) !important;
+  box-shadow:
+    inset 0 1.5px 0 var(--glass-edge-highlight),
+    inset 0 0 0 0.5px var(--glass-rim),
+    0 4px 12px var(--glass-shadow-near),
+    0 16px 48px var(--glass-shadow),
+    0 40px 80px var(--glass-shadow-lg) !important;
+  overflow: hidden;
+  transition:
+    box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.3s ease !important;
+}
+
+.liquid-glass-card-frame::before,
+[data-material="liquid"] .liquid-glass-card-frame::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 6%;
+  right: 6%;
+  height: 1px;
+  background: var(--glass-edge-highlight);
+  opacity: 0.85;
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* Pointer-driven interactive specular highlight */
+.liquid-glass-card-frame::after,
+[data-material="liquid"] .liquid-glass-card-frame::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(circle at var(--spec-x, 30%) var(--spec-y, 20%),
+      var(--glass-specular-glow) 0%,
+      transparent 60%);
+  opacity: var(--spec-opacity, 0);
+  pointer-events: none;
+  z-index: 5;
+}
+
+.liquid-glass-card-frame:hover,
+[data-material="liquid"] .liquid-glass-card-frame:hover {
+  box-shadow:
+    inset 0 2px 0 var(--glass-edge-highlight),
+    inset 0 0 0 0.5px var(--glass-rim-strong),
+    0 6px 18px var(--glass-shadow-near),
+    0 24px 60px var(--glass-shadow),
+    0 52px 96px var(--glass-shadow-lg) !important;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════
+   LIQUID GLASS — NODE (architecture workflow steps)
+   
+   Used for: processing architecture flow nodes
+═══════════════════════════════════════════════════════════════════ */
+
+.liquid-glass-node,
+[data-material="liquid"] .liquid-glass-node {
+  position: relative;
+  border-radius: var(--glass-radius-sm) !important;
+  border: 0.5px solid var(--glass-rim) !important;
+  backdrop-filter: blur(var(--glass-blur-sm)) saturate(1.15);
+  -webkit-backdrop-filter: blur(var(--glass-blur-sm)) saturate(1.15);
+  background: var(--glass-surface-tint) !important;
+  box-shadow:
+    inset 0 1px 0 var(--glass-edge-highlight),
+    inset 0 0 0 0.5px var(--glass-rim),
+    0 4px 12px var(--glass-shadow-sm),
+    0 8px 24px var(--glass-shadow) !important;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.liquid-glass-node-active,
+[data-material="liquid"] .liquid-glass-node-active {
+  background: var(--glass-surface-strong) !important;
+  border: 0.5px solid var(--glass-rim-strong) !important;
+  box-shadow:
+    inset 0 1.5px 0 var(--glass-edge-highlight),
+    inset 0 0 0 0.5px var(--glass-rim-strong),
+    0 0 0 2px var(--glass-active-ring),
+    0 8px 24px var(--glass-shadow),
+    0 16px 40px var(--glass-shadow-lg) !important;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════
+   LIQUID GLASS — FLOATING SURFACE (launcher, floating panel)
+   
+   Highest depth — used for Ask Awais launcher, modal overlay.
+   Stronger surface, deeper shadow, stronger specular.
+═══════════════════════════════════════════════════════════════════ */
+
+.liquid-glass-floating,
+[data-material="liquid"] .liquid-glass-floating {
+  position: relative;
+  border-radius: var(--glass-radius-pill) !important;
+  border: 0.5px solid var(--glass-rim-strong) !important;
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  background: var(--glass-surface-strong) !important;
+  box-shadow:
+    inset 0 2px 0 var(--glass-edge-highlight),
+    inset 0 0 0 0.5px var(--glass-rim-strong),
+    0 4px 16px var(--glass-shadow-near),
+    0 20px 48px var(--glass-shadow),
+    0 48px 88px var(--glass-shadow-lg) !important;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.liquid-glass-floating::before,
+[data-material="liquid"] .liquid-glass-floating::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 25%;
+  right: 25%;
+  height: 1px;
+  background: var(--glass-edge-highlight);
+  opacity: 0.9;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.liquid-glass-floating:hover,
+[data-material="liquid"] .liquid-glass-floating:hover {
+  box-shadow:
+    inset 0 2px 0 var(--glass-edge-highlight),
+    inset 0 0 0 0.5px var(--glass-rim-strong),
+    0 8px 24px var(--glass-shadow-near),
+    0 28px 64px var(--glass-shadow),
+    0 56px 104px var(--glass-shadow-lg) !important;
+  transform: translateY(-2px) !important;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════
+   LIQUID GLASS — MODAL SURFACE (deepest surface)
+═══════════════════════════════════════════════════════════════════ */
+
+.liquid-glass-modal,
+[data-material="liquid"] .liquid-glass-modal {
+  position: relative;
+  border-radius: var(--glass-radius-lg) !important;
+  border: 0.5px solid var(--glass-rim-strong) !important;
+  backdrop-filter: blur(28px) saturate(1.4);
+  -webkit-backdrop-filter: blur(28px) saturate(1.4);
+  background: var(--glass-surface-card) !important;
+  box-shadow:
+    inset 0 2px 0 var(--glass-edge-highlight),
+    inset 0 0 0 0.5px var(--glass-rim-strong),
+    0 8px 32px var(--glass-shadow-near),
+    0 32px 80px var(--glass-shadow),
+    0 64px 128px var(--glass-shadow-lg) !important;
+  overflow: hidden;
+}
+
+.liquid-glass-modal::before,
+[data-material="liquid"] .liquid-glass-modal::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 5%;
+  right: 5%;
+  height: 1px;
+  background: var(--glass-edge-highlight);
+  opacity: 0.9;
+  pointer-events: none;
+  z-index: 10;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════
+   LIQUID GLASS — INPUT SURFACE
+   
+   Used for: form inputs, textarea, search.
+═══════════════════════════════════════════════════════════════════ */
+
+.liquid-glass-input,
+[data-material="liquid"] .liquid-glass-input {
+  border-radius: var(--glass-radius-md) !important;
+  border: 0.5px solid var(--glass-rim) !important;
+  backdrop-filter: blur(var(--glass-blur-sm));
+  -webkit-backdrop-filter: blur(var(--glass-blur-sm));
+  background: var(--glass-surface-weak) !important;
+  box-shadow:
+    inset 0 2px 6px var(--glass-shadow-inner),
+    inset 0 0 0 0.5px var(--glass-rim) !important;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease !important;
+  outline: none !important;
+}
+
+.liquid-glass-input:focus,
+[data-material="liquid"] .liquid-glass-input:focus {
+  border: 0.5px solid var(--glass-rim-strong) !important;
+  box-shadow:
+    inset 0 2px 6px var(--glass-shadow-inner),
+    inset 0 0 0 0.5px var(--glass-rim-strong),
+    0 0 0 3px var(--glass-active-ring) !important;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════
+   LIQUID GLASS — PRIMARY CONTROL (main CTA buttons)
+   
+   Used for: primary action buttons — VIEW ALL WORK, SEND MESSAGE.
+   Opaque dark/light fill with strong specular rim.
+═══════════════════════════════════════════════════════════════════ */
+
+.liquid-glass-btn-primary,
+[data-material="liquid"] .liquid-glass-btn-primary {
+  border-radius: var(--glass-radius-pill) !important;
+  box-shadow:
+    inset 0 1.5px 0 rgba(255, 255, 255, 0.45),
+    inset 0 0 0 0.5px rgba(255, 255, 255, 0.12),
+    0 4px 16px var(--glass-shadow),
+    0 12px 32px var(--glass-shadow-lg) !important;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.liquid-glass-btn-primary:hover,
+[data-material="liquid"] .liquid-glass-btn-primary:hover {
+  box-shadow:
+    inset 0 2px 0 rgba(255, 255, 255, 0.55),
+    inset 0 0 0 0.5px rgba(255, 255, 255, 0.18),
+    0 8px 24px var(--glass-shadow),
+    0 20px 44px var(--glass-shadow-lg) !important;
+  transform: translateY(-1px) !important;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════
+   LIQUID GLASS — SECONDARY CONTROL (ghost buttons)
+   
+   Used for: secondary CTAs — LET'S CONNECT, RESUME, CASE STUDY.
+   Translucent surface with edge highlight.
+═══════════════════════════════════════════════════════════════════ */
+
+.liquid-glass-btn-secondary,
+[data-material="liquid"] .liquid-glass-btn-secondary {
+  border-radius: var(--glass-radius-pill) !important;
+  border: 0.5px solid var(--glass-rim) !important;
+  backdrop-filter: blur(var(--glass-blur-sm)) saturate(1.15);
+  -webkit-backdrop-filter: blur(var(--glass-blur-sm)) saturate(1.15);
+  background: var(--glass-surface-tint) !important;
+  box-shadow:
+    inset 0 1px 0 var(--glass-edge-highlight),
+    inset 0 0 0 0.5px var(--glass-rim),
+    0 4px 14px var(--glass-shadow) !important;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.liquid-glass-btn-secondary:hover,
+[data-material="liquid"] .liquid-glass-btn-secondary:hover {
+  border-color: var(--glass-rim-strong) !important;
+  box-shadow:
+    inset 0 1.5px 0 var(--glass-edge-highlight),
+    inset 0 0 0 0.5px var(--glass-rim-strong),
+    0 8px 22px var(--glass-shadow),
+    0 16px 36px var(--glass-shadow-lg) !important;
+  transform: translateY(-1px) !important;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════
+   LIQUID GLASS — ACTIVE NAVIGATION PILL
+   
+   The floating glass selection surface that glides between nav items.
+═══════════════════════════════════════════════════════════════════ */
+
+.liquid-glass-nav-pill,
+[data-material="liquid"] .liquid-glass-nav-pill {
+  border-radius: var(--glass-radius-pill);
+  border: 0.5px solid var(--glass-rim-strong);
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  background: var(--glass-surface-strong);
+  box-shadow:
+    inset 0 1px 0 var(--glass-edge-highlight),
+    inset 0 0 0 0.5px var(--glass-rim-strong),
+    0 2px 8px var(--glass-shadow),
+    0 6px 20px var(--glass-shadow-lg);
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   ENVIRONMENTAL AMBIENT LIGHT — Subtle directional light source
+   that Liquid Glass surfaces appear to refract and reflect.
+   Applied to the liquid ambient overlay div in page.tsx.
+═══════════════════════════════════════════════════════════════════ */
+
+.liquid-env-light {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 1;
+  transition: opacity 0.6s ease;
+}
+
+[data-material="liquid"] .liquid-env-light {
+  opacity: 1;
+}
+
+/* Light mode: soft warm light from upper-left */
+.liquid-env-light::before {
+  content: '';
+  position: absolute;
+  top: -10%;
+  left: -5%;
+  width: 65%;
+  height: 55%;
+  background: radial-gradient(ellipse at 30% 20%,
+      rgba(240, 238, 232, 0.12) 0%,
+      transparent 70%);
+  pointer-events: none;
+}
+
+/* Dark mode: subtle reflected light from upper area */
+.dark .liquid-env-light::before {
+  background: radial-gradient(ellipse at 30% 20%,
+      rgba(255, 255, 255, 0.035) 0%,
+      transparent 70%);
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   TYPOGRAPHY & UTILITY CLASSES (mode-agnostic)
+═══════════════════════════════════════════════════════════════════ */
+
+/* Monospace font */
 .font-mono-code {
   font-family: 'JetBrains Mono', monospace;
 }
@@ -83,50 +673,23 @@
   letter-spacing: -0.03em;
 }
 
-/* Editorial hollow text stroke typography */
-.text-stroke-editorial {
+/* Hollow text stroke */
+.text-stroke-hollow {
   -webkit-text-fill-color: transparent;
   -webkit-text-stroke: 1.5px currentColor;
-}
-
-/* Architectural corner crosshair marks */
-.editorial-corners {
-  position: relative;
-}
-.editorial-corners::before {
-  content: '';
-  position: absolute;
-  top: -1px;
-  right: -1px;
-  width: 14px;
-  height: 14px;
-  border-top: 1px solid currentColor;
-  border-right: 1px solid currentColor;
-  pointer-events: none;
-}
-.editorial-corners::after {
-  content: '';
-  position: absolute;
-  bottom: -1px;
-  left: -1px;
-  width: 14px;
-  height: 14px;
-  border-bottom: 1px solid currentColor;
-  border-left: 1px solid currentColor;
-  pointer-events: none;
 }
 
 /* Subtle architectural grid lines */
 .bg-grid-pattern {
   background-size: 48px 48px;
-  background-image: 
+  background-image:
     linear-gradient(to right, rgba(120, 120, 120, 0.06) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(120, 120, 120, 0.06) 1px, transparent 1px);
 }
 
 .dark .bg-grid-pattern {
   background-size: 48px 48px;
-  background-image: 
+  background-image:
     linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
 }
@@ -149,8 +712,9 @@
   background: rgba(120, 120, 120, 0.5);
 }
 
-/* Hide default cursor on desktop when custom cursor is active */
+/* Hide cursor when custom cursor is active */
 @media (pointer: fine) and (prefers-reduced-motion: no-preference) {
+
   body.has-custom-cursor,
   body.has-custom-cursor a,
   body.has-custom-cursor button,
@@ -164,4 +728,3 @@
     cursor: text !important;
   }
 }
-

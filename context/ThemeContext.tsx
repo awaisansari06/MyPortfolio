@@ -3,15 +3,22 @@
 import React, { createContext, useContext } from 'react';
 import { ThemeProvider as NextThemesProvider, useTheme as useNextTheme } from 'next-themes';
 
-type Theme = 'dark' | 'light';
+// ─── Types ────────────────────────────────────────────────────────────────────
+
+type ColorMode = 'dark' | 'light';
 
 interface ThemeContextType {
-  theme: Theme;
+  /** Current resolved color mode */
+  theme: ColorMode;
+  /** Toggle between light and dark */
   toggleTheme: () => void;
-  setTheme: (theme: Theme | 'system') => void;
+  /** Set color mode explicitly */
+  setTheme: (theme: ColorMode | 'system') => void;
   resolvedTheme?: string;
   systemTheme?: string;
 }
+
+// ─── Context ──────────────────────────────────────────────────────────────────
 
 const ThemeContext = createContext<ThemeContextType>({
   theme: 'dark',
@@ -19,10 +26,12 @@ const ThemeContext = createContext<ThemeContextType>({
   setTheme: () => {},
 });
 
+// ─── Inner provider (must be inside NextThemesProvider) ──────────────────────
+
 const ThemeSyncProvider = ({ children }: { children: React.ReactNode }) => {
   const { theme, resolvedTheme, setTheme, systemTheme } = useNextTheme();
 
-  const activeTheme = (resolvedTheme || theme || 'dark') as Theme;
+  const activeTheme = (resolvedTheme || theme || 'dark') as ColorMode;
 
   const toggleTheme = () => {
     setTheme(activeTheme === 'dark' ? 'light' : 'dark');
@@ -33,7 +42,7 @@ const ThemeSyncProvider = ({ children }: { children: React.ReactNode }) => {
       value={{
         theme: activeTheme,
         toggleTheme,
-        setTheme: (t: Theme | 'system') => setTheme(t),
+        setTheme: (t: ColorMode | 'system') => setTheme(t),
         resolvedTheme,
         systemTheme,
       }}
@@ -42,6 +51,8 @@ const ThemeSyncProvider = ({ children }: { children: React.ReactNode }) => {
     </ThemeContext.Provider>
   );
 };
+
+// ─── Public Providers & Hooks ─────────────────────────────────────────────────
 
 export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -56,4 +67,5 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
+/** Hook returning color theme state and controls */
 export const useTheme = () => useContext(ThemeContext);

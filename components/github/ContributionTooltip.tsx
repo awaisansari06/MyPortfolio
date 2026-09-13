@@ -11,7 +11,6 @@ interface ContributionTooltipProps {
 export const ContributionTooltip: React.FC<ContributionTooltipProps> = ({ day, position }) => {
   if (!day || !position) return null;
 
-  // Format date: e.g. "Sep 06, 2026"
   const dateObj = new Date(day.date);
   const formattedDate = dateObj.toLocaleDateString('en-US', {
     month: 'short',
@@ -28,7 +27,7 @@ export const ContributionTooltip: React.FC<ContributionTooltipProps> = ({ day, p
 
   return (
     <div
-      className="fixed z-50 pointer-events-none -translate-x-1/2 -translate-y-full mb-2.5 px-3 py-2 border border-neutral-300 dark:border-[#333333] bg-white/95 dark:bg-[#141414]/95 backdrop-blur-md shadow-xl text-left whitespace-nowrap min-w-[120px] transition-opacity duration-100"
+      className="fixed z-50 pointer-events-none -translate-x-1/2 -translate-y-full mb-2.5 px-3 py-2 text-left whitespace-nowrap min-w-[120px] transition-opacity duration-100 liquid-glass-badge shadow-xl"
       style={{
         left: `${position.x}px`,
         top: `${position.y - 6}px`,

@@ -17,7 +17,7 @@ export function isReducedMotion(): boolean {
 }
 
 /**
- * Standardized easing curves for restrained editorial motion
+ * Standardized easing curves for fluid UI motion
  */
 export const MOTION_EASE = {
   out: 'power2.out',

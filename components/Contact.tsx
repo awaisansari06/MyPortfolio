@@ -104,7 +104,7 @@ export const Contact = () => {
           </p>
         </div>
 
-        {/* Big Editorial Statement */}
+        {/* Big Statement */}
         <div className="contact-statement mb-20">
           <h3 className="text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-neutral-950 dark:text-[#F5F3EF] uppercase leading-[0.95] max-w-4xl">
             LET&apos;S BUILD SOMETHING TOGETHER.
@@ -119,7 +119,7 @@ export const Contact = () => {
           {/* Left Contact Options */}
           <div className="contact-info lg:col-span-5 space-y-6">
             {/* Email Card with Copy Trigger */}
-            <div className="p-6 border border-neutral-300 dark:border-[#2A2A2A] bg-white dark:bg-[#111111]">
+            <div className="p-6 transition-all duration-300 liquid-glass-card-frame">
               <div className="flex items-center justify-between font-mono-code text-[10px] text-neutral-400 dark:text-[#666666] uppercase mb-2">
                 <span>DIRECT EMAIL</span>
                 <Mail className="w-3.5 h-3.5" />
@@ -133,14 +133,14 @@ export const Contact = () => {
               <div className="mt-4 flex flex-wrap gap-2">
                 <a
                   href={`mailto:${portfolioData.email}`}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-neutral-950 hover:bg-neutral-800 dark:bg-[#F5F3EF] dark:hover:bg-white text-white dark:text-[#0A0A0A] text-xs font-mono-code transition-colors cursor-pointer"
+                  className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-mono-code cursor-pointer liquid-glass-btn-primary bg-neutral-950 dark:bg-[#F5F3EF] text-white dark:text-[#0A0A0A]"
                 >
                   <Mail className="w-3 h-3" />
                   <span>EMAIL ME</span>
                 </a>
                 <button
                   onClick={copyEmail}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 border border-neutral-300 dark:border-[#2A2A2A] bg-neutral-100 dark:bg-[#181818] text-xs font-mono-code hover:bg-neutral-200 dark:hover:bg-[#222222] transition-colors cursor-pointer text-neutral-900 dark:text-[#F5F3EF]"
+                  className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-mono-code cursor-pointer liquid-glass-btn-secondary text-neutral-900 dark:text-[#F5F3EF]"
                 >
                   {copied ? <Check className="w-3 h-3 text-emerald-500" /> : <Copy className="w-3 h-3 text-neutral-500" />}
                   <span>{copied ? 'COPIED' : 'COPY EMAIL'}</span>
@@ -154,7 +154,7 @@ export const Contact = () => {
                 href={portfolioData.socials.github}
                 target="_blank"
                 rel="noreferrer"
-                className="p-5 border border-neutral-300 dark:border-[#2A2A2A] bg-white dark:bg-[#111111] flex flex-col justify-between hover:border-neutral-500 dark:hover:border-neutral-500 transition-colors"
+                className="p-5 flex flex-col justify-between transition-all duration-300 liquid-glass-card"
               >
                 <div className="flex items-center justify-between font-mono-code text-[10px] text-neutral-400 dark:text-[#666666] uppercase">
                   <span>REPOSITORIES</span>
@@ -170,7 +170,7 @@ export const Contact = () => {
                 href={portfolioData.socials.linkedin}
                 target="_blank"
                 rel="noreferrer"
-                className="p-5 border border-neutral-300 dark:border-[#2A2A2A] bg-white dark:bg-[#111111] flex flex-col justify-between hover:border-neutral-500 dark:hover:border-neutral-500 transition-colors"
+                className="p-5 flex flex-col justify-between transition-all duration-300 liquid-glass-card"
               >
                 <div className="flex items-center justify-between font-mono-code text-[10px] text-neutral-400 dark:text-[#666666] uppercase">
                   <span>NETWORK</span>
@@ -184,12 +184,12 @@ export const Contact = () => {
             </div>
 
             {/* Location & Status */}
-            <div className="p-5 border border-neutral-300 dark:border-[#2A2A2A] bg-white dark:bg-[#111111] flex items-center justify-between font-mono-code text-xs">
+            <div className="p-5 flex items-center justify-between font-mono-code text-xs transition-all duration-300 liquid-glass-card">
               <div className="flex items-center gap-2 text-neutral-800 dark:text-[#A3A3A3]">
                 <MapPin className="w-3.5 h-3.5 text-neutral-400 dark:text-[#666666]" />
                 <span>{portfolioData.location}</span>
               </div>
-              <span className="text-emerald-500 font-medium flex items-center gap-1.5">
+              <span className="font-medium flex items-center gap-1.5 liquid-glass-badge text-emerald-600 dark:text-emerald-400">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
                 OPEN TO OPPORTUNITIES
               </span>
@@ -198,8 +198,8 @@ export const Contact = () => {
 
           {/* Right Contact Form */}
           <div className="contact-form lg:col-span-7">
-            <div className="p-8 border border-neutral-300 dark:border-[#2A2A2A] bg-white dark:bg-[#111111]">
-              <div className="font-mono-code text-xs font-bold text-neutral-950 dark:text-[#F5F3EF] uppercase tracking-wider pb-4 mb-6 border-b border-neutral-200 dark:border-[#2A2A2A]">
+            <div className="p-8 transition-all duration-300 liquid-glass-card-frame">
+              <div className="font-mono-code text-xs font-bold text-neutral-950 dark:text-[#F5F3EF] uppercase tracking-wider pb-4 mb-6 border-b border-white/10 dark:border-white/10">
                 SEND AN INQUIRY
               </div>
 
@@ -219,7 +219,7 @@ export const Contact = () => {
                   </p>
                   <button
                     onClick={() => setSubmitted(false)}
-                    className="mt-4 px-4 py-2 border border-neutral-300 dark:border-[#2A2A2A] font-mono-code text-xs uppercase cursor-pointer"
+                    className="mt-4 px-4 py-2 font-mono-code text-xs uppercase cursor-pointer rounded-full border border-neutral-300/80 dark:border-[#333333] bg-white/50 dark:bg-[#181818]/50 text-neutral-900 dark:text-[#F5F3EF]"
                   >
                     SEND ANOTHER MESSAGE
                   </button>
@@ -236,8 +236,7 @@ export const Contact = () => {
                       placeholder="e.g. Alex Mercer"
                       value={formState.name}
                       onChange={(e) => setFormState({ ...formState, name: e.target.value })}
-                      suppressHydrationWarning
-                      className="w-full px-4 py-3 border border-neutral-300 dark:border-[#2A2A2A] bg-transparent text-neutral-950 dark:text-[#F5F3EF] text-sm font-mono-code focus:outline-none focus:border-neutral-950 dark:focus:border-[#F5F3EF] transition-colors placeholder:text-neutral-400 dark:placeholder:text-[#555555]"
+                      className="w-full px-4 py-3 text-neutral-950 dark:text-[#F5F3EF] text-sm font-mono-code placeholder:text-neutral-400 dark:placeholder:text-[#555555] liquid-glass-input"
                     />
                   </div>
 
@@ -251,8 +250,7 @@ export const Contact = () => {
                       placeholder="e.g. alex@company.com"
                       value={formState.email}
                       onChange={(e) => setFormState({ ...formState, email: e.target.value })}
-                      suppressHydrationWarning
-                      className="w-full px-4 py-3 border border-neutral-300 dark:border-[#2A2A2A] bg-transparent text-neutral-950 dark:text-[#F5F3EF] text-sm font-mono-code focus:outline-none focus:border-neutral-950 dark:focus:border-[#F5F3EF] transition-colors placeholder:text-neutral-400 dark:placeholder:text-[#555555]"
+                      className="w-full px-4 py-3 text-neutral-950 dark:text-[#F5F3EF] text-sm font-mono-code placeholder:text-neutral-400 dark:placeholder:text-[#555555] liquid-glass-input"
                     />
                   </div>
 
@@ -266,15 +264,14 @@ export const Contact = () => {
                       placeholder="Describe your project, team opportunity, or inquiry..."
                       value={formState.message}
                       onChange={(e) => setFormState({ ...formState, message: e.target.value })}
-                      suppressHydrationWarning
-                      className="w-full px-4 py-3 border border-neutral-300 dark:border-[#2A2A2A] bg-transparent text-neutral-950 dark:text-[#F5F3EF] text-sm font-mono-code focus:outline-none focus:border-neutral-950 dark:focus:border-[#F5F3EF] transition-colors resize-none placeholder:text-neutral-400 dark:placeholder:text-[#555555]"
+                      className="w-full px-4 py-3 text-neutral-950 dark:text-[#F5F3EF] text-sm font-mono-code resize-none placeholder:text-neutral-400 dark:placeholder:text-[#555555] liquid-glass-input"
                     />
                   </div>
 
                   <button
                     type="submit"
                     data-cursor="TRANSMIT"
-                    className="w-full py-3.5 bg-neutral-950 hover:bg-neutral-800 dark:bg-[#F5F3EF] dark:hover:bg-white text-white dark:text-[#0A0A0A] font-mono-code text-xs font-semibold tracking-widest uppercase transition-colors flex items-center justify-center gap-2 cursor-pointer"
+                    className="w-full py-3.5 font-mono-code text-xs font-semibold tracking-widest uppercase flex items-center justify-center gap-2 cursor-pointer liquid-glass-btn-primary bg-neutral-950 dark:bg-[#F5F3EF] text-white dark:text-[#0A0A0A]"
                   >
                     <Send className="w-3.5 h-3.5" />
                     <span>SEND MESSAGE VIA EMAIL</span>
@@ -303,7 +300,7 @@ export const Contact = () => {
           </div>
 
           <div className="text-[11px] text-center md:text-left text-neutral-500 dark:text-[#666666]">
-            BUILT WITH NEXT.JS · THREE.JS · TAILWIND CSS · GEMINI
+            BUILT WITH NEXT.JS · THREE.JS · TAILWIND CSS 
           </div>
 
           <div className="flex flex-wrap items-center gap-6">

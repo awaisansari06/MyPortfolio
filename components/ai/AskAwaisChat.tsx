@@ -12,6 +12,7 @@ import {
   Loader2,
   ExternalLink,
 } from 'lucide-react';
+import { LiquidGlassSurface } from '@/components/liquid-glass/LiquidGlassSurface';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -278,20 +279,28 @@ export const AskAwaisChat: React.FC = () => {
 
   return (
     <>
-      {/* Discreet Fixed Trigger Button - Editorial & Minimal */}
+      {/* Floating Trigger Button */}
       {!isOpen && (
-        <button
-          onClick={() => setIsOpen(true)}
-          data-cursor="ASK AI"
-          aria-label="Open Ask Awais AI assistant"
-          className="fixed bottom-6 right-6 z-40 group inline-flex items-center gap-2.5 px-4 py-3 bg-[#F7F6F3] dark:bg-[#111111] text-neutral-950 dark:text-[#F5F3EF] border border-neutral-300 dark:border-[#2A2A2A] hover:border-neutral-950 dark:hover:border-[#555555] shadow-lg transition-all duration-200 cursor-pointer"
-        >
-          <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0" />
-          <span className="font-mono-code text-[11px] font-semibold uppercase tracking-wider">
-            ASK AWAIS AI
-          </span>
-          <ArrowUpRight className="w-3.5 h-3.5 text-neutral-400 group-hover:text-neutral-950 dark:group-hover:text-[#F5F3EF] transition-colors" />
-        </button>
+        <div className="fixed bottom-6 right-6 z-40">
+          <LiquidGlassSurface
+            preset="button"
+            borderRadius={9999}
+            id="ask-ai-launcher-glass"
+          >
+            <button
+              onClick={() => setIsOpen(true)}
+              data-cursor="ASK AI"
+              aria-label="Open Ask Awais AI assistant"
+              className="group inline-flex items-center gap-3 cursor-pointer liquid-glass-floating px-5 py-3.5 text-neutral-950 dark:text-[#F5F3EF] transition-all duration-300"
+            >
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0" />
+              <span className="font-mono-code text-[11px] font-semibold uppercase tracking-wider">
+                ASK AWAIS AI
+              </span>
+              <ArrowUpRight className="w-3.5 h-3.5 text-neutral-400 group-hover:text-neutral-950 dark:group-hover:text-[#F5F3EF] transition-colors" />
+            </button>
+          </LiquidGlassSurface>
+        </div>
       )}
 
       {/* Floating Chat Panel */}
@@ -301,7 +310,7 @@ export const AskAwaisChat: React.FC = () => {
           role="dialog"
           aria-modal="true"
           aria-labelledby="ask-awais-ai-title"
-          className="fixed inset-x-3 bottom-3 top-20 sm:inset-auto sm:bottom-6 sm:right-6 sm:w-[440px] sm:h-[620px] max-h-[calc(100vh-2rem)] z-50 flex flex-col bg-white dark:bg-[#111111] border border-neutral-300 dark:border-[#2A2A2A] shadow-2xl transition-all duration-200 overflow-hidden font-sans"
+          className="fixed inset-x-3 bottom-3 top-20 sm:inset-auto sm:bottom-6 sm:right-6 sm:w-[440px] sm:h-[620px] max-h-[calc(100vh-2rem)] z-50 flex flex-col overflow-hidden font-sans liquid-glass-modal"
         >
           {/* Header */}
           <div className="p-4 border-b border-neutral-200 dark:border-[#222222] bg-[#F7F6F3]/70 dark:bg-[#141414] flex items-start justify-between gap-3 shrink-0">
@@ -371,10 +380,10 @@ export const AskAwaisChat: React.FC = () => {
                         key={q}
                         onClick={() => handleSend(q)}
                         disabled={isStreaming}
-                        className="text-left p-2.5 border border-neutral-200 dark:border-[#262626] bg-neutral-50 dark:bg-[#141414] hover:border-neutral-500 dark:hover:border-[#444444] text-xs text-neutral-800 dark:text-[#D5D4D0] font-medium transition-colors flex items-center justify-between group cursor-pointer"
+                        className="text-left p-2.5 text-xs text-neutral-800 dark:text-[#D5D4D0] font-medium flex items-center justify-between group cursor-pointer liquid-glass-node"
                       >
                         <span className="line-clamp-1">{q}</span>
-                        <ArrowUpRight className="w-3 h-3 text-neutral-400 group-hover:text-neutral-950 dark:group-hover:text-white transition-colors shrink-0 ml-2" />
+                        <ArrowUpRight className="w-3.5 h-3.5 text-neutral-400 group-hover:text-neutral-950 dark:group-hover:text-white transition-colors shrink-0 ml-2" />
                       </button>
                     ))}
                   </div>
@@ -403,10 +412,10 @@ export const AskAwaisChat: React.FC = () => {
                 </div>
 
                 <div
-                  className={`max-w-[90%] p-3.5 border ${
+                  className={`max-w-[90%] p-3.5 rounded-xl border ${
                     msg.role === 'user'
                       ? 'bg-neutral-900 text-white dark:bg-[#1E1E1E] dark:text-[#F5F3EF] border-neutral-900 dark:border-[#333333]'
-                      : 'bg-[#F7F6F3] text-neutral-900 dark:bg-[#161616] dark:text-[#E0DFDC] border-neutral-200 dark:border-[#262626]'
+                      : 'liquid-glass-card text-neutral-900 dark:text-[#E0DFDC]'
                   }`}
                 >
                   {msg.content ? (
@@ -454,7 +463,7 @@ export const AskAwaisChat: React.FC = () => {
               }}
               className="space-y-2"
             >
-              <div className="relative flex items-center border border-neutral-300 dark:border-[#2A2A2A] bg-white dark:bg-[#181818] focus-within:border-neutral-950 dark:focus-within:border-[#555555] transition-colors">
+              <div className="relative flex items-center rounded-xl border border-neutral-300/80 dark:border-[#2A2A2A] bg-white/70 dark:bg-[#181818]/70 focus-within:border-neutral-950 dark:focus-within:border-[#555555] transition-colors">
                 <textarea
                   ref={textareaRef}
                   value={input}
@@ -471,7 +480,7 @@ export const AskAwaisChat: React.FC = () => {
                   type="submit"
                   disabled={!input.trim() || isStreaming}
                   aria-label="Send message"
-                  className="absolute right-2 p-1.5 bg-neutral-950 dark:bg-[#F5F3EF] text-white dark:text-[#0A0A0A] disabled:opacity-30 disabled:cursor-not-allowed hover:opacity-85 transition-opacity cursor-pointer"
+                  className="absolute right-2 p-1.5 rounded-lg bg-neutral-950 dark:bg-[#F5F3EF] text-white dark:text-[#0A0A0A] disabled:opacity-30 disabled:cursor-not-allowed hover:opacity-85 transition-opacity cursor-pointer"
                 >
                   {isStreaming ? (
                     <Loader2 className="w-3.5 h-3.5 animate-spin" />

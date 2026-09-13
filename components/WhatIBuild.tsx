@@ -76,7 +76,7 @@ export const WhatIBuild = () => {
           </p>
         </div>
 
-        {/* Categories Grid - Editorial Layout with pure CSS hover */}
+        {/* Categories Grid */}
         <div className="wib-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {portfolioData.whatIBuild.map((item, index) => {
             const Icon = icons[index % icons.length];
@@ -84,11 +84,11 @@ export const WhatIBuild = () => {
             return (
               <div
                 key={item.number}
-                className="wib-card group relative p-8 transition-colors duration-200 border border-neutral-300 dark:border-[#2A2A2A] bg-transparent hover:border-neutral-950 dark:hover:border-[#F5F3EF] hover:bg-white dark:hover:bg-[#111111] flex flex-col justify-between min-h-[360px]"
+                className="wib-card group relative p-8 flex flex-col justify-between min-h-[360px] transition-all duration-300 liquid-glass-card"
               >
                 <div>
                   {/* Category Number & Icon */}
-                  <div className="flex items-center justify-between pb-6 border-b border-neutral-200 dark:border-[#2A2A2A]">
+                  <div className="flex items-center justify-between pb-6 border-b border-white/10 dark:border-white/10">
                     <span className="font-mono-code text-xs font-semibold tracking-wider text-neutral-400 dark:text-[#666666]">
                       {item.number}
                     </span>
@@ -112,12 +112,12 @@ export const WhatIBuild = () => {
                 </div>
 
                 {/* Tech Tags */}
-                <div className="mt-8 pt-6 border-t border-neutral-200 dark:border-[#2A2A2A]">
+                <div className="mt-8 pt-6 border-t border-white/10 dark:border-white/10">
                   <div className="flex flex-wrap gap-1.5">
                     {item.tags.map((tag) => (
                       <span
                         key={tag}
-                        className="text-[9px] font-mono-code px-2 py-0.5 border border-neutral-300 dark:border-[#2A2A2A] text-neutral-700 dark:text-[#A3A3A3] bg-neutral-100/50 dark:bg-[#181818] inline-flex items-center gap-1"
+                        className="text-[9px] font-mono-code px-2 py-0.5 inline-flex items-center gap-1 liquid-glass-chip text-neutral-700 dark:text-[#A3A3A3]"
                       >
                         <TechIcon name={tag} className="w-2.5 h-2.5 shrink-0" />
                         <span>{tag}</span>
@@ -136,7 +136,7 @@ export const WhatIBuild = () => {
         </div>
 
         {/* Development Philosophy Footnote */}
-        <div className="mt-12 p-6 border border-neutral-300 dark:border-[#2A2A2A] bg-neutral-100/40 dark:bg-[#111111] flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-xs font-mono-code text-neutral-500 dark:text-[#A3A3A3]">
+        <div className="mt-12 p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-xs font-mono-code text-neutral-500 dark:text-[#A3A3A3] liquid-glass-node">
           <div className="flex items-center gap-3">
             <span className="w-1.5 h-1.5 rounded-full bg-neutral-900 dark:bg-[#F5F3EF]" />
             <span>DEVELOPMENT APPROACH: CLEAN CODE & PRACTICAL SYSTEMS</span>
