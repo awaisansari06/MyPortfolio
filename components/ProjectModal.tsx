@@ -116,16 +116,16 @@ export const ProjectModal = ({ project, onClose }: ProjectModalProps) => {
                   <img src="/ProjectImage/CareerWise-Light.png" alt="CareerWise Platform" className="w-full h-auto block dark:hidden" />
                 </>
               )}
-              {project.id === 'devflow' && (
+              {(project.id === 'devflow' || project.id === 'buildstack') && (
                 <>
-                  <img src="/ProjectImage/DevFlow-Dark.png" alt="DevFlow Platform" className="w-full h-auto hidden dark:block" />
-                  <img src="/ProjectImage/DevFlow-Light.png" alt="DevFlow Platform" className="w-full h-auto block dark:hidden" />
+                  <img src="/ProjectImage/BuildStack-Dark.png" alt="BuildStack Platform" className="w-full h-auto hidden dark:block" />
+                  <img src="/ProjectImage/BuildStack-Light.png" alt="BuildStack Platform" className="w-full h-auto block dark:hidden" />
                 </>
               )}
-              {project.id === 'smartjourney' && (
+              {(project.id === 'smartjourney' || project.id === 'tripcraft') && (
                 <>
-                  <img src="/ProjectImage/SmartJourney-Dark.png" alt="SmartJourney Platform" className="w-full h-auto hidden dark:block" />
-                  <img src="/ProjectImage/SmartJourney-Light.png" alt="SmartJourney Platform" className="w-full h-auto block dark:hidden" />
+                  <img src="/ProjectImage/TripCraft-Dark.png" alt="TripCraft Platform" className="w-full h-auto hidden dark:block" />
+                  <img src="/ProjectImage/TripCraft-Light.png" alt="TripCraft Platform" className="w-full h-auto block dark:hidden" />
                 </>
               )}
             </div>

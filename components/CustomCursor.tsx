@@ -59,15 +59,15 @@ export const CustomCursor = () => {
     document.body.classList.add('has-custom-cursor');
 
     // Initialize GSAP quickTo setters for high-performance, non-blocking transforms.
-    // 0.10s interpolation provides stable, smooth tracking without chasing raw pointer events or lagging behind.
+    // Duration 0 with 'none' ease ensures the cursor tracks the pointer instantly with no lag.
     const xTo = gsap.quickTo(cursorEl, 'x', {
-      duration: 0.10,
-      ease: 'power2.out',
+      duration: 0,
+      ease: 'none',
     });
 
     const yTo = gsap.quickTo(cursorEl, 'y', {
-      duration: 0.10,
-      ease: 'power2.out',
+      duration: 0,
+      ease: 'none',
     });
 
     // Start hidden until first pointermove
@@ -178,16 +178,17 @@ export const CustomCursor = () => {
       <div
         ref={cursorRef}
         aria-hidden="true"
-        className="pointer-events-none fixed top-0 left-0 z-[9999] text-neutral-900 dark:text-[#F5F3EF]"
+        className="pointer-events-none fixed top-0 left-0 z-[9999]"
         style={{
           transform: 'translate3d(-100px, -100px, 0)',
           willChange: 'transform',
+          mixBlendMode: 'difference',
         }}
       >
         {/* Normal State: Crisp 10px solid dot centered at pointer (0, 0) */}
         <div
           ref={dotRef}
-          className="pointer-events-none rounded-full bg-current shadow-xs"
+          className="pointer-events-none rounded-full bg-white"
           style={{
             position: 'absolute',
             top: '-5px',
@@ -201,7 +202,7 @@ export const CustomCursor = () => {
         {/* Interactive Hover: 32px Liquid Glass Lens centered at pointer (0, 0) */}
         <div
           ref={lensRef}
-          className="pointer-events-none overflow-hidden rounded-full border border-neutral-900/15 dark:border-white/25 bg-white/20 dark:bg-white/[0.08] shadow-[inset_0_1px_0_rgba(255,255,255,0.7),0_2px_8px_rgba(0,0,0,0.12)] dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.45),0_2px_10px_rgba(0,0,0,0.35)]"
+          className="pointer-events-none overflow-hidden rounded-full border border-white/40"
           style={{
             position: 'absolute',
             top: '-16px',
@@ -209,13 +210,12 @@ export const CustomCursor = () => {
             width: '32px',
             height: '32px',
             transformOrigin: 'center center',
-            backdropFilter: 'blur(1.5px) saturate(1.1)',
-            WebkitBackdropFilter: 'blur(1.5px) saturate(1.1)',
+            backgroundColor: 'rgba(255, 255, 255, 0.15)',
           }}
         >
           {/* Subtle top specular catch rim */}
           <div
-            className="absolute top-0 inset-x-2 h-[1px] bg-white/80 dark:bg-white/60 rounded-full opacity-80 pointer-events-none"
+            className="absolute top-0 inset-x-2 h-[1px] bg-white/60 rounded-full opacity-80 pointer-events-none"
             aria-hidden="true"
           />
         </div>

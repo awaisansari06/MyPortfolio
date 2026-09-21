@@ -47,7 +47,7 @@ Designed under the philosophy of **"Static Composition + Dynamic Behavior"**, th
 - **Authoritative Pinned Order**: Automatically displays selected repositories matching GitHub pinned order (`MyPortfolio`, `CareerWise`, `devflow`, `smart-journey`).
 
 ### 4. 💼 Deep-Dive Project Case Studies & Specs
-- **Selected Works**: Features **CareerWise** (AI Career Intelligence Platform), **DevFlow** (Agentic Web Application Generator), and **SmartJourney** (AI Route Planning System).
+- **Selected Works**: Features **CareerWise** (AI Career Intelligence Platform), **BuildStack** (Agentic Web Application Generator), and **TripCraft** (AI Route Planning System).
 - **Interactive Specs Modal**: Comprehensive architectural breakdowns covering system problems, engineering approaches, runtime execution flows, and key metrics.
 
 ### 5. 🎨 Quiet Luxury Monochrome Design System

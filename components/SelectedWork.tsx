@@ -261,7 +261,7 @@ export const SelectedWork = () => {
           </div>
         </div>
 
-        {/* ---------------- PROJECT 02: DEVFLOW ---------------- */}
+        {/* ---------------- PROJECT 02: BUILDSTACK ---------------- */}
         <div className="project-block mb-32 pb-24 border-b border-neutral-300 dark:border-[#2A2A2A]">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-start">
             {/* Left: Product Interface Frame */}
@@ -278,7 +278,7 @@ export const SelectedWork = () => {
                       <span className="w-2.5 h-2.5 rounded-full bg-[#FFBD2E]/80" />
                       <span className="w-2.5 h-2.5 rounded-full bg-[#27C93F]/80" />
                     </div>
-                    <span className="ml-1.5 text-neutral-700 dark:text-[#C5C3BF] font-medium">devflow-project.vercel.app</span>
+                    <span className="ml-1.5 text-neutral-700 dark:text-[#C5C3BF] font-medium">buildstack-project.vercel.app</span>
                   </div>
                   <a
                     href={devflow.liveUrl}
@@ -299,14 +299,14 @@ export const SelectedWork = () => {
                   className="relative rounded-lg border border-neutral-300/80 dark:border-[#2A2A2A] overflow-hidden bg-neutral-950/5 dark:bg-black/40 cursor-pointer shadow-sm group/frame"
                 >
                   <img
-                    src="/ProjectImage/DevFlow-Dark.png"
-                    alt="DevFlow Collaborative AI-Driven Development Platform Interface"
+                    src="/ProjectImage/BuildStack-Dark.png"
+                    alt="BuildStack Collaborative AI-Driven Development Platform Interface"
                     className="w-full h-auto object-cover hidden dark:block transition-transform duration-500 group-hover/frame:scale-[1.015]"
                     loading="lazy"
                   />
                   <img
-                    src="/ProjectImage/DevFlow-Light.png"
-                    alt="DevFlow Collaborative AI-Driven Development Platform Interface"
+                    src="/ProjectImage/BuildStack-Light.png"
+                    alt="BuildStack Collaborative AI-Driven Development Platform Interface"
                     className="w-full h-auto object-cover block dark:hidden transition-transform duration-500 group-hover/frame:scale-[1.015]"
                     loading="lazy"
                   />
@@ -317,7 +317,7 @@ export const SelectedWork = () => {
                 <div className="mt-4 pt-3 border-t border-neutral-300/60 dark:border-[#2E2E2E] flex justify-between items-center font-mono-code text-[10px] text-neutral-500 dark:text-[#777777]">
                   <div className="flex items-center gap-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-                    <span className="uppercase tracking-wider font-semibold text-neutral-800 dark:text-[#CCCCCC]">DEVFLOW PLATFORM</span>
+                    <span className="uppercase tracking-wider font-semibold text-neutral-800 dark:text-[#CCCCCC]">BUILDSTACK PLATFORM</span>
                   </div>
                   <div className="flex items-center gap-3 tracking-wide">
                     <span>E2B SANDBOX</span>
@@ -392,7 +392,7 @@ export const SelectedWork = () => {
                   data-cursor="OPEN"
                   className="inline-flex items-center gap-2 px-6 py-3 font-mono-code text-xs font-semibold tracking-wider cursor-pointer liquid-glass-btn-primary bg-neutral-950 dark:bg-[#F5F3EF] text-white dark:text-[#0A0A0A]"
                 >
-                  <span>LAUNCH DEVFLOW</span>
+                  <span>LAUNCH BUILDSTACK</span>
                   <ExternalLink className="w-3.5 h-3.5" />
                 </a>
 
@@ -408,7 +408,7 @@ export const SelectedWork = () => {
           </div>
         </div>
 
-        {/* ---------------- PROJECT 03: SMARTJOURNEY ---------------- */}
+        {/* ---------------- PROJECT 03: TRIPCRAFT ---------------- */}
         <div className="project-block">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-start">
             {/* Left: Project Details */}
@@ -475,7 +475,7 @@ export const SelectedWork = () => {
                   data-cursor="OPEN"
                   className="inline-flex items-center gap-2 px-6 py-3 font-mono-code text-xs font-semibold tracking-wider cursor-pointer liquid-glass-btn-primary bg-neutral-950 dark:bg-[#F5F3EF] text-white dark:text-[#0A0A0A]"
                 >
-                  <span>LAUNCH SMARTJOURNEY</span>
+                  <span>LAUNCH TRIPCRAFT</span>
                   <ExternalLink className="w-3.5 h-3.5" />
                 </a>
 
@@ -503,7 +503,7 @@ export const SelectedWork = () => {
                       <span className="w-2.5 h-2.5 rounded-full bg-[#FFBD2E]/80" />
                       <span className="w-2.5 h-2.5 rounded-full bg-[#27C93F]/80" />
                     </div>
-                    <span className="ml-1.5 text-neutral-700 dark:text-[#C5C3BF] font-medium">smartjourney-v2.vercel.app</span>
+                    <span className="ml-1.5 text-neutral-700 dark:text-[#C5C3BF] font-medium">tripcraft-project.vercel.app</span>
                   </div>
                   <a
                     href={smartjourney.liveUrl}
@@ -524,14 +524,14 @@ export const SelectedWork = () => {
                   className="relative rounded-lg border border-neutral-300/80 dark:border-[#2A2A2A] overflow-hidden bg-neutral-950/5 dark:bg-black/40 cursor-pointer shadow-sm group/frame"
                 >
                   <img
-                    src="/ProjectImage/SmartJourney-Dark.png"
-                    alt="SmartJourney AI-Driven Personalized Travel Assistant"
+                    src="/ProjectImage/TripCraft-Dark.png"
+                    alt="TripCraft AI-Driven Personalized Travel Assistant"
                     className="w-full h-auto object-cover hidden dark:block transition-transform duration-500 group-hover/frame:scale-[1.015]"
                     loading="lazy"
                   />
                   <img
-                    src="/ProjectImage/SmartJourney-Light.png"
-                    alt="SmartJourney AI-Driven Personalized Travel Assistant"
+                    src="/ProjectImage/TripCraft-Light.png"
+                    alt="TripCraft AI-Driven Personalized Travel Assistant"
                     className="w-full h-auto object-cover block dark:hidden transition-transform duration-500 group-hover/frame:scale-[1.015]"
                     loading="lazy"
                   />
@@ -542,7 +542,7 @@ export const SelectedWork = () => {
                 <div className="mt-4 pt-3 border-t border-neutral-300/60 dark:border-[#2E2E2E] flex justify-between items-center font-mono-code text-[10px] text-neutral-500 dark:text-[#777777]">
                   <div className="flex items-center gap-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-                    <span className="uppercase tracking-wider font-semibold text-neutral-800 dark:text-[#CCCCCC]">SMARTJOURNEY</span>
+                    <span className="uppercase tracking-wider font-semibold text-neutral-800 dark:text-[#CCCCCC]">TRIPCRAFT</span>
                   </div>
                   <div className="flex items-center gap-3 tracking-wide">
                     <span>MAPBOX</span>

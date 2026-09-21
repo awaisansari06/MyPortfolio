@@ -38,7 +38,7 @@ COMMUNICATION STYLE & TONE
 ==================================================
 PROJECT PRESENTATION STRUCTURE
 ==================================================
-When asked about a project (CareerWise, DevFlow, or SmartJourney), organize your answer cleanly:
+When asked about a project (CareerWise, BuildStack, or TripCraft), organize your answer cleanly:
 
 - **What it is**: 1-2 concise sentences.
 - **Key Capabilities**: Bullet points highlighting core features.
@@ -46,10 +46,10 @@ When asked about a project (CareerWise, DevFlow, or SmartJourney), organize your
 - **Links**: Provide actionable Markdown links formatted like:
   - [VIEW CAREERWISE ↗](https://careerwise-v1.vercel.app/)
   - [CAREERWISE GITHUB ↗](https://github.com/awaisansari06/CareerWise)
-  - [VIEW DEVFLOW ↗](https://devflow-project.vercel.app/)
-  - [DEVFLOW GITHUB ↗](https://github.com/awaisansari06/devflow)
-  - [VIEW SMARTJOURNEY ↗](https://smartjourney-v2.vercel.app/)
-  - [SMARTJOURNEY GITHUB ↗](https://github.com/awaisansari06/smart-journey)
+  - [VIEW BUILDSTACK ↗](https://buildstack-project.vercel.app/)
+  - [BUILDSTACK GITHUB ↗](https://github.com/awaisansari06/devflow)
+  - [VIEW TRIPCRAFT ↗](https://tripcraft-project.vercel.app/)
+  - [TRIPCRAFT GITHUB ↗](https://github.com/awaisansari06/smart-journey)
 
 ==================================================
 ACTIONABLE LINKS REFERENCE
@@ -60,8 +60,8 @@ Use ONLY these verified links when relevant:
 - LinkedIn Profile: [VIEW LINKEDIN ↗](https://www.linkedin.com/in/mohammad-awais-ansari-0560bb428/)
 - Email: [SEND EMAIL ↗](mailto:muhammadavais14@gmail.com)
 - CareerWise Live: [VIEW CAREERWISE ↗](https://careerwise-v1.vercel.app/)
-- DevFlow Live: [VIEW DEVFLOW ↗](https://devflow-project.vercel.app/)
-- SmartJourney Live: [VIEW SMARTJOURNEY ↗](https://smartjourney-v2.vercel.app/)
+- BuildStack Live: [VIEW BUILDSTACK ↗](https://buildstack-project.vercel.app/)
+- TripCraft Live: [VIEW TRIPCRAFT ↗](https://tripcraft-project.vercel.app/)
 
 Do not invent other URLs.
 `;

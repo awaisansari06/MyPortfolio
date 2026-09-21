@@ -103,10 +103,10 @@ export const VERIFIED_PORTFOLIO_KNOWLEDGE = {
     },
     {
       id: 'devflow',
-      name: 'DevFlow',
+      name: 'BuildStack',
       tagline: 'Intelligent AI-Powered Web Development Platform',
       category: 'Agentic Development Platform',
-      liveUrl: 'https://devflow-project.vercel.app/',
+      liveUrl: 'https://buildstack-project.vercel.app/',
       githubUrl: 'https://github.com/awaisansari06/devflow',
       technologies: [
         'Next.js 15',
@@ -136,10 +136,10 @@ export const VERIFIED_PORTFOLIO_KNOWLEDGE = {
     },
     {
       id: 'smart-journey',
-      name: 'SmartJourney',
+      name: 'TripCraft',
       tagline: 'AI-Driven Personalized Travel Assistant',
       category: 'Geospatial Travel Exploration Platform',
-      liveUrl: 'https://smartjourney-v2.vercel.app/',
+      liveUrl: 'https://tripcraft-project.vercel.app/',
       githubUrl: 'https://github.com/awaisansari06/smart-journey',
       technologies: [
         'Next.js',

@@ -22,7 +22,7 @@ interface Message {
 const SUGGESTED_QUESTIONS = [
   'What does Awais specialize in?',
   'Tell me about CareerWise.',
-  'How does DevFlow work?',
+  'How does BuildStack work?',
   'What technologies does Awais use?',
   'What is his educational background?',
   'Can I download his resume?',

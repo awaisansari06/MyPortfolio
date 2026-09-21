@@ -197,14 +197,14 @@ export const portfolioData: PortfolioData = {
     {
       id: "devflow",
       number: "02",
-      title: "DEVFLOW",
+      title: "BUILDSTACK",
       tagline: "INTELLIGENT AI-POWERED WEB DEVELOPMENT PLATFORM",
       category: "AGENTIC AI & CLOUD SANDBOX",
       shortDescription:
         "Agentic AI development platform generating functional web applications from natural-language prompts using advanced AI agents, sandboxed execution, and live terminal streaming.",
       description:
-        "DevFlow is an agentic development environment that transforms conversational software specifications into fully running, multi-file full-stack web applications. By pairing multi-step autonomous LLM agent loops with dedicated cloud micro-VM sandboxes, DevFlow compiles, installs packages, runs servers, and streams live application previews in real time.",
-      liveUrl: "https://devflow-project.vercel.app/",
+        "BuildStack is an agentic development environment that transforms conversational software specifications into fully running, multi-file full-stack web applications. By pairing multi-step autonomous LLM agent loops with dedicated cloud micro-VM sandboxes, BuildStack compiles, installs packages, runs servers, and streams live application previews in real time.",
+      liveUrl: "https://buildstack-project.vercel.app/",
       githubUrl: "https://github.com/awaisansari06/devflow",
       compactTechnologies: [
         "Next.js 15",
@@ -247,7 +247,7 @@ export const portfolioData: PortfolioData = {
       problem:
         "Building prototypes from prompts often produces non-executable code snippets trapped in chat windows, lacking isolated execution environments, file system trees, and live browser previews.",
       approach:
-        "DevFlow pairs agentic tool-use loops (via Vercel AI SDK) with dedicated cloud micro-VM sandboxes (E2B). Agents write files, install dependencies, spin up servers, and expose a live secure iframe preview directly to the user.",
+        "BuildStack pairs agentic tool-use loops (via Vercel AI SDK) with dedicated cloud micro-VM sandboxes (E2B). Agents write files, install dependencies, spin up servers, and expose a live secure iframe preview directly to the user.",
       implementation: [
         "Built agentic AI development platform generating functional web applications from natural-language prompts using advanced AI agents.",
         "Implemented secure E2B cloud sandbox execution with live application previews, terminal logs, file exploration, project history, and version control.",
@@ -270,14 +270,14 @@ export const portfolioData: PortfolioData = {
     {
       id: "smartjourney",
       number: "03",
-      title: "SMARTJOURNEY",
+      title: "TRIPCRAFT",
       tagline: "AI-DRIVEN PERSONALIZED TRAVEL ASSISTANT",
       category: "GEOSPATIAL AI ASSISTANT",
       shortDescription:
         "AI travel assistant generating personalized day-by-day itineraries based on destination, budget, group size, duration, and user interests with interactive geospatial maps.",
       description:
-        "SmartJourney is an intelligent itinerary and geospatial exploration platform designed to solve travel fragmentation. By combining large language model reasoning with live Google Places geospatial data and Mapbox interactive visual layers, SmartJourney synthesizes optimized multi-day travel schedules tailored to personal budgets, pacing, and logistics.",
-      liveUrl: "https://smartjourney-v2.vercel.app/",
+        "TripCraft is an intelligent itinerary and geospatial exploration platform designed to solve travel fragmentation. By combining large language model reasoning with live Google Places geospatial data and Mapbox interactive visual layers, TripCraft synthesizes optimized multi-day travel schedules tailored to personal budgets, pacing, and logistics.",
+      liveUrl: "https://tripcraft-project.vercel.app/",
       githubUrl: "https://github.com/awaisansari06/smart-journey",
       compactTechnologies: [
         "Next.js",

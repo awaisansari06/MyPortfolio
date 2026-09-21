@@ -112,10 +112,10 @@ export const GitHubRepositories: React.FC<GitHubRepositoriesProps> = ({ reposito
     if (lower.includes('careerwise')) {
       return 'AI-powered career intelligence platform with ATS resume optimization and mock interview agents.';
     }
-    if (lower.includes('devflow')) {
+    if (lower.includes('devflow') || lower.includes('buildstack')) {
       return 'Agentic AI development platform generating full-stack web applications with cloud VM sandbox execution.';
     }
-    if (lower.includes('journey') || lower.includes('trip')) {
+    if (lower.includes('journey') || lower.includes('trip') || lower.includes('tripcraft')) {
       return 'Intelligent personalized travel planning system with dynamic route and place recommendations.';
     }
     if (lower.includes('medcore') || lower.includes('hms')) {

@@ -209,7 +209,7 @@ export const Hero = () => {
               02 / PROJECT
             </span>
             <span className="text-[11px] sm:text-xs uppercase tracking-wider font-semibold text-neutral-800 dark:text-neutral-300 group-hover:text-neutral-950 dark:group-hover:text-[#F5F3EF] transition-colors truncate">
-              DevFlow Platform
+              BuildStack Platform
             </span>
           </div>
 
@@ -221,7 +221,7 @@ export const Hero = () => {
               03 / PROJECT
             </span>
             <span className="text-[11px] sm:text-xs uppercase tracking-wider font-semibold text-neutral-800 dark:text-neutral-300 group-hover:text-neutral-950 dark:group-hover:text-[#F5F3EF] transition-colors truncate">
-              SmartJourney V2
+              TripCraft Platform
             </span>
           </div>
 
