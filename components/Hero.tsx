@@ -5,6 +5,7 @@ import { portfolioData } from '@/data/portfolio';
 import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import { gsap, isReducedMotion, MOTION_EASE } from '@/lib/motion';
 import { RefractiveButton } from '@/components/liquid-glass/LiquidGlass';
+import { getScrollBehavior } from '@/lib/scroll';
 
 export const Hero = () => {
   const containerRef = useRef<HTMLElement>(null);
@@ -65,7 +66,7 @@ export const Hero = () => {
   const scrollTo = (id: string) => {
     const el = document.getElementById(id);
     if (el) {
-      el.scrollIntoView({ behavior: 'smooth' });
+      el.scrollIntoView({ behavior: getScrollBehavior() });
     }
   };
 

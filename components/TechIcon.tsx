@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image';
 import {
   Code2,
   Terminal,
@@ -267,7 +268,7 @@ export const TechIcon: React.FC<TechIconProps> = ({ name, className = 'w-3.5 h-3
   const localIcon = LOCAL_PROGRAMMING_ICONS[normalized];
   if (localIcon) {
     return (
-      <img
+      <Image
         src={localIcon}
         alt={name}
         width={size}

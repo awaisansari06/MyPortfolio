@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+@theme inline {
+  --font-sans: var(--font-jakarta);
+}
+
 @custom-variant dark (&:where(.dark, .dark *));
 
 @layer base {
@@ -117,7 +121,7 @@
 
   html {
     scroll-behavior: smooth;
-    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    font-family: var(--font-jakarta), system-ui, -apple-system, sans-serif;
   }
 
   body {
@@ -146,6 +150,16 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
   .glass-surface-backing {
     transition: none !important;
   }
@@ -664,11 +678,11 @@
 
 /* Monospace font */
 .font-mono-code {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-jetbrains-mono), monospace;
 }
 
 .font-display {
-  font-family: 'Space Grotesk', 'Plus Jakarta Sans', sans-serif;
+  font-family: var(--font-space-grotesk), var(--font-jakarta), sans-serif;
   letter-spacing: -0.03em;
 }
 
@@ -717,7 +731,9 @@
   body.has-custom-cursor,
   body.has-custom-cursor a,
   body.has-custom-cursor button,
-  body.has-custom-cursor [role="button"] {
+  body.has-custom-cursor [role="button"],
+  body.has-custom-cursor .cursor-pointer,
+  body.has-custom-cursor [data-cursor] {
     cursor: none !important;
   }
 

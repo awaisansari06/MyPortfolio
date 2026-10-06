@@ -1,6 +1,8 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
+import Image from 'next/image';
+import { projectImages } from '@/lib/projectImages';
 import { portfolioData, ProjectCaseStudy } from '@/data/portfolio';
 import { ProjectModal } from './ProjectModal';
 import { TechIcon } from './TechIcon';
@@ -229,14 +231,16 @@ export const SelectedWork = () => {
                   data-cursor="VIEW"
                   className="relative rounded-lg border border-neutral-300/80 dark:border-[#2A2A2A] overflow-hidden bg-neutral-950/5 dark:bg-black/40 cursor-pointer shadow-sm group/frame"
                 >
-                  <img
-                    src="/ProjectImage/CareerWise-Dark.png"
+                  <Image
+                    src={projectImages.careerwise.dark}
+                    sizes="(min-width: 1024px) 50vw, 100vw"
                     alt="CareerWise AI-Powered Preparation & Assessment Platform Interface"
                     className="w-full h-auto object-cover hidden dark:block transition-transform duration-500 group-hover/frame:scale-[1.015]"
                     loading="lazy"
                   />
-                  <img
-                    src="/ProjectImage/CareerWise-Light.png"
+                  <Image
+                    src={projectImages.careerwise.light}
+                    sizes="(min-width: 1024px) 50vw, 100vw"
                     alt="CareerWise AI-Powered Preparation & Assessment Platform Interface"
                     className="w-full h-auto object-cover block dark:hidden transition-transform duration-500 group-hover/frame:scale-[1.015]"
                     loading="lazy"
@@ -298,14 +302,16 @@ export const SelectedWork = () => {
                   data-cursor="VIEW"
                   className="relative rounded-lg border border-neutral-300/80 dark:border-[#2A2A2A] overflow-hidden bg-neutral-950/5 dark:bg-black/40 cursor-pointer shadow-sm group/frame"
                 >
-                  <img
-                    src="/ProjectImage/BuildStack-Dark.png"
+                  <Image
+                    src={projectImages.buildstack.dark}
+                    sizes="(min-width: 1024px) 50vw, 100vw"
                     alt="BuildStack Collaborative AI-Driven Development Platform Interface"
                     className="w-full h-auto object-cover hidden dark:block transition-transform duration-500 group-hover/frame:scale-[1.015]"
                     loading="lazy"
                   />
-                  <img
-                    src="/ProjectImage/BuildStack-Light.png"
+                  <Image
+                    src={projectImages.buildstack.light}
+                    sizes="(min-width: 1024px) 50vw, 100vw"
                     alt="BuildStack Collaborative AI-Driven Development Platform Interface"
                     className="w-full h-auto object-cover block dark:hidden transition-transform duration-500 group-hover/frame:scale-[1.015]"
                     loading="lazy"
@@ -523,14 +529,16 @@ export const SelectedWork = () => {
                   data-cursor="VIEW"
                   className="relative rounded-lg border border-neutral-300/80 dark:border-[#2A2A2A] overflow-hidden bg-neutral-950/5 dark:bg-black/40 cursor-pointer shadow-sm group/frame"
                 >
-                  <img
-                    src="/ProjectImage/TripCraft-Dark.png"
+                  <Image
+                    src={projectImages.tripcraft.dark}
+                    sizes="(min-width: 1024px) 50vw, 100vw"
                     alt="TripCraft AI-Driven Personalized Travel Assistant"
                     className="w-full h-auto object-cover hidden dark:block transition-transform duration-500 group-hover/frame:scale-[1.015]"
                     loading="lazy"
                   />
-                  <img
-                    src="/ProjectImage/TripCraft-Light.png"
+                  <Image
+                    src={projectImages.tripcraft.light}
+                    sizes="(min-width: 1024px) 50vw, 100vw"
                     alt="TripCraft AI-Driven Personalized Travel Assistant"
                     className="w-full h-auto object-cover block dark:hidden transition-transform duration-500 group-hover/frame:scale-[1.015]"
                     loading="lazy"

@@ -2,9 +2,11 @@ import type {NextConfig} from 'next';
 
 const nextConfig: NextConfig = {
   devIndicators: false,
+  // Allow verification builds to run separately from an active dev server.
+  distDir: process.env.NEXT_DIST_DIR || '.next',
   reactStrictMode: true,
   eslint: {
-    ignoreDuringBuilds: true,
+    ignoreDuringBuilds: false,
   },
   typescript: {
     ignoreBuildErrors: false,

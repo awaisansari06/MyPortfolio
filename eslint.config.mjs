@@ -3,7 +3,7 @@ import next from "eslint-config-next";
 
 export default defineConfig([
   {
-    ignores: [".next/**", "node_modules/**", "dist/**", "build/**"],
+    ignores: [".next/**", ".next-verify/**", "node_modules/**", "dist/**", "build/**"],
   },
   ...next,
 ]);

@@ -4,9 +4,12 @@ import React, { useEffect, useRef, useState } from 'react';
 import { portfolioData } from '@/data/portfolio';
 import { Mail, Github, Linkedin, MapPin, ArrowUp, Send, Check, Copy, ArrowUpRight } from 'lucide-react';
 import { gsap, isReducedMotion } from '@/lib/motion';
+import { getScrollBehavior } from '@/lib/scroll';
 
 export const Contact = () => {
   const [copied, setCopied] = useState(false);
+  const [copyError, setCopyError] = useState('');
+  const copyTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [formState, setFormState] = useState({ name: '', email: '', message: '' });
   const [submitted, setSubmitted] = useState(false);
   const containerRef = useRef<HTMLElement>(null);
@@ -65,10 +68,21 @@ export const Contact = () => {
     return () => ctx.revert();
   }, []);
 
-  const copyEmail = () => {
-    navigator.clipboard.writeText(portfolioData.email);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2500);
+  useEffect(() => () => {
+    if (copyTimerRef.current) clearTimeout(copyTimerRef.current);
+  }, []);
+
+  const copyEmail = async () => {
+    if (copyTimerRef.current) clearTimeout(copyTimerRef.current);
+    setCopied(false);
+    setCopyError('');
+    try {
+      await navigator.clipboard.writeText(portfolioData.email);
+      setCopied(true);
+      copyTimerRef.current = setTimeout(() => setCopied(false), 2500);
+    } catch {
+      setCopyError('Unable to copy. Please select and copy the email address above.');
+    }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -83,7 +97,7 @@ export const Contact = () => {
   };
 
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: getScrollBehavior() });
   };
 
   return (
@@ -149,6 +163,7 @@ export const Contact = () => {
             </div>
 
             {/* Social Links */}
+            {copyError && <p role="status" className="text-xs text-red-700 dark:text-red-400">{copyError}</p>}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <a
                 href={portfolioData.socials.github}
@@ -227,10 +242,11 @@ export const Contact = () => {
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div>
-                    <label className="block font-mono-code text-[11px] uppercase tracking-wider text-neutral-500 dark:text-[#A3A3A3] mb-2">
+                    <label htmlFor="contact-name" className="block font-mono-code text-[11px] uppercase tracking-wider text-neutral-500 dark:text-[#A3A3A3] mb-2">
                       YOUR NAME
                     </label>
                     <input
+                      id="contact-name"
                       type="text"
                       required
                       placeholder="e.g. Alex Mercer"
@@ -241,10 +257,11 @@ export const Contact = () => {
                   </div>
 
                   <div>
-                    <label className="block font-mono-code text-[11px] uppercase tracking-wider text-neutral-500 dark:text-[#A3A3A3] mb-2">
+                    <label htmlFor="contact-email" className="block font-mono-code text-[11px] uppercase tracking-wider text-neutral-500 dark:text-[#A3A3A3] mb-2">
                       YOUR EMAIL
                     </label>
                     <input
+                      id="contact-email"
                       type="email"
                       required
                       placeholder="e.g. alex@company.com"
@@ -255,10 +272,11 @@ export const Contact = () => {
                   </div>
 
                   <div>
-                    <label className="block font-mono-code text-[11px] uppercase tracking-wider text-neutral-500 dark:text-[#A3A3A3] mb-2">
+                    <label htmlFor="contact-message" className="block font-mono-code text-[11px] uppercase tracking-wider text-neutral-500 dark:text-[#A3A3A3] mb-2">
                       PROJECT OR INQUIRY DETAILS
                     </label>
                     <textarea
+                      id="contact-message"
                       required
                       rows={4}
                       placeholder="Describe your project, team opportunity, or inquiry..."

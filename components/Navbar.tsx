@@ -8,6 +8,7 @@ import { type LensConfig, type DisplacementMapData } from '@/components/liquid-g
 import { DEFAULT_LENS_CONFIG } from '@/components/liquid-glass/lens';
 import { generateDisplacementMap } from '@/components/liquid-glass/displacement-map';
 import { LiquidGlassFilter, getFilterUrl } from '@/components/liquid-glass/LiquidGlassFilter';
+import { getScrollBehavior } from '@/lib/scroll';
 
 // ─── Navbar Liquid Glass Backing ──────────────────────────────────────────────
 // The floating navbar is a suspended glass capsule with real SVG feDisplacementMap
@@ -21,6 +22,19 @@ const NAVBAR_LENS_PRESET: Omit<LensConfig, 'width' | 'height'> = {
   chroma: 0.02,
   glow: 0.10,
   edgeHighlight: 0.32,
+  specularAngle: 45,
+};
+
+const NAV_PILL_LENS: LensConfig = {
+  width: 120,
+  height: 28,
+  borderRadius: 14,
+  depth: 0.30,
+  curvature: 1.3,
+  scale: 8,
+  chroma: 0,
+  glow: 0.08,
+  edgeHighlight: 0.38,
   specularAngle: 45,
 };
 
@@ -103,20 +117,6 @@ export const Navbar = () => {
   const linkRefs = useRef<(HTMLAnchorElement | null)[]>([]);
   const [pillStyle, setPillStyle] = useState({ left: 0, width: 0, visible: false });
 
-  // Dedicated lens configuration for the moving navigation glass pill
-  const NAV_PILL_LENS = useRef<LensConfig>({
-    width: 120,
-    height: 28,
-    borderRadius: 14,
-    depth: 0.30,
-    curvature: 1.3,
-    scale: 8,
-    chroma: 0,
-    glow: 0.08,
-    edgeHighlight: 0.38,
-    specularAngle: 45,
-  }).current;
-
   // Deterministic mount to avoid hydration mismatch
   useEffect(() => {
     const id = requestAnimationFrame(() => {
@@ -125,7 +125,7 @@ export const Navbar = () => {
       if (pillMap) setNavPillMap(pillMap);
     });
     return () => cancelAnimationFrame(id);
-  }, [NAV_PILL_LENS]);
+  }, []);
 
   const regenerateNavbarMap = useCallback(() => {
     if (typeof window === 'undefined') return;
@@ -226,7 +226,7 @@ export const Navbar = () => {
     setMobileOpen(false);
     const target = document.querySelector(href);
     if (target) {
-      target.scrollIntoView({ behavior: 'smooth' });
+      target.scrollIntoView({ behavior: getScrollBehavior() });
     }
   };
 

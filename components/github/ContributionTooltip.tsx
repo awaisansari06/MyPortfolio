@@ -16,6 +16,7 @@ export const ContributionTooltip: React.FC<ContributionTooltipProps> = ({ day, p
     month: 'short',
     day: '2-digit',
     year: 'numeric',
+    timeZone: 'UTC',
   });
 
   const countText =

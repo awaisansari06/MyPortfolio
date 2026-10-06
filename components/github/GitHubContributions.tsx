@@ -101,8 +101,8 @@ export const GitHubContributions: React.FC = () => {
 
     const start = new Date(firstDay.date);
     const end = new Date(lastDay.date);
-    const startStr = start.toLocaleDateString('en-US', { month: 'short', year: 'numeric' }).toUpperCase();
-    const endStr = end.toLocaleDateString('en-US', { month: 'short', year: 'numeric' }).toUpperCase();
+    const startStr = start.toLocaleDateString('en-US', { month: 'short', year: 'numeric', timeZone: 'UTC' }).toUpperCase();
+    const endStr = end.toLocaleDateString('en-US', { month: 'short', year: 'numeric', timeZone: 'UTC' }).toUpperCase();
     return `${startStr} — ${endStr}`;
   };
 

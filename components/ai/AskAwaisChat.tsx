@@ -13,6 +13,9 @@ import {
   ExternalLink,
 } from 'lucide-react';
 import { LiquidGlassSurface } from '@/components/liquid-glass/LiquidGlassSurface';
+import { MAX_CHAT_MESSAGES } from '@/lib/ai/messages';
+import { getScrollBehavior } from '@/lib/scroll';
+import { useDialogFocus } from '@/hooks/useDialogFocus';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -154,58 +157,45 @@ export const AskAwaisChat: React.FC = () => {
   const messagesContainerRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const chatContainerRef = useRef<HTMLDivElement>(null);
+  const failedRequestRef = useRef<Message[] | null>(null);
+  const streamingRef = useRef(false);
+  useDialogFocus(chatContainerRef, isOpen, () => setIsOpen(false), '#ask-ai-launcher', false);
 
   // Listen to external open events (e.g. from Navbar)
   useEffect(() => {
     const handleOpen = () => {
       setIsOpen(true);
-      setTimeout(() => textareaRef.current?.focus(), 150);
     };
 
     window.addEventListener('open-ask-ai', handleOpen);
     return () => window.removeEventListener('open-ask-ai', handleOpen);
   }, []);
 
-  // Handle escape key to close
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && isOpen) {
-        setIsOpen(false);
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isOpen]);
-
   // Scroll to bottom when messages update — scroll inside the chat container directly to prevent outer page scroll
   useEffect(() => {
     if (isOpen && messagesContainerRef.current) {
       messagesContainerRef.current.scrollTo({
         top: messagesContainerRef.current.scrollHeight,
-        behavior: 'smooth',
+        behavior: getScrollBehavior(),
       });
     }
   }, [messages, isStreaming, isOpen]);
 
-  // Focus textarea when opened
-  useEffect(() => {
-    if (isOpen) {
-      textareaRef.current?.focus();
-    }
-  }, [isOpen]);
-
   // Submit query
   const handleSend = useCallback(
-    async (textToSend?: string) => {
+    async (textToSend?: string, retry = false) => {
       const userText = (textToSend || input).trim();
-      if (!userText || isStreaming) return;
+      if (streamingRef.current || (!retry && !userText)) return;
+      const newMessages: Message[] | null = retry
+        ? failedRequestRef.current
+        : [...messages, { role: 'user', content: userText }];
+      if (!newMessages) return;
+      streamingRef.current = true;
+      failedRequestRef.current = null;
 
       setError(null);
       setInput('');
 
-      const newMessages: Message[] = [...messages, { role: 'user', content: userText }];
-      setMessages(newMessages);
       setIsStreaming(true);
 
       // Add a placeholder assistant message that will be streamed into
@@ -216,7 +206,7 @@ export const AskAwaisChat: React.FC = () => {
         const res = await fetch('/api/chat', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ messages: newMessages }),
+          body: JSON.stringify({ messages: newMessages.slice(-MAX_CHAT_MESSAGES) }),
         });
 
         if (!res.ok) {
@@ -234,9 +224,7 @@ export const AskAwaisChat: React.FC = () => {
 
         while (true) {
           const { done, value } = await reader.read();
-          if (done) break;
-
-          const chunk = decoder.decode(value, { stream: true });
+          const chunk = done ? decoder.decode() : decoder.decode(value, { stream: true });
           accumulatedText += chunk;
 
           setMessages((prev) => {
@@ -249,9 +237,11 @@ export const AskAwaisChat: React.FC = () => {
             }
             return updated;
           });
+          if (done) break;
         }
       } catch (err: any) {
         console.error('Chat error:', err);
+        failedRequestRef.current = newMessages;
         setError(err.message || 'Unable to connect to Ask Awais AI. Please try again.');
         // Remove empty assistant placeholder if failed completely
         setMessages((prev) => {
@@ -261,10 +251,11 @@ export const AskAwaisChat: React.FC = () => {
           return prev;
         });
       } finally {
+        streamingRef.current = false;
         setIsStreaming(false);
       }
     },
-    [input, isStreaming, messages]
+    [input, messages]
   );
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
@@ -279,19 +270,20 @@ export const AskAwaisChat: React.FC = () => {
     setMessages([]);
     setError(null);
     setInput('');
+    failedRequestRef.current = null;
   };
 
   return (
     <>
       {/* Floating Trigger Button */}
-      {!isOpen && (
-        <div className="fixed bottom-6 right-6 z-40">
+        <div hidden={isOpen} className="fixed bottom-6 right-6 z-40">
           <LiquidGlassSurface
             preset="button"
             borderRadius={9999}
             id="ask-ai-launcher-glass"
           >
             <button
+              id="ask-ai-launcher"
               onClick={() => setIsOpen(true)}
               data-cursor="ASK AI"
               aria-label="Open Ask Awais AI assistant"
@@ -305,14 +297,14 @@ export const AskAwaisChat: React.FC = () => {
             </button>
           </LiquidGlassSurface>
         </div>
-      )}
 
       {/* Floating Chat Panel */}
       {isOpen && (
         <div
           ref={chatContainerRef}
           role="dialog"
-          aria-modal="true"
+          tabIndex={-1}
+          aria-modal="false"
           aria-labelledby="ask-awais-ai-title"
           style={{
             position: 'fixed',
@@ -457,7 +449,8 @@ export const AskAwaisChat: React.FC = () => {
               <div className="p-3 border border-red-300 dark:border-red-900/50 bg-red-50/50 dark:bg-red-950/20 text-red-700 dark:text-red-400 text-xs space-y-2">
                 <p>{error}</p>
                 <button
-                  onClick={() => handleSend(messages[messages.length - 1]?.content)}
+                  onClick={() => handleSend(undefined, true)}
+                  disabled={isStreaming}
                   className="inline-flex items-center gap-1 font-mono-code text-[11px] font-semibold underline uppercase"
                 >
                   <RotateCcw className="w-3 h-3" />
@@ -485,6 +478,7 @@ export const AskAwaisChat: React.FC = () => {
             >
               <div className="relative flex items-center rounded-xl border border-neutral-300/80 dark:border-[#2A2A2A] bg-white/70 dark:bg-[#181818]/70 focus-within:border-neutral-950 dark:focus-within:border-[#555555] transition-colors">
                 <textarea
+                  aria-label="Ask about projects, skills, or background"
                   ref={textareaRef}
                   value={input}
                   onChange={(e) => setInput(e.target.value)}

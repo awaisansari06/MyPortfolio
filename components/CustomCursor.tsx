@@ -6,20 +6,16 @@ import { type LensConfig, type DisplacementMapData } from '@/components/liquid-g
 import { generateDisplacementMap } from '@/components/liquid-glass/displacement-map';
 import { LiquidGlassFilter } from '@/components/liquid-glass/LiquidGlassFilter';
 
-/**
- * Dedicated 32px circular lens configuration for the custom cursor.
- * Uses the Aave-style displacement map infrastructure to optically refract live DOM pixels.
- */
 const CURSOR_LENS_CONFIG: LensConfig = {
-  width: 32,
-  height: 32,
-  borderRadius: 16,
+  width: 38,
+  height: 38,
+  borderRadius: 19,
   depth: 0.22,
   curvature: 1.4,
-  scale: 10,
+  scale: 8,
   chroma: 0,
   glow: 0.05,
-  edgeHighlight: 0.35,
+  edgeHighlight: 0.45,
   specularAngle: 45,
 };
 
@@ -27,16 +23,12 @@ export const CustomCursor = () => {
   const cursorRef = useRef<HTMLDivElement>(null);
   const dotRef = useRef<HTMLDivElement>(null);
   const lensRef = useRef<HTMLDivElement>(null);
+  const badgeRef = useRef<HTMLDivElement>(null);
+  const badgeTextRef = useRef<HTMLSpanElement>(null);
   const [mapData, setMapData] = useState<DisplacementMapData | null>(null);
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
-
-    // Generate the 32x32 circular displacement map ONCE on mount
-    const map = generateDisplacementMap(CURSOR_LENS_CONFIG);
-    if (map) {
-      setMapData(map);
-    }
 
     // Disable on touch / coarse devices
     const isTouchDevice =
@@ -54,118 +46,173 @@ export const CustomCursor = () => {
     const cursorEl = cursorRef.current;
     const dotEl = dotRef.current;
     const lensEl = lensRef.current;
-    if (!cursorEl || !dotEl || !lensEl) return;
+    const badgeEl = badgeRef.current;
+    const badgeTextEl = badgeTextRef.current;
+    if (!cursorEl || !dotEl || !lensEl || !badgeEl || !badgeTextEl) return;
 
-    document.body.classList.add('has-custom-cursor');
-
-    // Initialize GSAP quickTo setters for high-performance, non-blocking transforms.
-    // Duration 0 with 'none' ease ensures the cursor tracks the pointer instantly with no lag.
-    const xTo = gsap.quickTo(cursorEl, 'x', {
-      duration: 0,
-      ease: 'none',
+    const mapFrame = requestAnimationFrame(() => {
+      const map = generateDisplacementMap(CURSOR_LENS_CONFIG);
+      if (map) setMapData(map);
     });
 
-    const yTo = gsap.quickTo(cursorEl, 'y', {
-      duration: 0,
-      ease: 'none',
-    });
-
-    // Start hidden until first pointermove
-    gsap.set(cursorEl, { opacity: 0, x: -100, y: -100 });
+    // Start hidden until first pointer movement
+    cursorEl.style.opacity = '0';
+    cursorEl.style.transform = 'translate3d(-100px, -100px, 0)';
     gsap.set(dotEl, { opacity: 1, scale: 1 });
     gsap.set(lensEl, { opacity: 0, scale: 0.5 });
+    gsap.set(badgeEl, { opacity: 0, scale: 0.5 });
 
     let isVisible = false;
-    let isHovered = false;
-    let currentInteractiveEl: Element | null = null;
+    let currentMode: 'hidden' | 'text' | 'badge' | 'clickable' | 'default' = 'default';
+    let currentBadgeText = '';
 
     const handlePointerMove = (e: PointerEvent) => {
-      xTo(e.clientX);
-      yTo(e.clientY);
+      // Keep anchor positioning independent of GSAP's transform cache and
+      // hover animations so every pointer event has an exact viewport position.
+      cursorEl.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0)`;
 
-      if (!isVisible) {
-        isVisible = true;
-        gsap.to(cursorEl, { opacity: 1, duration: 0.10, overwrite: 'auto' });
+      // Document-level pointerenter events can target Document rather than an
+      // element, which has no closest() method.
+      const target = e.target instanceof Element ? e.target : document.documentElement;
+
+      // 1. Text input / editable element check -> yield to native I-beam cursor
+      const textInput = target.closest('input, textarea, select, [contenteditable="true"]');
+      if (textInput) {
+        document.body.classList.remove('has-custom-cursor');
+        if (currentMode !== 'text') {
+          currentMode = 'text';
+          cursorEl.style.opacity = '0';
+        }
+        return;
       }
 
-      // Check hovered element for clickable / interactive controls
-      const target = e.target as HTMLElement | null;
-      if (!target) return;
+      // Hide the native pointer only after the replacement is positioned.
+      document.body.classList.add('has-custom-cursor');
 
-      const interactiveEl = target.closest(
-        'a, button, [role="button"], input, textarea, select, [data-cursor]'
+      // Ensure cursor container is visible
+      if (!isVisible || currentMode === 'text') {
+        isVisible = true;
+        cursorEl.style.opacity = '1';
+      }
+
+      // 2. Custom action badge (data-cursor)
+      const dataCursorEl = target.closest('[data-cursor]') as HTMLElement | null;
+      const dataCursorValue = dataCursorEl?.getAttribute('data-cursor')?.trim();
+
+      if (dataCursorValue) {
+        if (currentMode !== 'badge' || currentBadgeText !== dataCursorValue) {
+          currentMode = 'badge';
+          currentBadgeText = dataCursorValue;
+          badgeTextEl.textContent = dataCursorValue;
+
+          gsap.to(badgeEl, {
+            scale: 1,
+            opacity: 1,
+            duration: 0.15,
+            ease: 'power2.out',
+            overwrite: 'auto',
+          });
+          gsap.to(dotEl, {
+            scale: 0.4,
+            opacity: 0,
+            duration: 0.12,
+            overwrite: 'auto',
+          });
+          gsap.to(lensEl, {
+            scale: 0.5,
+            opacity: 0,
+            duration: 0.12,
+            overwrite: 'auto',
+          });
+        }
+        return;
+      }
+
+      // 3. Clickable / interactive element
+      const clickableEl = target.closest(
+        'a, button, [role="button"], .cursor-pointer, [data-interactive]'
       );
 
-      // Prevent hover thrashing: only transition when resolved interactive target changes
-      if (interactiveEl !== currentInteractiveEl) {
-        currentInteractiveEl = interactiveEl;
-        const nextHovered = Boolean(interactiveEl);
+      if (clickableEl) {
+        if (currentMode !== 'clickable') {
+          currentMode = 'clickable';
+          currentBadgeText = '';
 
-        if (nextHovered !== isHovered) {
-          isHovered = nextHovered;
-          if (isHovered) {
-            // Smooth 140ms non-elastic transition to optical glass lens
-            gsap.to(dotEl, {
-              scale: 0.3,
-              opacity: 0,
-              duration: 0.14,
-              ease: 'power2.out',
-              overwrite: 'auto',
-            });
-            gsap.to(lensEl, {
-              scale: 1,
-              opacity: 1,
-              duration: 0.14,
-              ease: 'power2.out',
-              overwrite: 'auto',
-            });
-          } else {
-            // Smooth 140ms transition back to normal dot
-            gsap.to(dotEl, {
-              scale: 1,
-              opacity: 1,
-              duration: 0.14,
-              ease: 'power2.out',
-              overwrite: 'auto',
-            });
-            gsap.to(lensEl, {
-              scale: 0.5,
-              opacity: 0,
-              duration: 0.14,
-              ease: 'power2.out',
-              overwrite: 'auto',
-            });
-          }
+          // Center dot remains clearly visible, outer liquid glass lens expands
+          gsap.to(dotEl, {
+            scale: 0.75,
+            opacity: 1,
+            duration: 0.15,
+            ease: 'power2.out',
+            overwrite: 'auto',
+          });
+          gsap.to(lensEl, {
+            scale: 1,
+            opacity: 1,
+            duration: 0.15,
+            ease: 'power2.out',
+            overwrite: 'auto',
+          });
+          gsap.to(badgeEl, {
+            scale: 0.5,
+            opacity: 0,
+            duration: 0.12,
+            overwrite: 'auto',
+          });
         }
+        return;
+      }
+
+      // 4. Default state
+      if (currentMode !== 'default') {
+        currentMode = 'default';
+        currentBadgeText = '';
+
+        gsap.to(dotEl, {
+          scale: 1,
+          opacity: 1,
+          duration: 0.15,
+          ease: 'power2.out',
+          overwrite: 'auto',
+        });
+        gsap.to(lensEl, {
+          scale: 0.5,
+          opacity: 0,
+          duration: 0.14,
+          ease: 'power2.out',
+          overwrite: 'auto',
+        });
+        gsap.to(badgeEl, {
+          scale: 0.5,
+          opacity: 0,
+          duration: 0.12,
+          overwrite: 'auto',
+        });
       }
     };
 
     const handlePointerLeave = () => {
       isVisible = false;
-      currentInteractiveEl = null;
-      gsap.to(cursorEl, { opacity: 0, duration: 0.15, overwrite: 'auto' });
-    };
-
-    const handlePointerEnter = () => {
-      isVisible = true;
-      gsap.to(cursorEl, { opacity: 1, duration: 0.10, overwrite: 'auto' });
+      currentMode = 'hidden';
+      document.body.classList.remove('has-custom-cursor');
+      cursorEl.style.opacity = '0';
     };
 
     window.addEventListener('pointermove', handlePointerMove, { passive: true });
     document.addEventListener('pointerleave', handlePointerLeave);
-    document.addEventListener('pointerenter', handlePointerEnter);
+    document.addEventListener('pointerenter', handlePointerMove);
 
     return () => {
+      cancelAnimationFrame(mapFrame);
       document.body.classList.remove('has-custom-cursor');
       window.removeEventListener('pointermove', handlePointerMove);
       document.removeEventListener('pointerleave', handlePointerLeave);
-      document.removeEventListener('pointerenter', handlePointerEnter);
+      document.removeEventListener('pointerenter', handlePointerMove);
     };
   }, []);
 
   return (
     <>
-      {/* SVG feDisplacementMap filter injected once on mount for the lens specification */}
       {mapData && (
         <LiquidGlassFilter
           surfaceId="cursor"
@@ -174,49 +221,67 @@ export const CustomCursor = () => {
         />
       )}
 
-      {/* Outer cursor element solely responsible for pointer translation */}
+      {/* Main Cursor Anchor */}
       <div
         ref={cursorRef}
+        data-custom-cursor
         aria-hidden="true"
         className="pointer-events-none fixed top-0 left-0 z-[9999]"
         style={{
           transform: 'translate3d(-100px, -100px, 0)',
           willChange: 'transform',
-          mixBlendMode: 'difference',
         }}
       >
-        {/* Normal State: Crisp 10px solid dot centered at pointer (0, 0) */}
+        {/* State 1: Crisp Center Dot - Always precisely centered and visible in both light & dark themes */}
         <div
           ref={dotRef}
-          className="pointer-events-none rounded-full bg-white"
+          className="pointer-events-none rounded-full bg-neutral-900 dark:bg-[#F5F3EF] border border-white/60 dark:border-black/40 shadow-[0_0_8px_rgba(0,0,0,0.3)] dark:shadow-[0_0_10px_rgba(255,255,255,0.6)]"
           style={{
             position: 'absolute',
-            top: '-5px',
-            left: '-5px',
-            width: '10px',
-            height: '10px',
+            top: '-4px',
+            left: '-4px',
+            width: '8px',
+            height: '8px',
             transformOrigin: 'center center',
           }}
         />
 
-        {/* Interactive Hover: 32px Liquid Glass Lens centered at pointer (0, 0) */}
+        {/* State 2: Interactive Hover Lens - 38px Liquid Glass Lens around the central dot */}
         <div
           ref={lensRef}
-          className="pointer-events-none overflow-hidden rounded-full border border-white/40"
+          className="pointer-events-none rounded-full border border-neutral-900/35 dark:border-white/50 bg-neutral-900/[0.07] dark:bg-white/[0.14] backdrop-blur-[3px] shadow-[0_4px_16px_rgba(0,0,0,0.12)] dark:shadow-[0_0_20px_rgba(255,255,255,0.15)] overflow-hidden"
           style={{
             position: 'absolute',
-            top: '-16px',
-            left: '-16px',
-            width: '32px',
-            height: '32px',
+            top: '-19px',
+            left: '-19px',
+            width: '38px',
+            height: '38px',
             transformOrigin: 'center center',
-            backgroundColor: 'rgba(255, 255, 255, 0.15)',
           }}
         >
-          {/* Subtle top specular catch rim */}
+          {/* Specular Edge Highlight */}
           <div
-            className="absolute top-0 inset-x-2 h-[1px] bg-white/60 rounded-full opacity-80 pointer-events-none"
+            className="absolute top-0 inset-x-2 h-[1px] bg-white/70 dark:bg-white/80 rounded-full pointer-events-none"
             aria-hidden="true"
+          />
+        </div>
+
+        {/* State 3: Custom Action Badge - Displays label for elements with data-cursor */}
+        <div
+          ref={badgeRef}
+          className="pointer-events-none flex items-center justify-center px-3 py-1 rounded-full bg-neutral-950/90 dark:bg-[#F5F3EF]/95 text-white dark:text-[#0A0A0A] border border-neutral-700/60 dark:border-white/60 shadow-xl backdrop-blur-md"
+          style={{
+            position: 'absolute',
+            top: '0px',
+            left: '0px',
+            transform: 'translate(-50%, -50%)',
+            transformOrigin: 'center center',
+            whiteSpace: 'nowrap',
+          }}
+        >
+          <span
+            ref={badgeTextRef}
+            className="font-mono-code text-[10px] tracking-widest uppercase font-semibold leading-none select-none"
           />
         </div>
       </div>

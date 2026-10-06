@@ -35,10 +35,11 @@ export const RefractiveProcessNode: React.FC<RefractiveProcessNodeProps> = ({
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
-    const map = generateDisplacementMap(NODE_LENS_CONFIG);
-    if (map) {
-      setMapData(map);
-    }
+    const frame = requestAnimationFrame(() => {
+      const map = generateDisplacementMap(NODE_LENS_CONFIG);
+      if (map) setMapData(map);
+    });
+    return () => cancelAnimationFrame(frame);
   }, []);
 
   const filterUrl = mapData ? getFilterUrl('procnode', mapData.version) : undefined;

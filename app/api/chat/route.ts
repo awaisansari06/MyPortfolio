@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { GoogleGenAI } from '@google/genai';
 import { buildSystemInstruction } from '@/lib/ai/systemPrompt';
+import { MAX_CHAT_BODY_BYTES, validateChatMessages } from '@/lib/ai/messages';
 
 export const dynamic = 'force-dynamic';
 
@@ -41,48 +42,50 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    const reader = req.body?.getReader();
+    if (!reader) {
+      return NextResponse.json({ error: 'A JSON request body is required.' }, { status: 400 });
+    }
+    const decoder = new TextDecoder();
+    let bodyText = '';
+    let bodyBytes = 0;
+    try {
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        bodyBytes += value.byteLength;
+        if (bodyBytes > MAX_CHAT_BODY_BYTES) {
+          await reader.cancel();
+          return NextResponse.json({ error: 'Request body is too large.' }, { status: 413 });
+        }
+        bodyText += decoder.decode(value, { stream: true });
+      }
+      bodyText += decoder.decode();
+    } finally {
+      reader.releaseLock();
+    }
+
+    let body: unknown;
+    try {
+      body = JSON.parse(bodyText);
+    } catch {
+      return NextResponse.json({ error: 'Request body must contain valid JSON.' }, { status: 400 });
+    }
+    const validation = validateChatMessages(body);
+    if ('error' in validation) {
+      return NextResponse.json({ error: validation.error }, { status: 400 });
+    }
+
     const apiKey = process.env.GEMINI_API_KEY;
     if (!apiKey) {
       return NextResponse.json(
-        {
-          error:
-            'Portfolio AI service is temporarily unavailable. Please connect via email or LinkedIn.',
-        },
+        { error: 'Portfolio AI service is temporarily unavailable. Please connect via email or LinkedIn.' },
         { status: 503 }
       );
     }
 
-    const body = await req.json();
-    const { messages } = body;
-
-    if (!messages || !Array.isArray(messages) || messages.length === 0) {
-      return NextResponse.json(
-        { error: 'Invalid message payload. An array of messages is required.' },
-        { status: 400 }
-      );
-    }
-
-    // Protect against oversized message lists
-    const recentMessages = messages.slice(-10);
-    const lastUserMessage = recentMessages[recentMessages.length - 1];
-
-    if (!lastUserMessage || lastUserMessage.role !== 'user' || typeof lastUserMessage.content !== 'string') {
-      return NextResponse.json(
-        { error: 'Latest message must be from user with text content.' },
-        { status: 400 }
-      );
-    }
-
-    // Limit individual message length to prevent prompt stuffing
-    if (lastUserMessage.content.length > 500) {
-      return NextResponse.json(
-        { error: 'Query is too long. Please keep questions under 500 characters.' },
-        { status: 400 }
-      );
-    }
-
     // Format messages for Google Gen AI
-    const contents = recentMessages.map((msg: { role: string; content: string }) => ({
+    const contents = validation.messages.map((msg) => ({
       role: msg.role === 'assistant' ? 'model' : 'user',
       parts: [{ text: msg.content }],
     }));

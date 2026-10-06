@@ -1,10 +1,13 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { useRef, useId } from 'react';
+import Image from 'next/image';
+import { projectImages } from '@/lib/projectImages';
 import { ProjectCaseStudy } from '@/data/portfolio';
 import { TechIcon } from './TechIcon';
 import { X, ExternalLink, Github, CheckCircle2, Terminal, ArrowRight } from 'lucide-react';
 import { LiquidGlassSurface } from '@/components/liquid-glass/LiquidGlassSurface';
+import { useDialogFocus } from '@/hooks/useDialogFocus';
 
 interface ProjectModalProps {
   project: ProjectCaseStudy | null;
@@ -12,26 +15,19 @@ interface ProjectModalProps {
 }
 
 export const ProjectModal = ({ project, onClose }: ProjectModalProps) => {
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
-    };
-    if (project) {
-      document.body.style.overflow = 'hidden';
-      window.addEventListener('keydown', handleKeyDown);
-    }
-    return () => {
-      document.body.style.overflow = 'auto';
-      window.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [project, onClose]);
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const titleId = useId();
+  useDialogFocus(dialogRef, Boolean(project), onClose);
 
   if (!project) return null;
 
   return (
     <div
+      ref={dialogRef}
       role="dialog"
       aria-modal="true"
+      aria-labelledby={titleId}
+      tabIndex={-1}
       className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 md:p-10 bg-black/80 backdrop-blur-sm animate-fade-in"
     >
       <LiquidGlassSurface
@@ -61,7 +57,7 @@ export const ProjectModal = ({ project, onClose }: ProjectModalProps) => {
               <span>/</span>
               <span className="uppercase">{project.category}</span>
             </div>
-            <h2 className="text-2xl sm:text-4xl font-bold tracking-tight uppercase">
+            <h2 id={titleId} className="text-2xl sm:text-4xl font-bold tracking-tight uppercase">
               {project.title}
             </h2>
             <p className="font-mono-code text-xs sm:text-sm text-neutral-600 dark:text-[#A3A3A3] mt-2 uppercase tracking-wide">
@@ -80,13 +76,13 @@ export const ProjectModal = ({ project, onClose }: ProjectModalProps) => {
               </a>
 
               <a
-                href="https://github.com/awaisansari06"
+                href={project.githubUrl || 'https://github.com/awaisansari06'}
                 target="_blank"
                 rel="noreferrer"
                 className="inline-flex items-center gap-2 px-4 py-2.5 font-mono-code text-xs tracking-wider transition-all text-neutral-900 dark:text-[#F5F3EF] cursor-pointer rounded-full border border-neutral-300/80 dark:border-[#333333] bg-white/60 dark:bg-[#181818]/60 shadow-[inset_0_1px_0_var(--glass-edge-highlight)] hover:scale-[1.02]"
               >
                 <Github className="w-3.5 h-3.5" />
-                <span>VIEW GITHUB REPOSITORY</span>
+                <span>{project.githubUrl ? 'VIEW GITHUB REPOSITORY' : 'VIEW GITHUB PROFILE'}</span>
               </a>
             </div>
           </div>
@@ -112,20 +108,20 @@ export const ProjectModal = ({ project, onClose }: ProjectModalProps) => {
             <div className="rounded-lg border border-neutral-300/80 dark:border-[#2A2A2A] overflow-hidden bg-neutral-950/5 dark:bg-black/50">
               {project.id === 'careerwise' && (
                 <>
-                  <img src="/ProjectImage/CareerWise-Dark.png" alt="CareerWise Platform" className="w-full h-auto hidden dark:block" />
-                  <img src="/ProjectImage/CareerWise-Light.png" alt="CareerWise Platform" className="w-full h-auto block dark:hidden" />
+                  <Image src={projectImages.careerwise.dark} sizes="(min-width: 1024px) 800px, 100vw" alt="CareerWise Platform" className="w-full h-auto hidden dark:block" />
+                  <Image src={projectImages.careerwise.light} sizes="(min-width: 1024px) 800px, 100vw" alt="CareerWise Platform" className="w-full h-auto block dark:hidden" />
                 </>
               )}
               {(project.id === 'devflow' || project.id === 'buildstack') && (
                 <>
-                  <img src="/ProjectImage/BuildStack-Dark.png" alt="BuildStack Platform" className="w-full h-auto hidden dark:block" />
-                  <img src="/ProjectImage/BuildStack-Light.png" alt="BuildStack Platform" className="w-full h-auto block dark:hidden" />
+                  <Image src={projectImages.buildstack.dark} sizes="(min-width: 1024px) 800px, 100vw" alt="BuildStack Platform" className="w-full h-auto hidden dark:block" />
+                  <Image src={projectImages.buildstack.light} sizes="(min-width: 1024px) 800px, 100vw" alt="BuildStack Platform" className="w-full h-auto block dark:hidden" />
                 </>
               )}
               {(project.id === 'smartjourney' || project.id === 'tripcraft') && (
                 <>
-                  <img src="/ProjectImage/TripCraft-Dark.png" alt="TripCraft Platform" className="w-full h-auto hidden dark:block" />
-                  <img src="/ProjectImage/TripCraft-Light.png" alt="TripCraft Platform" className="w-full h-auto block dark:hidden" />
+                  <Image src={projectImages.tripcraft.dark} sizes="(min-width: 1024px) 800px, 100vw" alt="TripCraft Platform" className="w-full h-auto hidden dark:block" />
+                  <Image src={projectImages.tripcraft.light} sizes="(min-width: 1024px) 800px, 100vw" alt="TripCraft Platform" className="w-full h-auto block dark:hidden" />
                 </>
               )}
             </div>

@@ -43,10 +43,11 @@ export const RefractiveProcessFlow: React.FC<RefractiveProcessFlowProps> = ({
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
-    const map = generateDisplacementMap(PROC_FLOW_LENS);
-    if (map) {
-      setMapData(map);
-    }
+    const frame = requestAnimationFrame(() => {
+      const map = generateDisplacementMap(PROC_FLOW_LENS);
+      if (map) setMapData(map);
+    });
+    return () => cancelAnimationFrame(frame);
   }, []);
 
   useEffect(() => {

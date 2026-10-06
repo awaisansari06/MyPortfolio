@@ -44,10 +44,11 @@ export const RefractiveButton: React.FC<RefractiveButtonProps> = ({
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
-    const map = generateDisplacementMap(BTN_LENS_CONFIG);
-    if (map) {
-      setMapData(map);
-    }
+    const frame = requestAnimationFrame(() => {
+      const map = generateDisplacementMap(BTN_LENS_CONFIG);
+      if (map) setMapData(map);
+    });
+    return () => cancelAnimationFrame(frame);
   }, []);
 
   const filterUrl = mapData ? getFilterUrl('btn-lens', mapData.version) : undefined;
