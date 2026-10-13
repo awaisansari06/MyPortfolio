@@ -44,7 +44,7 @@ Designed under the philosophy of **"Static Composition + Dynamic Behavior"**, th
 ### 3. 📊 Live GitHub Activity & GraphQL Contributions
 - **Dynamic Heatmap**: Fetches authentic 52-week contribution graphs directly from the GitHub GraphQL API.
 - **Bespoke Skeleton Loader**: Displays a genuine monochrome 52-column $\times$ 7-row block skeleton with gentle pulsing during asynchronous fetches, followed by a smooth crossfade.
-- **Authoritative Pinned Order**: Automatically displays selected repositories matching GitHub pinned order (`MyPortfolio`, `CareerWise`, `devflow`, `smart-journey`).
+- **Authoritative Pinned Order**: Automatically displays selected repositories matching GitHub pinned order (`MyPortfolio`, `CareerWise`, `BuildStack`, `TripCraft`).
 
 ### 4. 💼 Deep-Dive Project Case Studies & Specs
 - **Selected Works**: Features **CareerWise** (AI Career Intelligence Platform), **BuildStack** (Agentic Web Application Generator), and **TripCraft** (AI Route Planning System).

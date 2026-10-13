@@ -55,12 +55,11 @@ export const RefractiveButton: React.FC<RefractiveButtonProps> = ({
 
   const content = (
     <>
-      {/* ── 1. Original Semantic Content (Always Accessible & 100% Visible) ── */}
+
       <span className="relative z-10 flex items-center justify-center gap-2 select-none">
         {children}
       </span>
 
-      {/* ── 2. Optical Glass Lens (~200 × 48px) with Refraction Target ─────── */}
       <span
         aria-hidden="true"
         className="absolute inset-0 rounded-full overflow-hidden pointer-events-none z-20 transition-all duration-300"
@@ -75,7 +74,7 @@ export const RefractiveButton: React.FC<RefractiveButtonProps> = ({
           WebkitBackdropFilter: 'blur(1.5px) saturate(1.15)',
         }}
       >
-        {/* Synchronized Refraction Target: positioned identically, receives feDisplacementMap */}
+
         <span
           className="absolute inset-0 flex items-center justify-center gap-2 px-5 py-3 whitespace-nowrap text-neutral-950 dark:text-[#F5F3EF] font-semibold"
           style={{
@@ -86,7 +85,6 @@ export const RefractiveButton: React.FC<RefractiveButtonProps> = ({
           {children}
         </span>
 
-        {/* Specular top catch rim */}
         <span
           className="absolute top-0 inset-x-3 h-[1px] bg-white/90 dark:bg-white/70 rounded-full opacity-90"
           aria-hidden="true"

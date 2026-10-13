@@ -21,8 +21,8 @@ export const SelectedWork = () => {
   const frame3Ref = useGlassHoverLens<HTMLDivElement>();
 
   const careerwise = portfolioData.projects[0];
-  const devflow = portfolioData.projects[1];
-  const smartjourney = portfolioData.projects[2];
+  const buildstack = portfolioData.projects[1];
+  const tripcraft = portfolioData.projects[2];
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -103,7 +103,7 @@ export const SelectedWork = () => {
       className="py-24 md:py-36 border-b border-neutral-300 dark:border-[#2A2A2A] relative"
     >
       <div className="max-w-7xl mx-auto px-6 md:px-12">
-        {/* Section Header */}
+
         <div className="work-header flex flex-col md:flex-row md:items-end justify-between pb-8 mb-16 border-b border-neutral-300 dark:border-[#2A2A2A]">
           <div>
             <div className="font-mono-code text-[11px] text-neutral-500 dark:text-[#A3A3A3] tracking-[0.25em] uppercase mb-2">
@@ -118,10 +118,9 @@ export const SelectedWork = () => {
           </p>
         </div>
 
-        {/* ---------------- PROJECT 01: CAREERWISE ---------------- */}
         <div className="project-block mb-32 pb-24 border-b border-neutral-300 dark:border-[#2A2A2A]">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-start">
-            {/* Left: Project Details */}
+
             <div className="project-info lg:col-span-6 flex flex-col justify-between">
               <div>
                 <div className="flex items-center gap-3 font-mono-code text-xs text-neutral-400 dark:text-[#666666] mb-3">
@@ -141,7 +140,6 @@ export const SelectedWork = () => {
                   {careerwise.shortDescription || careerwise.description}
                 </p>
 
-                {/* High-Level Architecture Pipeline */}
                 <div className="mt-6 p-4 transition-all duration-300 liquid-glass-node">
                   <div className="font-mono-code text-[10px] text-neutral-400 dark:text-[#666666] uppercase tracking-wider mb-2.5">
                     PROCESSING ARCHITECTURE
@@ -149,7 +147,6 @@ export const SelectedWork = () => {
                   <RefractiveProcessFlow steps={careerwise.flowSteps} />
                 </div>
 
-                {/* Concise Core Capabilities */}
                 <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-2 font-mono-code text-xs">
                   {(careerwise.conciseFeatures || careerwise.features.slice(0, 4)).map((feat, i) => (
                     <div
@@ -162,7 +159,6 @@ export const SelectedWork = () => {
                   ))}
                 </div>
 
-                {/* Compact Tech Badges */}
                 <div className="mt-6 flex flex-wrap gap-2">
                   {(careerwise.compactTechnologies || careerwise.technologies.slice(0, 8)).map((t) => (
                     <span
@@ -176,7 +172,6 @@ export const SelectedWork = () => {
                 </div>
               </div>
 
-              {/* Action Buttons */}
               <div className="mt-8 flex flex-wrap items-center gap-4">
                 <a
                   href={careerwise.liveUrl}
@@ -199,13 +194,12 @@ export const SelectedWork = () => {
               </div>
             </div>
 
-            {/* Right: Product Interface Frame */}
             <div className="project-visual lg:col-span-6">
               <div
                 ref={frame1Ref}
                 className="relative rounded-2xl p-4 sm:p-6 overflow-hidden group transition-all duration-300 liquid-glass-card-frame"
               >
-                {/* Browser Chrome Bar */}
+
                 <div className="flex items-center justify-between pb-3.5 mb-4 border-b border-neutral-300/60 dark:border-[#2E2E2E] font-mono-code text-[11px] text-neutral-500 dark:text-[#888888]">
                   <div className="flex items-center gap-2">
                     <div className="flex items-center gap-1.5">
@@ -227,11 +221,12 @@ export const SelectedWork = () => {
                   </a>
                 </div>
 
-                {/* Actual Product Screenshot in Frame */}
-                <div
+                <button
+                  type="button"
+                  aria-label={`View ${careerwise.title} case study`}
                   onClick={() => setActiveModalProject(careerwise)}
                   data-cursor="VIEW"
-                  className="relative rounded-lg border border-neutral-300/80 dark:border-[#2A2A2A] overflow-hidden bg-neutral-950/5 dark:bg-black/40 cursor-pointer shadow-sm group/frame"
+                  className="relative block w-full text-left rounded-lg border border-neutral-300/80 dark:border-[#2A2A2A] overflow-hidden bg-neutral-950/5 dark:bg-black/40 cursor-pointer shadow-sm group/frame"
                 >
                   <Image
                     src={projectImages.careerwise.dark}
@@ -248,9 +243,8 @@ export const SelectedWork = () => {
                     loading="lazy"
                   />
                   <div className="absolute inset-0 bg-neutral-950/0 group-hover/frame:bg-neutral-950/5 dark:group-hover/frame:bg-white/5 transition-colors pointer-events-none" />
-                </div>
+                </button>
 
-                {/* Metadata Footer */}
                 <div className="mt-4 pt-3 border-t border-neutral-300/60 dark:border-[#2E2E2E] flex justify-between items-center font-mono-code text-[10px] text-neutral-500 dark:text-[#777777]">
                   <div className="flex items-center gap-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
@@ -267,16 +261,15 @@ export const SelectedWork = () => {
           </div>
         </div>
 
-        {/* ---------------- PROJECT 02: BUILDSTACK ---------------- */}
         <div className="project-block mb-32 pb-24 border-b border-neutral-300 dark:border-[#2A2A2A]">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-start">
-            {/* Left: Product Interface Frame */}
+
             <div className="project-visual lg:col-span-6 order-2 lg:order-1">
               <div
                 ref={frame2Ref}
                 className="relative rounded-2xl p-4 sm:p-6 overflow-hidden group transition-all duration-300 liquid-glass-card-frame"
               >
-                {/* Browser Chrome Bar */}
+
                 <div className="flex items-center justify-between pb-3.5 mb-4 border-b border-neutral-300/60 dark:border-[#2E2E2E] font-mono-code text-[11px] text-neutral-500 dark:text-[#888888]">
                   <div className="flex items-center gap-2">
                     <div className="flex items-center gap-1.5">
@@ -287,7 +280,7 @@ export const SelectedWork = () => {
                     <span className="ml-1.5 text-neutral-700 dark:text-[#C5C3BF] font-medium">buildstack-project.vercel.app</span>
                   </div>
                   <a
-                    href={devflow.liveUrl}
+                    href={buildstack.liveUrl}
                     target="_blank"
                     rel="noreferrer"
                     data-cursor="OPEN"
@@ -298,11 +291,12 @@ export const SelectedWork = () => {
                   </a>
                 </div>
 
-                {/* Actual Product Screenshot in Frame */}
-                <div
-                  onClick={() => setActiveModalProject(devflow)}
+                <button
+                  type="button"
+                  aria-label={`View ${buildstack.title} case study`}
+                  onClick={() => setActiveModalProject(buildstack)}
                   data-cursor="VIEW"
-                  className="relative rounded-lg border border-neutral-300/80 dark:border-[#2A2A2A] overflow-hidden bg-neutral-950/5 dark:bg-black/40 cursor-pointer shadow-sm group/frame"
+                  className="relative block w-full text-left rounded-lg border border-neutral-300/80 dark:border-[#2A2A2A] overflow-hidden bg-neutral-950/5 dark:bg-black/40 cursor-pointer shadow-sm group/frame"
                 >
                   <Image
                     src={projectImages.buildstack.dark}
@@ -319,9 +313,8 @@ export const SelectedWork = () => {
                     loading="lazy"
                   />
                   <div className="absolute inset-0 bg-neutral-950/0 group-hover/frame:bg-neutral-950/5 dark:group-hover/frame:bg-white/5 transition-colors pointer-events-none" />
-                </div>
+                </button>
 
-                {/* Metadata Footer */}
                 <div className="mt-4 pt-3 border-t border-neutral-300/60 dark:border-[#2E2E2E] flex justify-between items-center font-mono-code text-[10px] text-neutral-500 dark:text-[#777777]">
                   <div className="flex items-center gap-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
@@ -336,37 +329,34 @@ export const SelectedWork = () => {
               </div>
             </div>
 
-            {/* Right: Technical Spec & Architecture */}
             <div className="project-info lg:col-span-6 order-1 lg:order-2 flex flex-col justify-between">
               <div>
                 <div className="flex items-center gap-3 font-mono-code text-xs text-neutral-400 dark:text-[#666666] mb-3">
                   <span className="font-semibold text-neutral-900 dark:text-[#F5F3EF]">02</span>
                   <span>/</span>
-                  <span className="uppercase">{devflow.category}</span>
+                  <span className="uppercase">{buildstack.category}</span>
                 </div>
 
                 <h3 className="text-3xl sm:text-5xl font-bold uppercase tracking-tight text-neutral-950 dark:text-[#F5F3EF]">
-                  {devflow.title}
+                  {buildstack.title}
                 </h3>
                 <p className="font-mono-code text-xs text-neutral-500 dark:text-[#A3A3A3] mt-2 uppercase tracking-wider">
-                  {devflow.tagline}
+                  {buildstack.tagline}
                 </p>
 
                 <p className="mt-5 text-base text-neutral-700 dark:text-[#A3A3A3] leading-relaxed font-normal">
-                  {devflow.shortDescription || devflow.description}
+                  {buildstack.shortDescription || buildstack.description}
                 </p>
 
-                {/* High-Level Architecture Pipeline */}
                 <div className="mt-6 p-4 transition-all duration-300 liquid-glass-node">
                   <div className="font-mono-code text-[10px] text-neutral-400 dark:text-[#666666] uppercase tracking-wider mb-2.5">
                     PROCESSING ARCHITECTURE
                   </div>
-                  <RefractiveProcessFlow steps={devflow.flowSteps} />
+                  <RefractiveProcessFlow steps={buildstack.flowSteps} />
                 </div>
 
-                {/* Concise Core Capabilities */}
                 <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-2 font-mono-code text-xs">
-                  {(devflow.conciseFeatures || devflow.features.slice(0, 4)).map((feat, i) => (
+                  {(buildstack.conciseFeatures || buildstack.features.slice(0, 4)).map((feat, i) => (
                     <div
                       key={i}
                       className="px-3 py-2 flex items-center gap-2 transition-all duration-200 rounded-lg border border-neutral-300/70 dark:border-[#2A2A2A] bg-white/50 dark:bg-[#141414]/50 text-neutral-800 dark:text-[#D4D4D4]"
@@ -377,9 +367,8 @@ export const SelectedWork = () => {
                   ))}
                 </div>
 
-                {/* Compact Tech Stack */}
                 <div className="mt-6 flex flex-wrap gap-2">
-                  {(devflow.compactTechnologies || devflow.technologies.slice(0, 8)).map((t) => (
+                  {(buildstack.compactTechnologies || buildstack.technologies.slice(0, 8)).map((t) => (
                     <span
                       key={t}
                       className="font-mono-code text-[10px] px-2.5 py-1 inline-flex items-center gap-1.5 transition-all duration-200 liquid-glass-chip text-neutral-800 dark:text-[#D4D4D4]"
@@ -391,10 +380,9 @@ export const SelectedWork = () => {
                 </div>
               </div>
 
-              {/* Action Buttons */}
               <div className="mt-8 flex flex-wrap items-center gap-4">
                 <a
-                  href={devflow.liveUrl}
+                  href={buildstack.liveUrl}
                   target="_blank"
                   rel="noreferrer"
                   data-cursor="OPEN"
@@ -405,7 +393,7 @@ export const SelectedWork = () => {
                 </a>
 
                 <RefractiveButton
-                  onClick={() => setActiveModalProject(devflow)}
+                  onClick={() => setActiveModalProject(buildstack)}
                   data-cursor="VIEW"
                 >
                   <span>CASE STUDY &amp; SPECS</span>
@@ -416,40 +404,37 @@ export const SelectedWork = () => {
           </div>
         </div>
 
-        {/* ---------------- PROJECT 03: TRIPCRAFT ---------------- */}
         <div className="project-block">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-start">
-            {/* Left: Project Details */}
+
             <div className="project-info lg:col-span-6 flex flex-col justify-between">
               <div>
                 <div className="flex items-center gap-3 font-mono-code text-xs text-neutral-400 dark:text-[#666666] mb-3">
                   <span className="font-semibold text-neutral-900 dark:text-[#F5F3EF]">03</span>
                   <span>/</span>
-                  <span className="uppercase">{smartjourney.category}</span>
+                  <span className="uppercase">{tripcraft.category}</span>
                 </div>
 
                 <h3 className="text-3xl sm:text-5xl font-bold uppercase tracking-tight text-neutral-950 dark:text-[#F5F3EF]">
-                  {smartjourney.title}
+                  {tripcraft.title}
                 </h3>
                 <p className="font-mono-code text-xs text-neutral-500 dark:text-[#A3A3A3] mt-2 uppercase tracking-wider">
-                  {smartjourney.tagline}
+                  {tripcraft.tagline}
                 </p>
 
                 <p className="mt-5 text-base text-neutral-700 dark:text-[#A3A3A3] leading-relaxed font-normal">
-                  {smartjourney.shortDescription || smartjourney.description}
+                  {tripcraft.shortDescription || tripcraft.description}
                 </p>
 
-                {/* High-Level Architecture Pipeline */}
                 <div className="mt-6 p-4 transition-all duration-300 liquid-glass-node">
                   <div className="font-mono-code text-[10px] text-neutral-400 dark:text-[#666666] uppercase tracking-wider mb-2.5">
                     PROCESSING ARCHITECTURE
                   </div>
-                  <RefractiveProcessFlow steps={smartjourney.flowSteps} />
+                  <RefractiveProcessFlow steps={tripcraft.flowSteps} />
                 </div>
 
-                {/* Concise Core Capabilities */}
                 <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-2 font-mono-code text-xs">
-                  {(smartjourney.conciseFeatures || smartjourney.features.slice(0, 4)).map((feat, i) => (
+                  {(tripcraft.conciseFeatures || tripcraft.features.slice(0, 4)).map((feat, i) => (
                     <div
                       key={i}
                       className="px-3 py-2 flex items-center gap-2 transition-all duration-200 rounded-lg border border-neutral-300/70 dark:border-[#2A2A2A] bg-white/50 dark:bg-[#141414]/50 text-neutral-800 dark:text-[#D4D4D4]"
@@ -460,9 +445,8 @@ export const SelectedWork = () => {
                   ))}
                 </div>
 
-                {/* Compact Tech Stack */}
                 <div className="mt-6 flex flex-wrap gap-2">
-                  {(smartjourney.compactTechnologies || smartjourney.technologies.slice(0, 8)).map((t) => (
+                  {(tripcraft.compactTechnologies || tripcraft.technologies.slice(0, 8)).map((t) => (
                     <span
                       key={t}
                       className="font-mono-code text-[10px] px-2.5 py-1 inline-flex items-center gap-1.5 transition-all duration-200 liquid-glass-chip text-neutral-800 dark:text-[#D4D4D4]"
@@ -474,10 +458,9 @@ export const SelectedWork = () => {
                 </div>
               </div>
 
-              {/* Action Buttons */}
               <div className="mt-8 flex flex-wrap items-center gap-4">
                 <a
-                  href={smartjourney.liveUrl}
+                  href={tripcraft.liveUrl}
                   target="_blank"
                   rel="noreferrer"
                   data-cursor="OPEN"
@@ -488,7 +471,7 @@ export const SelectedWork = () => {
                 </a>
 
                 <RefractiveButton
-                  onClick={() => setActiveModalProject(smartjourney)}
+                  onClick={() => setActiveModalProject(tripcraft)}
                   data-cursor="VIEW"
                 >
                   <span>CASE STUDY &amp; SPECS</span>
@@ -497,13 +480,12 @@ export const SelectedWork = () => {
               </div>
             </div>
 
-            {/* Right: Product Interface Frame */}
             <div className="project-visual lg:col-span-6">
               <div
                 ref={frame3Ref}
                 className="relative rounded-2xl p-4 sm:p-6 overflow-hidden group transition-all duration-300 liquid-glass-card-frame"
               >
-                {/* Browser Chrome Bar */}
+
                 <div className="flex items-center justify-between pb-3.5 mb-4 border-b border-neutral-300/60 dark:border-[#2E2E2E] font-mono-code text-[11px] text-neutral-500 dark:text-[#888888]">
                   <div className="flex items-center gap-2">
                     <div className="flex items-center gap-1.5">
@@ -514,7 +496,7 @@ export const SelectedWork = () => {
                     <span className="ml-1.5 text-neutral-700 dark:text-[#C5C3BF] font-medium">tripcraft-project.vercel.app</span>
                   </div>
                   <a
-                    href={smartjourney.liveUrl}
+                    href={tripcraft.liveUrl}
                     target="_blank"
                     rel="noreferrer"
                     data-cursor="OPEN"
@@ -525,11 +507,12 @@ export const SelectedWork = () => {
                   </a>
                 </div>
 
-                {/* Actual Product Screenshot in Frame */}
-                <div
-                  onClick={() => setActiveModalProject(smartjourney)}
+                <button
+                  type="button"
+                  aria-label={`View ${tripcraft.title} case study`}
+                  onClick={() => setActiveModalProject(tripcraft)}
                   data-cursor="VIEW"
-                  className="relative rounded-lg border border-neutral-300/80 dark:border-[#2A2A2A] overflow-hidden bg-neutral-950/5 dark:bg-black/40 cursor-pointer shadow-sm group/frame"
+                  className="relative block w-full text-left rounded-lg border border-neutral-300/80 dark:border-[#2A2A2A] overflow-hidden bg-neutral-950/5 dark:bg-black/40 cursor-pointer shadow-sm group/frame"
                 >
                   <Image
                     src={projectImages.tripcraft.dark}
@@ -546,9 +529,8 @@ export const SelectedWork = () => {
                     loading="lazy"
                   />
                   <div className="absolute inset-0 bg-neutral-950/0 group-hover/frame:bg-neutral-950/5 dark:group-hover/frame:bg-white/5 transition-colors pointer-events-none" />
-                </div>
+                </button>
 
-                {/* Metadata Footer */}
                 <div className="mt-4 pt-3 border-t border-neutral-300/60 dark:border-[#2E2E2E] flex justify-between items-center font-mono-code text-[10px] text-neutral-500 dark:text-[#777777]">
                   <div className="flex items-center gap-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
@@ -566,7 +548,6 @@ export const SelectedWork = () => {
         </div>
       </div>
 
-      {/* Case Study Modal */}
       <ProjectModal
         project={activeModalProject}
         onClose={() => setActiveModalProject(null)}

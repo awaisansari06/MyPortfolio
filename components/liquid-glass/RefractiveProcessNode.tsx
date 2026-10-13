@@ -47,7 +47,7 @@ export const RefractiveProcessNode: React.FC<RefractiveProcessNodeProps> = ({
 
   return (
     <>
-      {/* SVG feDisplacementMap filter */}
+
       {mapData && (
         <LiquidGlassFilter
           surfaceId="procnode"
@@ -71,7 +71,7 @@ export const RefractiveProcessNode: React.FC<RefractiveProcessNodeProps> = ({
         }`}
         style={{ position: 'relative' }}
       >
-        {/* Base badge background */}
+
         <span
           className={`absolute inset-0 rounded-full transition-all duration-300 ${
             isElevated
@@ -81,12 +81,10 @@ export const RefractiveProcessNode: React.FC<RefractiveProcessNodeProps> = ({
           aria-hidden="true"
         />
 
-        {/* 1. Visible semantic content (always readable and accessible) */}
         <span className={`relative z-10 transition-opacity duration-200 ${isElevated ? 'opacity-0' : 'opacity-100'}`}>
           {label}
         </span>
 
-        {/* 2. Refraction Target / Optical Glass Lens (visible only when hovered or active) */}
         <span
           aria-hidden="true"
           className="absolute inset-0 rounded-full overflow-hidden pointer-events-none z-20 transition-all duration-200"
@@ -99,7 +97,7 @@ export const RefractiveProcessNode: React.FC<RefractiveProcessNodeProps> = ({
               'inset 0 1px 0 var(--glass-edge-highlight), inset 0 0 0 0.5px var(--glass-rim-strong), 0 4px 12px var(--glass-shadow)',
           }}
         >
-          {/* Synchronized Refraction Target receiving SVG displacement filter */}
+
           <span
             className="absolute inset-0 flex items-center justify-center px-2.5 py-1 whitespace-nowrap font-medium text-neutral-950 dark:text-white will-change-transform"
             style={{
@@ -109,7 +107,6 @@ export const RefractiveProcessNode: React.FC<RefractiveProcessNodeProps> = ({
             {label}
           </span>
 
-          {/* Top specular highlight rim */}
           <span
             className="absolute top-0 inset-x-2 h-[1px] bg-white/90 dark:bg-white/70 rounded-full opacity-90"
             aria-hidden="true"

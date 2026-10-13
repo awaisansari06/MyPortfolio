@@ -1,12 +1,11 @@
 'use client';
 
 import { useEffect, useRef, type RefObject } from 'react';
+import { lockPageScroll } from '@/lib/scrollLock';
 
 const dialogs: HTMLElement[] = [];
 const focusableSelector =
   'a[href], button:not([disabled]), input:not([disabled]), textarea:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])';
-let scrollLocks = 0;
-let previousOverflow = '';
 
 /** Manage focus and Escape; modal dialogs also trap focus and lock scrolling. */
 export function useDialogFocus(
@@ -35,13 +34,8 @@ export function useDialogFocus(
       (input || focusable()[0] || dialog).focus({ preventScroll: true });
     };
 
-    if (modal) {
-      dialogs.push(dialog);
-      if (scrollLocks++ === 0) {
-        previousOverflow = document.body.style.overflow;
-        document.body.style.overflow = 'hidden';
-      }
-    }
+    const unlockScroll = modal ? lockPageScroll() : undefined;
+    if (modal) dialogs.push(dialog);
     const frame = requestAnimationFrame(focusFirst);
 
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -81,7 +75,7 @@ export function useDialogFocus(
         (dialog.contains(document.activeElement) || document.activeElement === document.body);
       const index = dialogs.lastIndexOf(dialog);
       if (index >= 0) dialogs.splice(index, 1);
-      if (modal && --scrollLocks === 0) document.body.style.overflow = previousOverflow;
+      unlockScroll?.();
       if (shouldRestoreFocus) {
         const target = previousFocus?.isConnected && previousFocus.getClientRects().length &&
           getComputedStyle(previousFocus).visibility !== 'hidden'

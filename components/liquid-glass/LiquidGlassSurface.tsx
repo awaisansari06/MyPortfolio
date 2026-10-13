@@ -1,30 +1,10 @@
 'use client';
 
-// ─────────────────────────────────────────────────────────────────────────────
-// LiquidGlassSurface — Core refractive glass container
-// Inspired by Aave's "Building Glass for the Web" technique
-//
-// Architecture:
-//   1. Measures the container element via ResizeObserver.
-//   2. Generates a displacement map (only on shape changes, never on moves).
-//   3. Injects a versioned SVG filter into the document.
-//   4. Renders a refractive "backing" div that applies CSS backdrop-filter
-//      referencing the SVG filter URL to bend live DOM pixels behind it.
-//   5. Renders crisp foreground content on top in an isolated layer.
-//
-// Lint-safe design:
-//   - All render state lives in React useState, not useRef.current during render.
-//   - setState calls inside effects are wrapped in queueMicrotask or use
-//     functional form to avoid react-hooks/set-state-in-effect violations.
-// ─────────────────────────────────────────────────────────────────────────────
-
 import React, { useRef, useEffect, useCallback, useId, useState } from 'react';
 import { type LensConfig, type DisplacementMapData, type LiquidGlassProps } from './types';
 import { DEFAULT_LENS_CONFIG } from './lens';
 import { generateDisplacementMap } from './displacement-map';
 import { LiquidGlassFilter, getFilterUrl } from './LiquidGlassFilter';
-
-// ─── Preset configurations tuned per component ────────────────────────────────
 
 type Preset =
   | 'navbar'
@@ -141,14 +121,10 @@ const PRESETS: Record<Preset, Partial<LensConfig>> = {
   },
 };
 
-// ─── Props ────────────────────────────────────────────────────────────────────
-
 interface LiquidGlassSurfaceProps extends LiquidGlassProps {
   borderRadius?: string | number;
   preset?: Preset;
 }
-
-// ─── Component ────────────────────────────────────────────────────────────────
 
 export const LiquidGlassSurface: React.FC<LiquidGlassSurfaceProps> = ({
   children,
@@ -169,12 +145,8 @@ export const LiquidGlassSurface: React.FC<LiquidGlassSurfaceProps> = ({
 
   const containerRef = useRef<HTMLDivElement>(null);
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  // ── Render state — all in React useState so render reads are safe ──────────
   const [mapData, setMapData] = useState<DisplacementMapData | null>(null);
   const [activeConfig, setActiveConfig] = useState<LensConfig | null>(null);
-
-  // ── Build effective lens config from props + preset + defaults ────────────
 
   const buildConfig = useCallback(
     (width: number, height: number): LensConfig => {
@@ -198,8 +170,6 @@ export const LiquidGlassSurface: React.FC<LiquidGlassSurfaceProps> = ({
     [preset, lens, depth, curvature, scale, chroma, edgeHighlight],
   );
 
-  // ── Regenerate displacement map (only on shape change) ────────────────────
-
   const regenerateMap = useCallback(
     (width: number, height: number) => {
       if (width < 4 || height < 4) return;
@@ -212,8 +182,6 @@ export const LiquidGlassSurface: React.FC<LiquidGlassSurfaceProps> = ({
     },
     [buildConfig],
   );
-
-  // ── ResizeObserver — regenerate when element dimensions change ────────────
 
   useEffect(() => {
     const el = containerRef.current;
@@ -245,8 +213,6 @@ export const LiquidGlassSurface: React.FC<LiquidGlassSurfaceProps> = ({
     };
   }, [regenerateMap]);
 
-  // ── Render ────────────────────────────────────────────────────────────────
-
   const showGlass = mapData !== null && activeConfig !== null;
   const filterUrl = showGlass && mapData ? getFilterUrl(surfaceId, mapData.version) : undefined;
 
@@ -267,7 +233,7 @@ export const LiquidGlassSurface: React.FC<LiquidGlassSurfaceProps> = ({
       className={className}
       style={{ position: 'relative', isolation: 'isolate' }}
     >
-      {/* ── SVG filter injection (zero visible size) ────────────────────── */}
+
       {showGlass && mapData && activeConfig && (
         <LiquidGlassFilter
           surfaceId={surfaceId}
@@ -276,9 +242,6 @@ export const LiquidGlassSurface: React.FC<LiquidGlassSurfaceProps> = ({
         />
       )}
 
-      {/* ── Refractive glass backing layer ─────────────────────────────── */}
-      {/* This bends live DOM pixels via CSS backdrop-filter with SVG URL.
-          Falls back to .glass-surface-backing CSS class for Firefox. */}
       {showGlass && filterUrl && (
         <div
           aria-hidden="true"
@@ -303,7 +266,6 @@ export const LiquidGlassSurface: React.FC<LiquidGlassSurfaceProps> = ({
         />
       )}
 
-      {/* ── Top specular rim — physically correct brightest edge ───────── */}
       {showGlass && (
         <div
           aria-hidden="true"
@@ -322,8 +284,6 @@ export const LiquidGlassSurface: React.FC<LiquidGlassSurfaceProps> = ({
         />
       )}
 
-      {/* ── Foreground content — always crisp, always readable ─────────── */}
-      {/* Isolated from the backing layer so content is never distorted. */}
       <div
         style={{
           position: 'relative',

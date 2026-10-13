@@ -1,11 +1,11 @@
 import type { Metadata, Viewport } from 'next';
-import { Plus_Jakarta_Sans, Space_Grotesk, JetBrains_Mono } from 'next/font/google';
+import localFont from 'next/font/local';
 import './globals.css';
 import { ThemeProvider } from '@/context/ThemeContext';
 
-const jakarta = Plus_Jakarta_Sans({ subsets: ['latin'], variable: '--font-jakarta', display: 'swap' });
-const spaceGrotesk = Space_Grotesk({ subsets: ['latin'], variable: '--font-space-grotesk', display: 'swap' });
-const jetBrainsMono = JetBrains_Mono({ subsets: ['latin'], variable: '--font-jetbrains-mono', display: 'swap' });
+const jakarta = localFont({ src: '../public/fonts/plus-jakarta-sans.ttf', weight: '200 800', variable: '--font-jakarta', display: 'swap' });
+const spaceGrotesk = localFont({ src: '../public/fonts/space-grotesk.ttf', weight: '300 700', variable: '--font-space-grotesk', display: 'swap' });
+const jetBrainsMono = localFont({ src: '../public/fonts/jetbrains-mono.ttf', weight: '100 800', variable: '--font-jetbrains-mono', display: 'swap' });
 
 export const metadata: Metadata = {
   title: 'Mohammad Awais Ansari — Full-Stack Developer',

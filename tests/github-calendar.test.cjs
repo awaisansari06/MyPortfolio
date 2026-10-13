@@ -288,6 +288,6 @@ test('12. Tooltip rendering and accessibility props', () => {
   });
 
   assert.equal(cellTree.props.role, 'gridcell');
-  assert.equal(cellTree.props.tabIndex, 0);
+  assert.equal(cellTree.props.tabIndex, -1);
   assert.ok(cellTree.props['aria-label'].includes('Jul 01, 2026: 5 contributions'));
 });

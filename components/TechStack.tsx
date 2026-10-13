@@ -91,7 +91,7 @@ export const TechStack = () => {
       className="py-24 md:py-36 border-b border-neutral-300 dark:border-[#2A2A2A] relative"
     >
       <div className="max-w-7xl mx-auto px-6 md:px-12">
-        {/* Section Header */}
+
         <div className="stack-header flex flex-col md:flex-row md:items-end justify-between pb-8 mb-12 border-b border-neutral-300 dark:border-[#2A2A2A]">
           <div>
             <div className="font-mono-code text-[11px] text-neutral-500 dark:text-[#A3A3A3] tracking-[0.25em] uppercase mb-2">
@@ -106,7 +106,6 @@ export const TechStack = () => {
           </p>
         </div>
 
-        {/* Categorized Matrix with pure CSS card hover */}
         <div className="stack-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {portfolioData.techCategories.map((category) => {
             return (
@@ -115,7 +114,7 @@ export const TechStack = () => {
                 className="stack-card p-6 flex flex-col justify-between transition-all duration-200 liquid-glass-card"
               >
                 <div>
-                  {/* Category Header */}
+
                   <div className="flex items-center justify-between pb-4 mb-4 border-b border-neutral-300/60 dark:border-white/10">
                     <span className="font-mono-code text-xs font-bold tracking-widest text-neutral-950 dark:text-[#F5F3EF] uppercase">
                       {category.title}
@@ -125,7 +124,6 @@ export const TechStack = () => {
                     </span>
                   </div>
 
-                  {/* Skills Pills */}
                   <div className="flex flex-wrap gap-2 pt-1">
                     {category.skills.map((skill) => {
                       const highlighted = isRelated(skill);

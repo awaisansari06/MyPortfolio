@@ -102,12 +102,12 @@ export const VERIFIED_PORTFOLIO_KNOWLEDGE = {
         'Built with Next.js 15.5 App Router and React 19, powered by Google Gemini generative models with serverless background queue processing via Inngest and relational persistence via PostgreSQL & Prisma.',
     },
     {
-      id: 'devflow',
+      id: 'buildstack',
       name: 'BuildStack',
       tagline: 'Intelligent AI-Powered Web Development Platform',
       category: 'Agentic Development Platform',
       liveUrl: 'https://buildstack-project.vercel.app/',
-      githubUrl: 'https://github.com/awaisansari06/devflow',
+      githubUrl: 'https://github.com/awaisansari06/buildstack',
       technologies: [
         'Next.js 15',
         'React 19',
@@ -135,12 +135,12 @@ export const VERIFIED_PORTFOLIO_KNOWLEDGE = {
         'Pairs autonomous multi-step LLM loops via Vercel AI SDK with dedicated E2B secure Linux micro-VMs, orchestrated with type-safe tRPC client-server protocols and Inngest queues.',
     },
     {
-      id: 'smart-journey',
+      id: 'tripcraft',
       name: 'TripCraft',
       tagline: 'AI-Driven Personalized Travel Assistant',
       category: 'Geospatial Travel Exploration Platform',
       liveUrl: 'https://tripcraft-project.vercel.app/',
-      githubUrl: 'https://github.com/awaisansari06/smart-journey',
+      githubUrl: 'https://github.com/awaisansari06/TripCraft',
       technologies: [
         'Next.js',
         'React',

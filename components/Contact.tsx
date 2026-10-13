@@ -91,7 +91,7 @@ export const Contact = () => {
   return (
     <section ref={containerRef} id="contact" className="pt-24 md:pt-36 bg-neutral-100/60 dark:bg-[#070707] relative">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
-        {/* Section Header */}
+
         <div className="contact-header flex flex-col md:flex-row md:items-end justify-between pb-8 mb-16 border-b border-neutral-300 dark:border-[#2A2A2A]">
           <div>
             <div className="font-mono-code text-[11px] text-neutral-500 dark:text-[#A3A3A3] tracking-[0.25em] uppercase mb-2">
@@ -106,7 +106,6 @@ export const Contact = () => {
           </p>
         </div>
 
-        {/* Big Statement */}
         <div className="contact-statement mb-20">
           <h3 className="text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-neutral-950 dark:text-[#F5F3EF] uppercase leading-[0.95] max-w-4xl">
             LET&apos;S BUILD SOMETHING TOGETHER.
@@ -116,11 +115,10 @@ export const Contact = () => {
           </p>
         </div>
 
-        {/* Contact Layout: Left Info, Right Minimal Form */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 pb-24 border-b border-neutral-300 dark:border-[#2A2A2A]">
-          {/* Left Contact Options */}
+
           <div className="contact-info lg:col-span-5 space-y-6">
-            {/* Email Card with Copy Trigger */}
+
             <div className="p-6 transition-all duration-300 liquid-glass-card-frame">
               <div className="flex items-center justify-between font-mono-code text-[10px] text-neutral-400 dark:text-[#666666] uppercase mb-2">
                 <span>DIRECT EMAIL</span>
@@ -150,7 +148,6 @@ export const Contact = () => {
               </div>
             </div>
 
-            {/* Social Links */}
             {copyError && <p role="status" className="text-xs text-red-700 dark:text-red-400">{copyError}</p>}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <a
@@ -186,7 +183,6 @@ export const Contact = () => {
               </a>
             </div>
 
-            {/* Location & Status */}
             <div className="p-5 flex items-center justify-between font-mono-code text-xs transition-all duration-300 liquid-glass-card">
               <div className="flex items-center gap-2 text-neutral-800 dark:text-[#A3A3A3]">
                 <MapPin className="w-3.5 h-3.5 text-neutral-400 dark:text-[#666666]" />
@@ -199,7 +195,6 @@ export const Contact = () => {
             </div>
           </div>
 
-          {/* Right Contact Form */}
           <div className="contact-form lg:col-span-7">
             <div className="p-8 transition-all duration-300 liquid-glass-card-frame">
               <div className="font-mono-code text-xs font-bold text-neutral-950 dark:text-[#F5F3EF] uppercase tracking-wider pb-4 mb-6 border-b border-neutral-300/60 dark:border-white/10">
@@ -288,7 +283,6 @@ export const Contact = () => {
           </div>
         </div>
 
-        {/* ---------------- FOOTER ---------------- */}
         <footer className="py-12 flex flex-col md:flex-row items-center justify-between gap-6 font-mono-code text-xs text-neutral-500 dark:text-[#A3A3A3]">
           <div>
             <div className="font-bold text-neutral-950 dark:text-[#F5F3EF] uppercase tracking-wider">
@@ -306,7 +300,7 @@ export const Contact = () => {
           </div>
 
           <div className="text-[11px] text-center md:text-left text-neutral-500 dark:text-[#666666]">
-            BUILT WITH NEXT.JS · THREE.JS · TAILWIND CSS 
+            BUILT WITH NEXT.JS · TYPESCRIPT · TAILWIND CSS
           </div>
 
           <div className="flex flex-wrap items-center gap-6">

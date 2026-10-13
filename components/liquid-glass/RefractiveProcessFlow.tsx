@@ -93,7 +93,7 @@ export const RefractiveProcessFlow: React.FC<RefractiveProcessFlowProps> = ({
         onMouseLeave={() => setHoverIdx(null)}
         className="relative flex flex-wrap items-center gap-2 text-xs font-mono-code"
       >
-        {/* ── 1. Real Semantic DOM Content (Accessible & Visible) ─────────────── */}
+
         {steps.map((step, idx) => {
           const isCurrent = (hoverIdx !== null ? hoverIdx : activeIdx) === idx;
           return (
@@ -120,7 +120,6 @@ export const RefractiveProcessFlow: React.FC<RefractiveProcessFlowProps> = ({
           );
         })}
 
-        {/* ── 2. Moving Optical Glass Selection Lens (~120 × 28px) ───────────── */}
         {lensStyle.visible && (
           <div
             aria-hidden="true"
@@ -143,7 +142,7 @@ export const RefractiveProcessFlow: React.FC<RefractiveProcessFlowProps> = ({
               zIndex: 10,
             }}
           >
-            {/* Synchronized Refraction Target: The underlying track offset to align with viewport */}
+
             <div
               style={{
                 position: 'absolute',
@@ -170,7 +169,6 @@ export const RefractiveProcessFlow: React.FC<RefractiveProcessFlowProps> = ({
               </div>
             </div>
 
-            {/* Specular top catch rim */}
             <div
               className="absolute top-0 inset-x-2 h-[1px] bg-white/90 dark:bg-white/60 rounded-full opacity-80 pointer-events-none"
               aria-hidden="true"

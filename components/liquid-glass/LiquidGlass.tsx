@@ -1,8 +1,5 @@
 'use client';
-
-// ─────────────────────────────────────────────────────────────────────────────
 // Liquid Glass — Public API Barrel
-// ─────────────────────────────────────────────────────────────────────────────
 
 export { LiquidGlassSurface } from './LiquidGlassSurface';
 export { LiquidGlassFilter, getFilterUrl } from './LiquidGlassFilter';
@@ -12,11 +9,8 @@ export { RefractiveProcessNode } from './RefractiveProcessNode';
 export { RefractiveProcessFlow } from './RefractiveProcessFlow';
 export { RefractiveButton } from './RefractiveButton';
 export type { LensConfig, DisplacementMapData, LiquidGlassProps } from './types';
-
-// ─────────────────────────────────────────────────────────────────────────────
 // LiquidGlass — Convenience wrapper component
 // Wraps LiquidGlassSurface with simplified API for general use.
-// ─────────────────────────────────────────────────────────────────────────────
 
 import React from 'react';
 import { LiquidGlassSurface } from './LiquidGlassSurface';

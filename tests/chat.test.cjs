@@ -3,6 +3,7 @@ const { test } = require('node:test');
 const { loadSource, createReactHarness, findElement, icons } = require('./helpers.cjs');
 const limits = loadSource('lib/ai/messages.ts');
 const requests = [];
+let providerFailure = null;
 const { POST } = loadSource('app/api/chat/route.ts', {
   '@/lib/ai/messages': limits,
   '@/lib/ai/systemPrompt': { buildSystemInstruction: () => 'Test portfolio instruction' },
@@ -10,6 +11,7 @@ const { POST } = loadSource('app/api/chat/route.ts', {
     GoogleGenAI: class {
       models = {
         generateContentStream: async request => {
+          if (providerFailure) throw providerFailure;
           requests.push(request);
           return (async function* () { yield { text: 'Test answer' }; })();
         },
@@ -93,6 +95,7 @@ test('retry replaces a partial answer and reuses the original question', async (
     '@/hooks/useDialogFocus': { useDialogFocus() {} },
     '@/hooks/useChatViewport': { useChatViewport: () => ({ compact: false, viewportStyle: {} }) },
     './MobileAiLauncher': { MobileAiLauncher: 'mobile-launcher' },
+    '@/lib/ai/stream': loadSource('lib/ai/stream.ts'),
     '@/lib/scroll': { getScrollBehavior: () => 'instant' },
     '@/lib/ai/messages': limits,
   });
@@ -135,5 +138,24 @@ test('retry replaces a partial answer and reuses the original question', async (
     if (previousWindow === undefined) delete global.window;
     else global.window = previousWindow;
     console.error = previousError;
+  }
+});
+
+test('provider overload is reported as temporary unavailability without exposing provider details', async () => {
+  const previousKey = process.env.GEMINI_API_KEY;
+  const previousError = console.error;
+  process.env.GEMINI_API_KEY = 'local-test-key';
+  console.error = () => {};
+  providerFailure = Object.assign(new Error('Private provider diagnostics'), { status: 503 });
+  try {
+    const response = await send({ messages: [{ role: 'user', content: 'Hi' }] });
+    assert.equal(response.status, 503);
+    const body = await response.json();
+    assert.match(body.error, /temporarily unavailable/);
+    assert.equal(body.error.includes('Private provider diagnostics'), false);
+  } finally {
+    providerFailure = null;
+    console.error = previousError;
+    if (previousKey === undefined) delete process.env.GEMINI_API_KEY; else process.env.GEMINI_API_KEY = previousKey;
   }
 });

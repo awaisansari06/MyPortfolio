@@ -121,7 +121,7 @@ export const GitHubContributions: React.FC = () => {
       className="py-20 md:py-28 border-b border-neutral-300 dark:border-[#2A2A2A] bg-transparent dark:bg-[#0A0A0A] relative"
     >
       <div className="max-w-7xl mx-auto px-6 md:px-12">
-        {/* Section Header */}
+
         <div className="github-header flex flex-col md:flex-row md:items-end justify-between pb-6 mb-10 border-b border-neutral-300 dark:border-[#2A2A2A]">
           <div>
             <div className="font-mono-code text-[11px] text-neutral-500 dark:text-[#A3A3A3] tracking-[0.25em] uppercase mb-2">
@@ -136,9 +136,8 @@ export const GitHubContributions: React.FC = () => {
           </p>
         </div>
 
-        {/* Top Highlight Metric & Profile Card */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-8 items-stretch">
-          {/* Left: Total Contributions Highlight */}
+
           <div className="github-metric-card lg:col-span-4 p-7 flex flex-col justify-between liquid-glass-card rounded-2xl">
             <div>
               <div className="flex items-center justify-between font-mono-code text-[10px] text-neutral-400 dark:text-[#666666] uppercase mb-4">
@@ -172,7 +171,6 @@ export const GitHubContributions: React.FC = () => {
             </div>
           </div>
 
-          {/* Right: GitHub Identity & Action */}
           <div className="github-metric-card lg:col-span-8 p-7 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 liquid-glass-card rounded-2xl">
             <div className="space-y-3 max-w-lg">
               <div className="inline-flex items-center gap-2 px-3 py-1 liquid-glass-chip rounded-md font-mono-code text-[10px] uppercase tracking-wider text-neutral-900 dark:text-[#F5F3EF]">
@@ -200,7 +198,6 @@ export const GitHubContributions: React.FC = () => {
           </div>
         </div>
 
-        {/* Contribution Calendar Heatmap Card */}
         <div className="github-calendar-card p-5 sm:p-7 liquid-glass-card-frame rounded-2xl">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3.5 mb-3.5 border-b border-[var(--glass-rim)] gap-2">
             <div className="flex items-center gap-3">
@@ -282,7 +279,6 @@ export const GitHubContributions: React.FC = () => {
           )}
         </div>
 
-        {/* Selected Repositories Grid */}
         <GitHubRepositories repositories={data?.repositories} />
       </div>
     </section>

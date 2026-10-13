@@ -22,8 +22,6 @@ interface TechIconProps {
   className?: string;
   size?: number;
 }
-
-// User-provided icons in public/Programming-Icons/
 const LOCAL_PROGRAMMING_ICONS: Record<string, string> = {
   // C++
   'c++': '/Programming-Icons/icons8-c++.svg',

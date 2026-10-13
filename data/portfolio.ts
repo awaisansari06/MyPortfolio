@@ -15,6 +15,10 @@ export interface ProjectCaseStudy {
   problem: string;
   approach: string;
   implementation: string[];
+  contribution: string;
+  challenge: string;
+  tradeoff: string;
+  takeaway: string;
   metrics?: { label: string; value: string }[];
   flowSteps: string[];
 }
@@ -131,6 +135,10 @@ export const portfolioData: PortfolioData = {
   projects: [
     {
       id: "careerwise",
+      contribution: "Built the career preparation workflow across the Next.js interface, Gemini integration, authenticated user data, and PostgreSQL persistence. Connected resume feedback, interview preparation, and career guidance in one application.",
+      challenge: "The central engineering challenge is coordinating AI analysis with a responsive interface. Document processing can take longer than a normal request, so Inngest separates background work from the user-facing response cycle.",
+      tradeoff: "Background workflows keep lengthy analysis outside the request path, but introduce intermediate states and delayed results. The interface needs to distinguish work in progress from completed feedback instead of treating every request as immediate.",
+      takeaway: "AI features need a clear workflow around the model: authenticated inputs, durable data, visible progress, and useful results. The surrounding application matters as much as the generated response.",
       number: "01",
       title: "CAREERWISE",
       tagline: "AI-POWERED CAREER INTELLIGENCE PLATFORM",
@@ -195,7 +203,11 @@ export const portfolioData: PortfolioData = {
       flowSteps: ["DOCUMENT", "ANALYSIS", "INTELLIGENCE", "CAREER PATH"],
     },
     {
-      id: "devflow",
+      id: "buildstack",
+      contribution: "Built the prompt-to-preview experience, connecting the agent workflow to E2B execution, terminal output, file exploration, and persistent project history. Used tRPC, Prisma, and PostgreSQL for the application API and stored project data.",
+      challenge: "The central engineering challenge is turning generated code into an inspectable running application. File creation, dependency installation, server startup, and preview availability are separate steps that need to be coordinated and surfaced to the user.",
+      tradeoff: "Cloud sandboxes provide a separate environment for generated code and live previews, but add startup time, service costs, and an external dependency. Streaming execution logs makes that work visible while the environment is being prepared.",
+      takeaway: "Code generation is only one part of a development tool. Execution feedback, inspectable files, and saved project context make the output easier to understand and continue working on.",
       number: "02",
       title: "BUILDSTACK",
       tagline: "INTELLIGENT AI-POWERED WEB DEVELOPMENT PLATFORM",
@@ -205,7 +217,7 @@ export const portfolioData: PortfolioData = {
       description:
         "BuildStack is an agentic development environment that transforms conversational software specifications into fully running, multi-file full-stack web applications. By pairing multi-step autonomous LLM agent loops with dedicated cloud micro-VM sandboxes, BuildStack compiles, installs packages, runs servers, and streams live application previews in real time.",
       liveUrl: "https://buildstack-project.vercel.app/",
-      githubUrl: "https://github.com/awaisansari06/devflow",
+      githubUrl: "https://github.com/awaisansari06/buildstack",
       compactTechnologies: [
         "Next.js 15",
         "React 19",
@@ -268,7 +280,11 @@ export const portfolioData: PortfolioData = {
       ],
     },
     {
-      id: "smartjourney",
+      id: "tripcraft",
+      contribution: "Built the personalized itinerary flow and connected OpenRouter generation with Google Places discovery and Mapbox visualization. Added authenticated trip history with Convex persistence and integrated Arcjet protection around the application.",
+      challenge: "The central engineering challenge is connecting an AI-generated plan to real places. Recommendations need location context so users can inspect the suggested activities on a map and judge how the trip fits together.",
+      tradeoff: "Dedicated services for generation, places, maps, and persistence offer useful capabilities, but increase integration complexity and expose the experience to multiple services' latency and availability. Generated recommendations still need to be treated as suggestions, not guaranteed travel facts.",
+      takeaway: "A useful AI planning interface makes its output inspectable. Combining a day-by-day itinerary with place details and a map gives users more context for deciding what to keep or change.",
       number: "03",
       title: "TRIPCRAFT",
       tagline: "AI-DRIVEN PERSONALIZED TRAVEL ASSISTANT",
@@ -278,7 +294,7 @@ export const portfolioData: PortfolioData = {
       description:
         "TripCraft is an intelligent itinerary and geospatial exploration platform designed to solve travel fragmentation. By combining large language model reasoning with live Google Places geospatial data and Mapbox interactive visual layers, TripCraft synthesizes optimized multi-day travel schedules tailored to personal budgets, pacing, and logistics.",
       liveUrl: "https://tripcraft-project.vercel.app/",
-      githubUrl: "https://github.com/awaisansari06/smart-journey",
+      githubUrl: "https://github.com/awaisansari06/TripCraft",
       compactTechnologies: [
         "Next.js",
         "React",

@@ -7,6 +7,8 @@ interface ContributionCellProps {
   day: ContributionDay;
   onHover: (day: ContributionDay, target: HTMLElement) => void;
   onLeave: () => void;
+  tabIndex?: number;
+  onSelect?: () => void;
 }
 
 export const getIntensityLevel = (count: number, level?: string): 0 | 1 | 2 | 3 | 4 => {
@@ -39,7 +41,7 @@ export const getCellColorClass = (count: number, level?: string): string => {
   }
 };
 
-const ContributionCellComponent: React.FC<ContributionCellProps> = ({ day, onHover, onLeave }) => {
+const ContributionCellComponent: React.FC<ContributionCellProps> = ({ day, onHover, onLeave, tabIndex = -1, onSelect }) => {
   const dateParts = day.date.split('-');
   const year = parseInt(dateParts[0], 10);
   const month = parseInt(dateParts[1], 10) - 1;
@@ -71,12 +73,13 @@ const ContributionCellComponent: React.FC<ContributionCellProps> = ({ day, onHov
 
   return (
     <div
-      tabIndex={0}
+      tabIndex={tabIndex}
+      data-contribution-date={day.date}
       role="gridcell"
       aria-label={`${formattedDate}: ${countText}`}
       onMouseEnter={(e) => onHover(day, e.currentTarget)}
       onMouseLeave={onLeave}
-      onFocus={(e) => onHover(day, e.currentTarget)}
+      onFocus={(e) => { onSelect?.(); onHover(day, e.currentTarget); }}
       onBlur={onLeave}
       onClick={(e) => onHover(day, e.currentTarget)}
       onKeyDown={handleKeyDown}

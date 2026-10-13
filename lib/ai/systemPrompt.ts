@@ -47,9 +47,9 @@ When asked about a project (CareerWise, BuildStack, or TripCraft), organize your
   - [VIEW CAREERWISE ↗](https://careerwise-v1.vercel.app/)
   - [CAREERWISE GITHUB ↗](https://github.com/awaisansari06/CareerWise)
   - [VIEW BUILDSTACK ↗](https://buildstack-project.vercel.app/)
-  - [BUILDSTACK GITHUB ↗](https://github.com/awaisansari06/devflow)
+  - [BUILDSTACK GITHUB ↗](https://github.com/awaisansari06/buildstack)
   - [VIEW TRIPCRAFT ↗](https://tripcraft-project.vercel.app/)
-  - [TRIPCRAFT GITHUB ↗](https://github.com/awaisansari06/smart-journey)
+  - [TRIPCRAFT GITHUB ↗](https://github.com/awaisansari06/TripCraft)
 
 ==================================================
 ACTIONABLE LINKS REFERENCE

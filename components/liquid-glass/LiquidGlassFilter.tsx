@@ -1,6 +1,4 @@
 'use client';
-
-// ─────────────────────────────────────────────────────────────────────────────
 // LiquidGlassFilter — SVG filter with versioned ID for Safari cache safety
 // Inspired by Aave's "Building Glass for the Web" technique
 //
@@ -17,7 +15,6 @@
 //   (Optional) feDisplacementMap chroma pass: restrained second pass
 //              at fractionally different scale → subtle color fringe
 //   3. feComposite: clips result to source bounds
-// ─────────────────────────────────────────────────────────────────────────────
 
 import React from 'react';
 import { type DisplacementMapData, type LensConfig } from './types';
@@ -68,7 +65,7 @@ export const LiquidGlassFilter: React.FC<LiquidGlassFilterProps> = ({
           height="110%"
           colorInterpolationFilters="sRGB"
         >
-          {/* Step 1: Load generated displacement map PNG */}
+
           <feImage
             id={`${filterId}-map`}
             href={mapData.dataUri}
@@ -81,8 +78,6 @@ export const LiquidGlassFilter: React.FC<LiquidGlassFilterProps> = ({
             preserveAspectRatio="none"
           />
 
-          {/* Step 2: Core optical displacement (feDisplacementMap) */}
-          {/* Reads R→X and G→Y displacement vectors from the generated map */}
           <feDisplacementMap
             in="SourceGraphic"
             in2="displacementMap"

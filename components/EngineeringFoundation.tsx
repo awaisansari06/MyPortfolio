@@ -71,7 +71,7 @@ export const EngineeringFoundation = () => {
       className="py-24 md:py-36 border-b border-neutral-300 dark:border-[#2A2A2A] relative"
     >
       <div className="max-w-7xl mx-auto px-6 md:px-12">
-        {/* Section Header */}
+
         <div className="eng-header flex flex-col md:flex-row md:items-end justify-between pb-8 mb-16 border-b border-neutral-300 dark:border-[#2A2A2A]">
           <div>
             <div className="font-mono-code text-[11px] text-neutral-500 dark:text-[#A3A3A3] tracking-[0.25em] uppercase mb-2">
@@ -86,7 +86,6 @@ export const EngineeringFoundation = () => {
           </p>
         </div>
 
-        {/* Foundations Grid */}
         <div className="eng-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {portfolioData.engineeringFoundations.map((foundation, index) => {
             const Icon = icons[index % icons.length];

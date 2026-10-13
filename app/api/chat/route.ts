@@ -12,6 +12,9 @@ const MAX_REQUESTS_PER_WINDOW = 15;
 
 function isRateLimited(ip: string): boolean {
   const now = Date.now();
+  for (const [key, visits] of rateLimitMap) {
+    if (!visits.some(time => now - time < RATE_LIMIT_WINDOW_MS)) rateLimitMap.delete(key);
+  }
   const timestamps = rateLimitMap.get(ip) || [];
   const validTimestamps = timestamps.filter((t) => now - t < RATE_LIMIT_WINDOW_MS);
 
@@ -90,11 +93,12 @@ export async function POST(req: NextRequest) {
       parts: [{ text: msg.content }],
     }));
 
-    const ai = new GoogleGenAI({ apiKey });
+    const ai = new GoogleGenAI({ apiKey, httpOptions: { timeout: 40000 } });
     const responseStream = await ai.models.generateContentStream({
       model: 'gemini-3.5-flash-lite',
       contents,
       config: {
+        abortSignal: req.signal,
         systemInstruction: buildSystemInstruction(),
         temperature: 0.2,
         maxOutputTokens: 1024,
@@ -116,24 +120,30 @@ export async function POST(req: NextRequest) {
           controller.error(err);
         }
       },
+      async cancel() {
+        await responseStream.return?.(undefined);
+      },
     });
 
     return new Response(stream, {
       headers: {
         'Content-Type': 'text/plain; charset=utf-8',
         'Cache-Control': 'no-cache, no-transform',
-        'Transfer-Encoding': 'chunked',
+        'X-Content-Type-Options': 'nosniff',
       },
     });
   } catch (error: any) {
-    console.error('Ask Awais AI route error:', error);
+    if (req.signal.aborted) return new Response(null, { status: 499 });
+    const status = error?.status === 429 ? 429 : error?.status === 503 ? 503 : 500;
+    console.error('Ask Awais AI service error:', status);
     return NextResponse.json(
       {
         error:
-          error?.message ||
+          status === 429 ? 'The AI service is busy. Please wait a moment and retry.' :
+          status === 503 ? 'The AI service is temporarily unavailable. Please retry shortly or contact Awais directly.' :
           'Failed to process your request. Please try again or reach out directly to Awais.',
       },
-      { status: 500 }
+      { status }
     );
   }
 }

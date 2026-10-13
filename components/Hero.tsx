@@ -89,6 +89,14 @@ export const Hero = () => {
           <p className="hero-reveal hero-description mt-7 max-w-lg text-xl sm:text-2xl leading-relaxed tracking-tight text-neutral-700 dark:text-neutral-300">
             I turn ideas into <span className="text-emerald-700 dark:text-emerald-400">useful web apps</span>—with AI where it matters.
           </p>
+          <div className="hero-reveal hero-hiring mt-5 max-w-lg border-l-2 border-emerald-600/40 pl-4 dark:border-emerald-400/40">
+            <p className="text-sm font-medium leading-relaxed text-neutral-800 dark:text-neutral-200">
+              Open to Frontend, Backend, Full Stack &amp; Software Engineer (SWE) roles.
+            </p>
+            <p className="mt-2 text-xs leading-relaxed text-neutral-600 dark:text-neutral-400">
+              React, Next.js &amp; TypeScript · API development · PostgreSQL &amp; Prisma · Applied AI integrations
+            </p>
+          </div>
           <div className="hero-reveal hero-actions mt-8 flex flex-wrap items-center gap-7">
             <button onClick={scrollToWork} data-cursor="EXPLORE" className="hero-primary group inline-flex items-center gap-4 rounded-full bg-emerald-700 px-6 py-4 text-sm font-semibold text-white dark:bg-emerald-400 dark:text-emerald-950">
               Explore my work <ArrowUpRight aria-hidden="true" className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 motion-reduce:transform-none" />

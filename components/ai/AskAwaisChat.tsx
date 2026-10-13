@@ -13,6 +13,7 @@ import {
   ExternalLink,
 } from 'lucide-react';
 import { MAX_CHAT_MESSAGES } from '@/lib/ai/messages';
+import { streamChat } from '@/lib/ai/stream';
 import { getScrollBehavior } from '@/lib/scroll';
 import { useDialogFocus } from '@/hooks/useDialogFocus';
 import { useChatViewport } from '@/hooks/useChatViewport';
@@ -160,8 +161,14 @@ export const AskAwaisChat: React.FC = () => {
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const failedRequestRef = useRef<Message[] | null>(null);
   const streamingRef = useRef(false);
+  const requestRef = useRef<AbortController | null>(null);
+  const closeChat = useCallback(() => {
+    requestRef.current?.abort();
+    setIsOpen(false);
+  }, []);
   const { compact, viewportStyle } = useChatViewport(isOpen);
-  useDialogFocus(chatContainerRef, isOpen, () => setIsOpen(false), compact ? '#ask-ai-launcher-mobile' : '#ask-ai-launcher', compact);
+  useDialogFocus(chatContainerRef, isOpen, closeChat, compact ? '#ask-ai-launcher-mobile' : '#ask-ai-launcher', compact);
+  useEffect(() => () => requestRef.current?.abort(), []);
 
   // Listen to external open events (e.g. from Navbar)
   useEffect(() => {
@@ -203,32 +210,11 @@ export const AskAwaisChat: React.FC = () => {
       // Add a placeholder assistant message that will be streamed into
       const assistantMessageIndex = newMessages.length;
       setMessages([...newMessages, { role: 'assistant', content: '' }]);
+      const controller = new AbortController();
+      requestRef.current = controller;
 
       try {
-        const res = await fetch('/api/chat', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ messages: newMessages.slice(-MAX_CHAT_MESSAGES) }),
-        });
-
-        if (!res.ok) {
-          const errData = await res.json().catch(() => ({}));
-          throw new Error(errData.error || `Request failed with status ${res.status}`);
-        }
-
-        if (!res.body) {
-          throw new Error('Readable stream not supported by server.');
-        }
-
-        const reader = res.body.getReader();
-        const decoder = new TextDecoder();
-        let accumulatedText = '';
-
-        while (true) {
-          const { done, value } = await reader.read();
-          const chunk = done ? decoder.decode() : decoder.decode(value, { stream: true });
-          accumulatedText += chunk;
-
+        await streamChat(newMessages.slice(-MAX_CHAT_MESSAGES), accumulatedText => {
           setMessages((prev) => {
             const updated = [...prev];
             if (updated[assistantMessageIndex]) {
@@ -239,8 +225,7 @@ export const AskAwaisChat: React.FC = () => {
             }
             return updated;
           });
-          if (done) break;
-        }
+        }, controller.signal);
       } catch (err: any) {
         console.error('Chat error:', err);
         failedRequestRef.current = newMessages;
@@ -253,6 +238,7 @@ export const AskAwaisChat: React.FC = () => {
           return prev;
         });
       } finally {
+        requestRef.current = null;
         streamingRef.current = false;
         setIsStreaming(false);
       }
@@ -278,8 +264,8 @@ export const AskAwaisChat: React.FC = () => {
   return (
     <>
       <MobileAiLauncher open={isOpen} onOpen={() => setIsOpen(true)} />
-      {isOpen && compact && <div className="ai-chat-backdrop" aria-hidden="true" onClick={() => setIsOpen(false)} />}
-      {/* Floating Chat Panel */}
+      {isOpen && compact && <div className="ai-chat-backdrop" aria-hidden="true" onClick={closeChat} />}
+
       {isOpen && (
         <div
           ref={chatContainerRef}
@@ -298,7 +284,7 @@ export const AskAwaisChat: React.FC = () => {
           }}
           className="ai-chat-panel !fixed z-50 flex flex-col overflow-hidden font-sans liquid-glass-modal shadow-2xl"
         >
-          {/* Header */}
+
           <div className="p-4 border-b border-neutral-200 dark:border-[#222222] bg-[#F1F0EC]/80 dark:bg-[#141414] flex items-start justify-between gap-3 shrink-0">
             <div>
               <div className="flex items-center gap-2 font-mono-code text-[10px] uppercase tracking-wider text-neutral-500 dark:text-[#A3A3A3] mb-1">
@@ -332,7 +318,7 @@ export const AskAwaisChat: React.FC = () => {
                 </button>
               )}
               <button
-                onClick={() => setIsOpen(false)}
+                  onClick={closeChat}
                 aria-label="Close Ask Awais AI assistant"
                 className="min-h-11 min-w-11 flex items-center justify-center p-1.5 text-neutral-500 hover:text-neutral-950 dark:hover:text-[#F5F3EF] transition-colors cursor-pointer"
               >
@@ -341,12 +327,11 @@ export const AskAwaisChat: React.FC = () => {
             </div>
           </div>
 
-          {/* Conversation Body */}
           <div
             ref={messagesContainerRef}
             className="flex-1 min-h-0 overflow-y-auto p-4 space-y-4 text-neutral-800 dark:text-[#E0DFDC] overscroll-contain"
           >
-            {/* Empty State */}
+
             {messages.length === 0 && (
               <div className="py-6 space-y-6">
                 <div className="p-4 border border-neutral-200 dark:border-[#222222] bg-[#F1F0EC]/60 dark:bg-[#161616] space-y-2">
@@ -380,7 +365,6 @@ export const AskAwaisChat: React.FC = () => {
               </div>
             )}
 
-            {/* Messages Thread */}
             {messages.map((msg, idx) => (
               <div
                 key={idx}
@@ -426,7 +410,6 @@ export const AskAwaisChat: React.FC = () => {
               </div>
             ))}
 
-            {/* Error Display */}
             {error && (
               <div className="p-3 border border-red-300 dark:border-red-900/50 bg-red-50/50 dark:bg-red-950/20 text-red-700 dark:text-red-400 text-xs space-y-2">
                 <p>{error}</p>
@@ -444,13 +427,17 @@ export const AskAwaisChat: React.FC = () => {
             <div ref={messagesEndRef} />
           </div>
 
-          {/* Input Footer */}
           <div
             className="p-3 border-t border-neutral-200 dark:border-[#222222] bg-[#F1F0EC]/80 dark:bg-[#141414] shrink-0"
             style={{
               paddingBottom: 'max(12px, env(safe-area-inset-bottom, 12px))',
             }}
           >
+            {isStreaming && (
+              <button type="button" onClick={() => requestRef.current?.abort()} className="mb-2 rounded-lg border border-neutral-300 px-3 py-2 text-xs font-medium dark:border-neutral-700">
+                Stop response
+              </button>
+            )}
             <form
               onSubmit={(e) => {
                 e.preventDefault();

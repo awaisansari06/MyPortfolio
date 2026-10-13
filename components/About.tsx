@@ -98,7 +98,7 @@ export const About = () => {
       className="py-24 md:py-36 border-b border-neutral-300 dark:border-[#2A2A2A] relative"
     >
       <div className="max-w-7xl mx-auto px-6 md:px-12">
-        {/* Section Header */}
+
         <div className="about-header flex flex-col md:flex-row md:items-end justify-between pb-8 mb-16 border-b border-neutral-300 dark:border-[#2A2A2A]">
           <div>
             <div className="font-mono-code text-[11px] text-neutral-500 dark:text-[#A3A3A3] tracking-[0.25em] uppercase mb-2">
@@ -113,9 +113,8 @@ export const About = () => {
           </p>
         </div>
 
-        {/* Bio & Profile Section */}
         <div className="about-profile-grid grid grid-cols-1 lg:grid-cols-12 gap-12 mb-20 items-stretch">
-          {/* Main Statement (Left) */}
+
           <div className="about-profile-card lg:col-span-7 flex flex-col justify-between p-8 liquid-glass-card">
             <div>
               <div className="font-mono-code text-[10px] text-neutral-400 dark:text-[#666666] uppercase tracking-widest mb-4">
@@ -145,7 +144,6 @@ export const About = () => {
                 </div>
               </div>
 
-              {/* Resume Action Buttons */}
               <div className="flex flex-wrap items-center gap-3 pt-1">
                 <a
                   href="/AwaisCV.pdf"
@@ -173,7 +171,6 @@ export const About = () => {
             </div>
           </div>
 
-          {/* Right: Engineering Profile Card */}
           <div className="about-profile-card lg:col-span-5 p-8 space-y-6 flex flex-col justify-between liquid-glass-card">
             <div>
               <div className="flex items-center justify-between pb-4 border-b border-neutral-200 dark:border-[#2A2A2A] mb-6">
@@ -222,7 +219,6 @@ export const About = () => {
           </div>
         </div>
 
-        {/* ---------------- EDUCATION TIMELINE ---------------- */}
         <div className="mb-20">
           <div className="flex items-center gap-3 mb-8 pb-3 border-b border-neutral-300 dark:border-[#2A2A2A]">
             <GraduationCap className="w-4 h-4 text-neutral-600 dark:text-[#A3A3A3]" />
@@ -269,7 +265,6 @@ export const About = () => {
           </div>
         </div>
 
-        {/* ---------------- CERTIFICATIONS ---------------- */}
         <div>
           <div className="flex items-center gap-3 mb-8 pb-3 border-b border-neutral-300 dark:border-[#2A2A2A]">
             <Award className="w-4 h-4 text-neutral-600 dark:text-[#A3A3A3]" />

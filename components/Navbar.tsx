@@ -11,8 +11,6 @@ import { LiquidGlassFilter, getFilterUrl } from '@/components/liquid-glass/Liqui
 import { getScrollBehavior } from '@/lib/scroll';
 import { useDialogFocus } from '@/hooks/useDialogFocus';
 import { BrandLogo } from '@/components/BrandLogo';
-
-// ─── Navbar Liquid Glass Backing ──────────────────────────────────────────────
 // The floating navbar is a suspended glass capsule with real SVG feDisplacementMap
 // live DOM refraction, edge specular highlights, and soft ambient shadow.
 
@@ -47,7 +45,7 @@ const NavbarGlassBacking: React.FC<{
 }> = ({ filterId, mapData, borderRadius = '9999px' }) => {
   return (
     <>
-      {/* SVG filter injected into document if mapData ready */}
+
       {mapData && (
         <LiquidGlassFilter
           surfaceId={filterId}
@@ -55,7 +53,7 @@ const NavbarGlassBacking: React.FC<{
           config={{ ...NAVBAR_LENS_PRESET, width: mapData.width, height: mapData.height }}
         />
       )}
-      {/* Refractive physical curved glass backing layer */}
+
       <div
         aria-hidden="true"
         className="glass-surface-backing"
@@ -69,15 +67,14 @@ const NavbarGlassBacking: React.FC<{
           boxShadow: [
             'inset 0 1.5px 0 var(--glass-edge-highlight)',
             'inset 0 0 0 0.5px var(--glass-rim-strong)',
-            '0 4px 16px var(--glass-shadow)',
-            '0 16px 48px var(--glass-shadow-lg)',
+            '0 4px 12px var(--glass-shadow)',
           ].join(', '),
           zIndex: 0,
           pointerEvents: 'none',
           border: '0.5px solid var(--glass-rim-strong)',
         }}
       />
-      {/* Top specular highlight edge line */}
+
       <div
         aria-hidden="true"
         style={{
@@ -96,8 +93,6 @@ const NavbarGlassBacking: React.FC<{
     </>
   );
 };
-
-// ─── Main Navbar Component ────────────────────────────────────────────────────
 
 export const Navbar = () => {
   const { theme, toggleTheme } = useTheme();
@@ -123,7 +118,6 @@ export const Navbar = () => {
   const [hoverIdx, setHoverIdx] = useState<number | null>(null);
   const headerRef = useRef<HTMLElement>(null);
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  // ── Active sliding glass pill ──────────────────────────────────────────────
   const navListRef = useRef<HTMLUListElement>(null);
   const linkRefs = useRef<(HTMLAnchorElement | null)[]>([]);
   const [pillStyle, setPillStyle] = useState({ left: 0, width: 0, visible: false });
@@ -168,8 +162,6 @@ export const Navbar = () => {
     };
   }, [regenerateNavbarMap]);
 
-  // ── Scroll tracking ────────────────────────────────────────────────────────
-
   const navLinks = [
     { label: 'WORK', href: '#work' },
     { label: 'STACK', href: '#stack' },
@@ -179,7 +171,9 @@ export const Navbar = () => {
   ];
 
   useEffect(() => {
+    let scrollFrame = 0;
     const handleScroll = () => {
+      scrollFrame = 0;
       const page = window.matchMedia('(width < 1100px)').matches ? document.getElementById('portfolio-scroll') : null;
       const scrollTop = page ? page.scrollTop : window.scrollY;
       const totalScroll = page ? page.scrollHeight - page.clientHeight : document.documentElement.scrollHeight - window.innerHeight;
@@ -201,11 +195,18 @@ export const Navbar = () => {
       }
     };
 
-    document.addEventListener('scroll', handleScroll, { passive: true, capture: true });
-    return () => document.removeEventListener('scroll', handleScroll, true);
+    const scheduleScroll = () => {
+      if (!scrollFrame) scrollFrame = requestAnimationFrame(handleScroll);
+    };
+    scheduleScroll();
+    document.addEventListener('scroll', scheduleScroll, { passive: true, capture: true });
+    window.addEventListener('resize', scheduleScroll, { passive: true });
+    return () => {
+      cancelAnimationFrame(scrollFrame);
+      document.removeEventListener('scroll', scheduleScroll, true);
+      window.removeEventListener('resize', scheduleScroll);
+    };
   }, []);
-
-  // ── Compute active glass pill position ────────────────────────────────────
   useEffect(() => {
     const updatePill = () => {
       const effectiveIdx = hoverIdx !== null
@@ -245,8 +246,8 @@ export const Navbar = () => {
 
   const headerClass = `fixed top-3 sm:top-4 inset-x-3 sm:inset-x-6 md:inset-x-8 max-w-5xl mx-auto z-40 transition-all duration-300 rounded-full border border-neutral-300/70 dark:border-white/15 bg-[var(--glass-surface-strong)] backdrop-blur-xl ${
     scrolled
-      ? 'py-2 px-4 sm:px-6 shadow-[0_16px_40px_-10px_var(--glass-shadow)]'
-      : 'py-2.5 px-4 sm:px-6 shadow-[0_8px_24px_-6px_var(--glass-shadow)]'
+      ? 'py-1.5 px-4 sm:px-6 shadow-[0_6px_18px_-10px_var(--glass-shadow)]'
+      : 'py-1.5 px-4 sm:px-6 shadow-none'
   }`;
 
   return (
@@ -256,10 +257,9 @@ export const Navbar = () => {
       className={headerClass}
       style={{ position: 'fixed' }}
     >
-      {/* ── Liquid Glass backing layer ────────────────────────────────────── */}
+
       <NavbarGlassBacking filterId={filterId} mapData={navGlassMap} borderRadius="9999px" />
 
-      {/* ── Optical Glass Filter for moving Navigation Pill ───────────────── */}
       {navPillMap && (
         <LiquidGlassFilter
           surfaceId="nav-pill"
@@ -268,9 +268,8 @@ export const Navbar = () => {
         />
       )}
 
-      {/* ── Navbar content ────────────────────────────────────────────────── */}
       <div className="w-full flex items-center justify-between" style={{ position: 'relative', zIndex: 1 }}>
-        {/* Brand / Logo */}
+
         <a
           href="#hero"
           onClick={(e) => {
@@ -284,11 +283,10 @@ export const Navbar = () => {
           <BrandLogo priority />
         </a>
 
-        {/* Desktop Navigation */}
         <nav className="hidden min-[1100px]:flex items-center gap-5 lg:gap-7 xl:gap-8 shrink-0">
-          {/* Relative container so the glass pill can be absolutely positioned */}
+
           <div style={{ position: 'relative' }}>
-            {/* Sliding active optical refractive glass pill */}
+
             <div
               aria-hidden="true"
               className="liquid-glass-nav-pill pointer-events-none overflow-hidden"
@@ -312,7 +310,7 @@ export const Navbar = () => {
                 zIndex: 10,
               }}
             >
-              {/* Synchronized Refraction Target: translated inversely so text aligns perfectly under the lens */}
+
               <div
                 style={{
                   position: 'absolute',
@@ -336,7 +334,6 @@ export const Navbar = () => {
                 </ul>
               </div>
 
-              {/* Specular top catch rim */}
               <div
                 className="absolute top-0 inset-x-2 h-[1px] bg-white/90 dark:bg-white/60 rounded-full opacity-80 pointer-events-none"
                 aria-hidden="true"
@@ -376,7 +373,6 @@ export const Navbar = () => {
             </ul>
           </div>
 
-          {/* ── Theme Control (Light / Dark only) ─────────────────────────── */}
           <div className="flex items-center shrink-0 ml-1">
             <button
               id="theme-toggle-desktop"
@@ -393,7 +389,6 @@ export const Navbar = () => {
           </div>
         </nav>
 
-        {/* Dedicated space keeps the floating assistant clear of page content. */}
         <button id="ask-ai-launcher" type="button"
           onClick={() => { setMobileOpen(false); window.dispatchEvent(new CustomEvent('open-ask-ai')); }}
           aria-label="Open Ask Awais AI assistant" aria-haspopup="dialog" className="ai-launcher shrink-0">
@@ -402,7 +397,6 @@ export const Navbar = () => {
           <ArrowUpRight className="ai-launcher-arrow w-3.5 h-3.5" aria-hidden="true" />
         </button>
 
-        {/* Mobile menu trigger & controls */}
         <div className="flex items-center gap-1.5 min-[1100px]:hidden">
           <button
             id="theme-toggle-mobile"
@@ -426,7 +420,6 @@ export const Navbar = () => {
         </div>
       </div>
 
-      {/* Mobile drawer */}
       {mobileOpen && (
         <div
           id="mobile-navigation"
@@ -514,7 +507,6 @@ export const Navbar = () => {
         </div>
       )}
 
-      {/* Scroll Progress Indicator */}
       <div
         className="absolute bottom-0 left-6 right-6 h-[1.5px] bg-neutral-300/30 dark:bg-neutral-700/30 rounded-full overflow-hidden pointer-events-none"
         style={{ zIndex: 2 }}

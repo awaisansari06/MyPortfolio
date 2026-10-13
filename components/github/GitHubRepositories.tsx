@@ -23,17 +23,17 @@ const FALLBACK_REPOSITORIES: GitHubRepo[] = [
     updatedAt: '2026-09-05T12:00:00Z',
   },
   {
-    name: 'devflow',
+    name: 'buildstack',
     description: 'Agentic AI development platform generating full-stack web applications with cloud VM sandbox execution.',
-    url: 'https://github.com/awaisansari06/devflow',
+    url: 'https://github.com/awaisansari06/buildstack',
     stargazerCount: 0,
     primaryLanguage: { name: 'TypeScript', color: '#3178c6' },
     updatedAt: '2026-09-06T06:00:00Z',
   },
   {
-    name: 'smart-journey',
+    name: 'tripcraft',
     description: 'Intelligent personalized travel planning system with dynamic route and place recommendations.',
-    url: 'https://github.com/awaisansari06/smart-journey',
+    url: 'https://github.com/awaisansari06/TripCraft',
     stargazerCount: 0,
     primaryLanguage: { name: 'TypeScript', color: '#3178c6' },
     updatedAt: '2026-08-31T12:00:00Z',
@@ -112,7 +112,7 @@ export const GitHubRepositories: React.FC<GitHubRepositoriesProps> = ({ reposito
     if (lower.includes('careerwise')) {
       return 'AI-powered career intelligence platform with ATS resume optimization and mock interview agents.';
     }
-    if (lower.includes('devflow') || lower.includes('buildstack')) {
+    if (lower.includes('buildstack') || lower.includes('buildstack')) {
       return 'Agentic AI development platform generating full-stack web applications with cloud VM sandbox execution.';
     }
     if (lower.includes('journey') || lower.includes('trip') || lower.includes('tripcraft')) {

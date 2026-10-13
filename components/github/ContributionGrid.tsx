@@ -13,6 +13,7 @@ interface ContributionGridProps {
 export const ContributionGrid: React.FC<ContributionGridProps> = ({ calendar }) => {
   const [hoveredDay, setHoveredDay] = useState<ContributionDay | null>(null);
   const [tooltipPos, setTooltipPos] = useState<TooltipPosition | null>(null);
+  const [activeDate, setActiveDate] = useState<string | null>(null);
 
   const handleCellHover = useCallback((day: ContributionDay, target: HTMLElement) => {
     const rect = target.getBoundingClientRect();
@@ -46,6 +47,23 @@ export const ContributionGrid: React.FC<ContributionGridProps> = ({ calendar }) 
   // Build authoritative normalized calendar
   const processed = useMemo(() => buildProcessedCalendar(calendar), [calendar]);
   const weeks = processed.weeks;
+  const dates = weeks.flatMap(week => week.days.filter((day): day is ContributionDay => Boolean(day)).map(day => day.date));
+  const selectedDate = activeDate && dates.includes(activeDate) ? activeDate : dates.at(-1);
+  const navigate = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    const cell = (event.target as HTMLElement).closest<HTMLElement>('[data-contribution-date]');
+    if (!cell) return;
+    const current = dates.indexOf(cell.dataset.contributionDate!);
+    const offsets: Record<string, number> = { ArrowLeft: -7, ArrowRight: 7, ArrowUp: -1, ArrowDown: 1 };
+    let next: number;
+    if (event.key in offsets) next = Math.max(0, Math.min(dates.length - 1, current + offsets[event.key]));
+    else if (event.key === 'Home') next = 0;
+    else if (event.key === 'End') next = dates.length - 1;
+    else return;
+    event.preventDefault();
+    const target = event.currentTarget.querySelector<HTMLElement>(`[data-contribution-date="${dates[next]}"]`);
+    target?.focus({ preventScroll: true });
+    target?.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'instant' });
+  };
 
   const dayLabels = ['', 'MON', '', 'WED', '', 'FRI', ''];
 
@@ -53,14 +71,13 @@ export const ContributionGrid: React.FC<ContributionGridProps> = ({ calendar }) 
     <div className="relative w-full">
       <ContributionTooltip day={hoveredDay} position={tooltipPos} />
 
-      {/* Scrollable Container for Heatmap with smooth contained scrolling */}
       <div
         className="w-full overflow-x-auto pb-3 pt-1 custom-scrollbar overscroll-x-contain touch-pan-x"
         onScroll={handleScroll}
       >
         <div className="inline-flex flex-col min-w-max mx-auto">
           <div className="flex gap-2 items-start">
-            {/* Day of Week Labels (Left Column) aligned 1:1 with weekday rows */}
+
             <div className="flex flex-col gap-1 sm:gap-1.5 text-[8px] font-mono-code text-neutral-400 dark:text-[#666666] select-none pt-[22px] shrink-0">
               {dayLabels.map((label, idx) => (
                 <span
@@ -72,9 +89,8 @@ export const ContributionGrid: React.FC<ContributionGridProps> = ({ calendar }) 
               ))}
             </div>
 
-            {/* Calendar Content (Month Headers + Contribution Heatmap Columns locked to identical widths) */}
             <div className="flex flex-col">
-              {/* Month Labels Row */}
+
               <div className="flex gap-1 sm:gap-1.5 mb-1.5 h-4 select-none">
                 {weeks.map((week) => (
                   <div key={week.weekIndex} className="w-3 sm:w-3.5 relative shrink-0">
@@ -87,11 +103,11 @@ export const ContributionGrid: React.FC<ContributionGridProps> = ({ calendar }) 
                 ))}
               </div>
 
-              {/* Heatmap Grid */}
               <div
                 className="flex gap-1 sm:gap-1.5"
                 role="grid"
                 aria-label="GitHub Contribution Heatmap"
+                onKeyDown={navigate}
               >
                 {weeks.map((week) => (
                   <div
@@ -106,6 +122,8 @@ export const ContributionGrid: React.FC<ContributionGridProps> = ({ calendar }) 
                           day={day}
                           onHover={handleCellHover}
                           onLeave={handleCellLeave}
+                          tabIndex={day.date === selectedDate ? 0 : -1}
+                          onSelect={() => setActiveDate(day.date)}
                         />
                       ) : (
                         <div
@@ -123,7 +141,6 @@ export const ContributionGrid: React.FC<ContributionGridProps> = ({ calendar }) 
         </div>
       </div>
 
-      {/* Bottom Controls & Green Heatmap Legend */}
       <div className="mt-4 pt-3.5 border-t border-neutral-200 dark:border-[#222222] flex flex-col sm:flex-row sm:items-center justify-between gap-3 font-mono-code text-[11px] text-neutral-500 dark:text-[#888888]">
         <div className="flex items-center gap-1.5">
           <span className="text-neutral-900 dark:text-[#F5F3EF] font-bold">
@@ -132,7 +149,6 @@ export const ContributionGrid: React.FC<ContributionGridProps> = ({ calendar }) 
           <span>contributions in the last year</span>
         </div>
 
-        {/* GitHub Green Heatmap Legend */}
         <div className="flex items-center gap-2 text-[10px]">
           <span className="text-neutral-400 dark:text-[#666666]">LESS</span>
           <div className="flex items-center gap-1">

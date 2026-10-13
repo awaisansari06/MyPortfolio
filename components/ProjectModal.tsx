@@ -40,7 +40,7 @@ export const ProjectModal = ({ project, onClose }: ProjectModalProps) => {
           className="relative w-full max-h-[90vh] overflow-y-auto text-neutral-950 dark:text-[#F5F3EF] p-6 sm:p-10 transition-all duration-300 rounded-2xl border border-neutral-300/80 dark:border-[#333333] bg-[var(--glass-surface-tint)] backdrop-blur-xl shadow-[0_24px_64px_rgba(0,0,0,0.4),inset_0_1px_0_var(--glass-edge-highlight)]"
           onClick={(e) => e.stopPropagation()}
         >
-          {/* Close Button */}
+
           <button
             onClick={onClose}
             aria-label="Close modal"
@@ -50,7 +50,6 @@ export const ProjectModal = ({ project, onClose }: ProjectModalProps) => {
             <X className="w-4 h-4 text-neutral-700 dark:text-[#A3A3A3]" />
           </button>
 
-          {/* Header */}
           <div className="border-b border-neutral-300 dark:border-[#2A2A2A] pb-6 mb-8">
             <div className="flex items-center gap-3 mb-2 font-mono-code text-xs text-neutral-500 dark:text-[#A3A3A3]">
               <span>PROJECT {project.number}</span>
@@ -87,7 +86,6 @@ export const ProjectModal = ({ project, onClose }: ProjectModalProps) => {
             </div>
           </div>
 
-          {/* Real Product Interface Preview */}
           <div className="mb-10 rounded-xl p-3 sm:p-4 transition-all duration-300 liquid-glass-card-frame bg-white/60 dark:bg-[#111111]/70 backdrop-blur-md">
             <div className="flex items-center justify-between pb-3 mb-3 border-b border-neutral-300 dark:border-[#2A2A2A] font-mono-code text-[11px] text-neutral-500 dark:text-[#888888]">
               <div className="flex items-center gap-2">
@@ -102,7 +100,7 @@ export const ProjectModal = ({ project, onClose }: ProjectModalProps) => {
               </div>
               <span className="text-[10px] uppercase tracking-wider font-medium flex items-center gap-1.5 font-mono-code liquid-glass-badge text-emerald-600 dark:text-emerald-400">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-                VERIFIED LIVE BUILD
+                PROJECT PREVIEW
               </span>
             </div>
             <div className="rounded-lg border border-neutral-300/80 dark:border-[#2A2A2A] overflow-hidden bg-neutral-950/5 dark:bg-black/50">
@@ -112,13 +110,13 @@ export const ProjectModal = ({ project, onClose }: ProjectModalProps) => {
                   <Image src={projectImages.careerwise.light} sizes="(min-width: 1024px) 800px, 100vw" alt="CareerWise Platform" className="w-full h-auto block dark:hidden" />
                 </>
               )}
-              {(project.id === 'devflow' || project.id === 'buildstack') && (
+              {(project.id === 'buildstack' || project.id === 'buildstack') && (
                 <>
                   <Image src={projectImages.buildstack.dark} sizes="(min-width: 1024px) 800px, 100vw" alt="BuildStack Platform" className="w-full h-auto hidden dark:block" />
                   <Image src={projectImages.buildstack.light} sizes="(min-width: 1024px) 800px, 100vw" alt="BuildStack Platform" className="w-full h-auto block dark:hidden" />
                 </>
               )}
-              {(project.id === 'smartjourney' || project.id === 'tripcraft') && (
+              {(project.id === 'tripcraft' || project.id === 'tripcraft') && (
                 <>
                   <Image src={projectImages.tripcraft.dark} sizes="(min-width: 1024px) 800px, 100vw" alt="TripCraft Platform" className="w-full h-auto hidden dark:block" />
                   <Image src={projectImages.tripcraft.light} sizes="(min-width: 1024px) 800px, 100vw" alt="TripCraft Platform" className="w-full h-auto block dark:hidden" />
@@ -127,9 +125,8 @@ export const ProjectModal = ({ project, onClose }: ProjectModalProps) => {
             </div>
           </div>
 
-          {/* Content Columns */}
           <div className="space-y-10">
-            {/* Overview */}
+
             <div>
               <h3 className="font-mono-code text-xs text-neutral-500 dark:text-[#A3A3A3] uppercase tracking-widest mb-3">
                 01 // OVERVIEW
@@ -139,7 +136,6 @@ export const ProjectModal = ({ project, onClose }: ProjectModalProps) => {
               </p>
             </div>
 
-            {/* Problem & Approach */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div className="p-6 transition-all duration-300 rounded-xl border border-neutral-300/70 dark:border-[#2A2A2A] bg-white/40 dark:bg-[#111111]/40">
                 <h4 className="font-mono-code text-xs text-neutral-500 dark:text-[#A3A3A3] uppercase tracking-widest mb-3">
@@ -159,10 +155,28 @@ export const ProjectModal = ({ project, onClose }: ProjectModalProps) => {
               </div>
             </div>
 
-            {/* Verified Features */}
             <div>
               <h3 className="font-mono-code text-xs text-neutral-500 dark:text-[#A3A3A3] uppercase tracking-widest mb-4">
-                02 // KEY SYSTEM CAPABILITIES
+                02 // BEHIND THE BUILD
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {[
+                  { title: 'My contribution', text: project.contribution },
+                  { title: 'The hardest engineering problem', text: project.challenge },
+                  { title: 'Tradeoffs', text: project.tradeoff },
+                  { title: 'Engineering takeaway', text: project.takeaway },
+                ].map(({ title, text }) => (
+                  <div key={title} className="rounded-xl border border-neutral-300/70 dark:border-white/10 bg-white/40 dark:bg-white/[0.02] p-5 sm:p-6">
+                    <h4 className="mb-3 text-sm font-semibold text-neutral-950 dark:text-[#F5F3EF]">{title}</h4>
+                    <p className="text-sm leading-relaxed text-neutral-700 dark:text-neutral-300">{text}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <h3 className="font-mono-code text-xs text-neutral-500 dark:text-[#A3A3A3] uppercase tracking-widest mb-4">
+                03 // KEY SYSTEM CAPABILITIES
               </h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {project.features.map((feature, i) => (
@@ -177,10 +191,9 @@ export const ProjectModal = ({ project, onClose }: ProjectModalProps) => {
               </div>
             </div>
 
-            {/* Technical Implementation Details */}
             <div>
               <h3 className="font-mono-code text-xs text-neutral-500 dark:text-[#A3A3A3] uppercase tracking-widest mb-4">
-                03 // IMPLEMENTATION SPECIFICATION
+                04 // IMPLEMENTATION SPECIFICATION
               </h3>
               <div className="border divide-y transition-all duration-300 rounded-xl overflow-hidden border-neutral-300/70 dark:border-[#2A2A2A] divide-neutral-300/50 dark:divide-[#222222]">
                 {project.implementation.map((impl, i) => (
@@ -194,7 +207,6 @@ export const ProjectModal = ({ project, onClose }: ProjectModalProps) => {
               </div>
             </div>
 
-            {/* Process Flow Pipeline */}
             <div className="p-4 transition-all duration-300 rounded-xl border border-neutral-300/60 dark:border-[#2A2A2A] bg-white/40 dark:bg-[#111111]/40">
               <div className="font-mono-code text-[10px] text-neutral-500 dark:text-[#A3A3A3] uppercase tracking-widest mb-3">
                 ARCHITECTURAL DATA FLOW PIPELINE
@@ -213,10 +225,9 @@ export const ProjectModal = ({ project, onClose }: ProjectModalProps) => {
               </div>
             </div>
 
-            {/* Technology Stack Tags */}
             <div>
               <h3 className="font-mono-code text-xs text-neutral-500 dark:text-[#A3A3A3] uppercase tracking-widest mb-3">
-                04 // TECHNOLOGIES & TOOLS
+                05 // TECHNOLOGIES & TOOLS
               </h3>
               <div className="flex flex-wrap gap-2">
                 {project.technologies.map((tech) => (
@@ -231,7 +242,6 @@ export const ProjectModal = ({ project, onClose }: ProjectModalProps) => {
               </div>
             </div>
 
-            {/* Architectural Metrics */}
             {project.metrics && (
               <div className="pt-6 border-t border-neutral-300 dark:border-[#2A2A2A] grid grid-cols-2 sm:grid-cols-4 gap-4">
                 {project.metrics.map((m) => (

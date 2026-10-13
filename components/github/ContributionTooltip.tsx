@@ -99,7 +99,6 @@ export const ContributionTooltip: React.FC<ContributionTooltipProps> = ({ day, p
   );
 
   // Portal to document.body in browser so it is never trapped by container overflow, transforms, or stacking contexts.
-  // In SSR or test environments, render directly for compatibility.
   if (typeof document !== 'undefined' && document.body) {
     return createPortal(tooltipElement, document.body);
   }
