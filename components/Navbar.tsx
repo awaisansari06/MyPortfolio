@@ -9,6 +9,8 @@ import { DEFAULT_LENS_CONFIG } from '@/components/liquid-glass/lens';
 import { generateDisplacementMap } from '@/components/liquid-glass/displacement-map';
 import { LiquidGlassFilter, getFilterUrl } from '@/components/liquid-glass/LiquidGlassFilter';
 import { getScrollBehavior } from '@/lib/scroll';
+import { useDialogFocus } from '@/hooks/useDialogFocus';
+import { BrandLogo } from '@/components/BrandLogo';
 
 // ─── Navbar Liquid Glass Backing ──────────────────────────────────────────────
 // The floating navbar is a suspended glass capsule with real SVG feDisplacementMap
@@ -103,6 +105,15 @@ export const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const mobileMenuRef = useRef<HTMLDivElement>(null);
+  useDialogFocus(mobileMenuRef, mobileOpen, () => setMobileOpen(false), '#mobile-nav-toggle', false);
+
+  useEffect(() => {
+    const desktop = window.matchMedia('(min-width: 1100px)');
+    const closeOnDesktop = () => { if (desktop.matches) setMobileOpen(false); };
+    desktop.addEventListener('change', closeOnDesktop);
+    return () => desktop.removeEventListener('change', closeOnDesktop);
+  }, []);
   const [activeSection, setActiveSection] = useState('hero');
 
   const reactId = useId().replace(/:/g, '');
@@ -169,11 +180,13 @@ export const Navbar = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      const totalScroll = document.documentElement.scrollHeight - window.innerHeight;
+      const page = window.matchMedia('(width < 1100px)').matches ? document.getElementById('portfolio-scroll') : null;
+      const scrollTop = page ? page.scrollTop : window.scrollY;
+      const totalScroll = page ? page.scrollHeight - page.clientHeight : document.documentElement.scrollHeight - window.innerHeight;
       if (totalScroll > 0) {
-        setScrollProgress(Math.min(1, Math.max(0, window.scrollY / totalScroll)));
+        setScrollProgress(Math.min(1, Math.max(0, scrollTop / totalScroll)));
       }
-      setScrolled(window.scrollY > 40);
+      setScrolled(scrollTop > 40);
 
       const sections = ['hero', 'what-i-build', 'work', 'stack', 'engineering', 'about', 'activity', 'contact'];
       for (const sectionId of sections) {
@@ -188,8 +201,8 @@ export const Navbar = () => {
       }
     };
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    document.addEventListener('scroll', handleScroll, { passive: true, capture: true });
+    return () => document.removeEventListener('scroll', handleScroll, true);
   }, []);
 
   // ── Compute active glass pill position ────────────────────────────────────
@@ -264,20 +277,15 @@ export const Navbar = () => {
             e.preventDefault();
             scrollTo('#hero');
           }}
-          className="group flex flex-col transition-colors text-left shrink-0"
+          className="group flex items-center transition-colors text-left shrink-0 rounded-lg"
           data-cursor="HOME"
           aria-label="Mohammad Awais Ansari - Home"
         >
-          <span className="text-[9px] md:text-[10px] tracking-[0.3em] font-medium text-neutral-500 dark:text-[#A3A3A3] font-mono-code mb-0.5 whitespace-nowrap">
-            / PORTFOLIO 2026
-          </span>
-          <span className="text-xs md:text-sm font-semibold uppercase tracking-widest text-neutral-950 dark:text-[#F5F3EF] whitespace-nowrap">
-            A. ANSARI
-          </span>
+          <BrandLogo priority />
         </a>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-5 lg:gap-7 xl:gap-8 shrink-0">
+        <nav className="hidden min-[1100px]:flex items-center gap-5 lg:gap-7 xl:gap-8 shrink-0">
           {/* Relative container so the glass pill can be absolutely positioned */}
           <div style={{ position: 'relative' }}>
             {/* Sliding active optical refractive glass pill */}
@@ -348,6 +356,7 @@ export const Navbar = () => {
                     <a
                       ref={el => { linkRefs.current[idx] = el; }}
                       href={link.href}
+                      aria-current={isActive ? 'location' : undefined}
                       onMouseEnter={() => setHoverIdx(idx)}
                       onClick={(e) => {
                         e.preventDefault();
@@ -373,7 +382,7 @@ export const Navbar = () => {
               id="theme-toggle-desktop"
               onClick={toggleTheme}
               aria-label={mounted && theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
-              className="w-8 h-8 flex items-center justify-center transition-colors cursor-pointer rounded-full border border-neutral-300/80 dark:border-[#333333] hover:bg-black/5 dark:hover:bg-white/10 text-neutral-800 dark:text-[#F5F3EF] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-neutral-950 dark:focus-visible:ring-white"
+              className="w-11 h-11 flex items-center justify-center transition-colors cursor-pointer rounded-full border border-neutral-300/80 dark:border-[#333333] hover:bg-black/5 dark:hover:bg-white/10 text-neutral-800 dark:text-[#F5F3EF] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-neutral-950 dark:focus-visible:ring-white"
             >
               {mounted && theme === 'dark' ? (
                 <Sun className="w-3.5 h-3.5" />
@@ -384,13 +393,22 @@ export const Navbar = () => {
           </div>
         </nav>
 
+        {/* Dedicated space keeps the floating assistant clear of page content. */}
+        <button id="ask-ai-launcher" type="button"
+          onClick={() => { setMobileOpen(false); window.dispatchEvent(new CustomEvent('open-ask-ai')); }}
+          aria-label="Open Ask Awais AI assistant" aria-haspopup="dialog" className="ai-launcher shrink-0">
+          <span className="ai-status" aria-hidden="true" />
+          <span className="ai-launcher-label">ASK AWAIS AI</span>
+          <ArrowUpRight className="ai-launcher-arrow w-3.5 h-3.5" aria-hidden="true" />
+        </button>
+
         {/* Mobile menu trigger & controls */}
-        <div className="flex items-center gap-1.5 md:hidden">
+        <div className="flex items-center gap-1.5 min-[1100px]:hidden">
           <button
             id="theme-toggle-mobile"
             onClick={toggleTheme}
             aria-label={mounted && theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
-            className="p-1.5 rounded-full border border-neutral-300/80 dark:border-[#333333] text-neutral-800 dark:text-neutral-200 transition-colors cursor-pointer"
+            className="min-w-11 min-h-11 flex items-center justify-center p-1.5 rounded-full border border-neutral-300/80 dark:border-[#333333] text-neutral-800 dark:text-neutral-200 transition-colors cursor-pointer"
           >
             {mounted && theme === 'dark' ? <Sun className="w-3.5 h-3.5" /> : <Moon className="w-3.5 h-3.5" />}
           </button>
@@ -399,7 +417,9 @@ export const Navbar = () => {
             id="mobile-nav-toggle"
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label="Toggle navigation menu"
-            className="p-1.5 rounded-full border border-neutral-300/80 dark:border-[#333333] text-neutral-800 dark:text-neutral-200 cursor-pointer"
+            aria-expanded={mobileOpen}
+            aria-controls="mobile-navigation"
+            className="min-w-11 min-h-11 flex items-center justify-center p-1.5 rounded-full border border-neutral-300/80 dark:border-[#333333] text-neutral-800 dark:text-neutral-200 cursor-pointer"
           >
             {mobileOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
           </button>
@@ -409,7 +429,9 @@ export const Navbar = () => {
       {/* Mobile drawer */}
       {mobileOpen && (
         <div
-          className="md:hidden fixed inset-x-3 sm:inset-x-6 top-[64px] max-w-5xl mx-auto rounded-2xl border border-neutral-300/80 dark:border-[#333333] bg-[var(--glass-surface-strong)] backdrop-blur-xl px-6 py-6 shadow-[0_20px_50px_rgba(0,0,0,0.3)] transition-all"
+          id="mobile-navigation"
+          ref={mobileMenuRef}
+          className="min-[1100px]:hidden fixed inset-x-3 sm:inset-x-6 top-[64px] max-w-5xl mx-auto rounded-2xl border border-neutral-300/80 dark:border-[#333333] bg-[var(--glass-surface-strong)] backdrop-blur-xl px-6 py-6 shadow-[0_20px_50px_rgba(0,0,0,0.3)] transition-all"
           style={{ zIndex: 50 }}
         >
           <nav className="flex flex-col gap-5">

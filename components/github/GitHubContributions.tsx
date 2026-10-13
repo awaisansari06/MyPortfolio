@@ -45,8 +45,11 @@ export const GitHubContributions: React.FC = () => {
 
   // GSAP ScrollTrigger entrance
   useEffect(() => {
-    if (isReducedMotion()) return;
+    if (typeof window === 'undefined') return;
+
     const ctx = gsap.context(() => {
+      const reduced = isReducedMotion();
+      if (reduced) return;
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: containerRef.current,
@@ -55,29 +58,30 @@ export const GitHubContributions: React.FC = () => {
         },
       });
 
-      tl.from('.github-header', {
-        y: 20,
-        opacity: 0,
-        duration: 0.6,
-        ease: 'power2.out',
-      })
-        .from(
+      tl.fromTo(
+        '.github-header',
+        { y: reduced ? 0 : 24, opacity: 1 },
+        { y: 0, opacity: 1, duration: 0.65, ease: 'power2.out' }
+      )
+        .fromTo(
           '.github-metric-card',
+          { y: reduced ? 0 : 28, opacity: 1 },
           {
-            y: 24,
-            opacity: 0,
-            duration: 0.55,
-            stagger: 0.1,
+            y: 0,
+            opacity: 1,
+            duration: 0.6,
+            stagger: 0.08,
             ease: 'power2.out',
           },
           '-=0.3'
         )
-        .from(
+        .fromTo(
           '.github-calendar-card',
+          { y: reduced ? 0 : 28, opacity: 1 },
           {
-            y: 20,
-            opacity: 0,
-            duration: 0.55,
+            y: 0,
+            opacity: 1,
+            duration: 0.6,
             ease: 'power2.out',
             clearProps: 'all',
           },
@@ -88,33 +92,37 @@ export const GitHubContributions: React.FC = () => {
     return () => ctx.revert();
   }, []);
 
-  // Dynamic date range formatted as "SEP 2025 — SEP 2026"
+  // Dynamic date range formatted as e.g. "OCT 2025 — OCT 2026"
   const getDateRangeLabel = () => {
-    if (!data?.calendar?.weeks?.length) return 'SEP 2025 — SEP 2026';
+    if (!data?.calendar?.weeks?.length) return 'OCT 2025 — OCT 2026';
     const weeks = data.calendar.weeks;
-    const firstWeek = weeks[0];
-    const lastWeek = weeks[weeks.length - 1];
-    const firstDay = firstWeek?.contributionDays?.[0];
-    const lastDay = lastWeek?.contributionDays?.[lastWeek.contributionDays.length - 1];
+    let firstDate = '';
+    let lastDate = '';
 
-    if (!firstDay || !lastDay) return 'SEP 2025 — SEP 2026';
+    for (const w of weeks) {
+      for (const d of w.contributionDays || []) {
+        if (!firstDate) firstDate = d.date;
+        lastDate = d.date;
+      }
+    }
 
-    const start = new Date(firstDay.date);
-    const end = new Date(lastDay.date);
-    const startStr = start.toLocaleDateString('en-US', { month: 'short', year: 'numeric', timeZone: 'UTC' }).toUpperCase();
-    const endStr = end.toLocaleDateString('en-US', { month: 'short', year: 'numeric', timeZone: 'UTC' }).toUpperCase();
-    return `${startStr} — ${endStr}`;
+    if (!firstDate || !lastDate) return 'OCT 2025 — OCT 2026';
+
+    const [y1, m1] = firstDate.split('-').map(Number);
+    const [y2, m2] = lastDate.split('-').map(Number);
+    const MONTHS = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+    return `${MONTHS[m1 - 1]} ${y1} — ${MONTHS[m2 - 1]} ${y2}`;
   };
 
   return (
     <section
       ref={containerRef}
       id="activity"
-      className="py-24 md:py-36 border-b border-neutral-300 dark:border-[#2A2A2A] bg-transparent dark:bg-[#0A0A0A] relative"
+      className="py-20 md:py-28 border-b border-neutral-300 dark:border-[#2A2A2A] bg-transparent dark:bg-[#0A0A0A] relative"
     >
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         {/* Section Header */}
-        <div className="github-header flex flex-col md:flex-row md:items-end justify-between pb-8 mb-16 border-b border-neutral-300 dark:border-[#2A2A2A]">
+        <div className="github-header flex flex-col md:flex-row md:items-end justify-between pb-6 mb-10 border-b border-neutral-300 dark:border-[#2A2A2A]">
           <div>
             <div className="font-mono-code text-[11px] text-neutral-500 dark:text-[#A3A3A3] tracking-[0.25em] uppercase mb-2">
               06 / OPEN SOURCE & ACTIVITY
@@ -129,9 +137,9 @@ export const GitHubContributions: React.FC = () => {
         </div>
 
         {/* Top Highlight Metric & Profile Card */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-12 items-stretch">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-8 items-stretch">
           {/* Left: Total Contributions Highlight */}
-          <div className="github-metric-card lg:col-span-4 p-8 flex flex-col justify-between liquid-glass-card rounded-2xl">
+          <div className="github-metric-card lg:col-span-4 p-7 flex flex-col justify-between liquid-glass-card rounded-2xl">
             <div>
               <div className="flex items-center justify-between font-mono-code text-[10px] text-neutral-400 dark:text-[#666666] uppercase mb-4">
                 <div className="flex items-center gap-1.5">
@@ -165,7 +173,7 @@ export const GitHubContributions: React.FC = () => {
           </div>
 
           {/* Right: GitHub Identity & Action */}
-          <div className="github-metric-card lg:col-span-8 p-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 liquid-glass-card rounded-2xl">
+          <div className="github-metric-card lg:col-span-8 p-7 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 liquid-glass-card rounded-2xl">
             <div className="space-y-3 max-w-lg">
               <div className="inline-flex items-center gap-2 px-3 py-1 liquid-glass-chip rounded-md font-mono-code text-[10px] uppercase tracking-wider text-neutral-900 dark:text-[#F5F3EF]">
                 <Github className="w-3.5 h-3.5" />
@@ -193,8 +201,8 @@ export const GitHubContributions: React.FC = () => {
         </div>
 
         {/* Contribution Calendar Heatmap Card */}
-        <div className="github-calendar-card p-6 sm:p-8 liquid-glass-card-frame rounded-2xl">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 mb-4 border-b border-[var(--glass-rim)] gap-2">
+        <div className="github-calendar-card p-5 sm:p-7 liquid-glass-card-frame rounded-2xl">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3.5 mb-3.5 border-b border-[var(--glass-rim)] gap-2">
             <div className="flex items-center gap-3">
               <span className="font-mono-code text-xs font-bold uppercase tracking-wider text-neutral-950 dark:text-[#F5F3EF]">
                 CONTRIBUTION CALENDAR
@@ -210,11 +218,11 @@ export const GitHubContributions: React.FC = () => {
           </div>
 
           {loading ? (
-            /* Activity heatmap skeleton */
-            <div className="py-6 space-y-4 animate-pulse">
+            /* Activity heatmap skeleton with green accents */
+            <div className="py-4 space-y-3.5 animate-pulse">
               <div className="flex items-center justify-between font-mono-code text-[10px] text-neutral-400 dark:text-[#666666]">
                 <div className="flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-neutral-400 dark:bg-[#444444] animate-ping" />
+                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
                   <span>SYNCHRONIZING WITH GITHUB GRAPHQL API...</span>
                 </div>
                 <span>52 WEEKS</span>
@@ -228,13 +236,15 @@ export const GitHubContributions: React.FC = () => {
                         const intensity = (col * 3 + row * 7) % 5;
                         const bgClass =
                           intensity === 4
-                            ? 'bg-neutral-400 dark:bg-[#555555]'
+                            ? 'bg-[#216E39] dark:bg-[#39D353]'
                             : intensity === 3
-                            ? 'bg-neutral-300 dark:bg-[#383838]'
+                            ? 'bg-[#30A14E] dark:bg-[#26A641]'
                             : intensity === 2
-                            ? 'bg-neutral-200 dark:bg-[#252525]'
-                            : 'bg-neutral-100 dark:bg-[#181818]';
-                        return <div key={row} className={`w-[10px] h-[10px] ${bgClass}`} />;
+                            ? 'bg-[#40C463] dark:bg-[#006D32]'
+                            : intensity === 1
+                            ? 'bg-[#9BE9A8] dark:bg-[#0E4429]'
+                            : 'bg-[#EBEDF0] dark:bg-[#161B22]';
+                        return <div key={row} className={`w-[11px] h-[11px] rounded-[1px] ${bgClass}`} />;
                       })}
                     </div>
                   ))}
@@ -244,10 +254,11 @@ export const GitHubContributions: React.FC = () => {
               <div className="flex items-center justify-between font-mono-code text-[10px] text-neutral-400 dark:text-[#666666] pt-1">
                 <span>LESS</span>
                 <div className="flex items-center gap-1">
-                  <div className="w-[10px] h-[10px] bg-neutral-100 dark:bg-[#181818]" />
-                  <div className="w-[10px] h-[10px] bg-neutral-200 dark:bg-[#252525]" />
-                  <div className="w-[10px] h-[10px] bg-neutral-300 dark:bg-[#383838]" />
-                  <div className="w-[10px] h-[10px] bg-neutral-400 dark:bg-[#555555]" />
+                  <div className="w-[10px] h-[10px] rounded-[1px] bg-[#EBEDF0] dark:bg-[#161B22]" />
+                  <div className="w-[10px] h-[10px] rounded-[1px] bg-[#9BE9A8] dark:bg-[#0E4429]" />
+                  <div className="w-[10px] h-[10px] rounded-[1px] bg-[#40C463] dark:bg-[#006D32]" />
+                  <div className="w-[10px] h-[10px] rounded-[1px] bg-[#30A14E] dark:bg-[#26A641]" />
+                  <div className="w-[10px] h-[10px] rounded-[1px] bg-[#216E39] dark:bg-[#39D353]" />
                 </div>
                 <span>MORE</span>
               </div>

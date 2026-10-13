@@ -33,17 +33,19 @@ export const TechStack = () => {
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
-    if (isReducedMotion()) return;
 
     const ctx = gsap.context(() => {
+      const reduced = isReducedMotion();
+      if (reduced) return;
+
       // Header reveal
       gsap.fromTo(
         '.stack-header',
-        { opacity: 0, y: 20 },
+        { opacity: 1, y: reduced ? 0 : 24 },
         {
           opacity: 1,
           y: 0,
-          duration: 0.6,
+          duration: 0.65,
           ease: MOTION_EASE.out,
           scrollTrigger: {
             trigger: '.stack-header',
@@ -56,12 +58,12 @@ export const TechStack = () => {
       // Staggered cards reveal
       gsap.fromTo(
         '.stack-card',
-        { opacity: 0, y: 24 },
+        { opacity: 1, y: reduced ? 0 : 28 },
         {
           opacity: 1,
           y: 0,
-          duration: 0.55,
-          stagger: 0.06,
+          duration: 0.6,
+          stagger: 0.07,
           ease: MOTION_EASE.out,
           scrollTrigger: {
             trigger: '.stack-grid',
@@ -134,6 +136,8 @@ export const TechStack = () => {
                           key={skill}
                           onMouseEnter={() => setHoveredSkill(skill)}
                           onMouseLeave={() => setHoveredSkill(null)}
+                          onFocus={() => setHoveredSkill(skill)}
+                          onBlur={() => setHoveredSkill(null)}
                           className={`font-mono-code text-xs px-3 py-1.5 text-left cursor-pointer inline-flex items-center gap-2 group/skill rounded-md border transition-all duration-200 ${
                             isHovered
                               ? 'border-neutral-400 dark:border-white/30 bg-neutral-900/[0.06] dark:bg-white/[0.10] backdrop-blur-sm text-neutral-950 dark:text-[#F5F3EF] font-medium shadow-[inset_0_1px_0_var(--glass-edge-highlight),0_2px_8px_var(--glass-shadow-sm)]'

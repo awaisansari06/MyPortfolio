@@ -12,17 +12,19 @@ export const WhatIBuild = () => {
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
-    if (isReducedMotion()) return;
 
     const ctx = gsap.context(() => {
+      const reduced = isReducedMotion();
+      if (reduced) return;
+
       // Header reveal
       gsap.fromTo(
         '.wib-header',
-        { opacity: 0, y: 20 },
+        { opacity: 1, y: reduced ? 0 : 24 },
         {
           opacity: 1,
           y: 0,
-          duration: 0.6,
+          duration: 0.65,
           ease: MOTION_EASE.out,
           scrollTrigger: {
             trigger: '.wib-header',
@@ -35,12 +37,12 @@ export const WhatIBuild = () => {
       // Staggered cards reveal
       gsap.fromTo(
         '.wib-card',
-        { opacity: 0, y: 24 },
+        { opacity: 1, y: reduced ? 0 : 28 },
         {
           opacity: 1,
           y: 0,
-          duration: 0.55,
-          stagger: 0.07,
+          duration: 0.6,
+          stagger: 0.08,
           ease: MOTION_EASE.out,
           scrollTrigger: {
             trigger: '.wib-grid',

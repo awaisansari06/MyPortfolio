@@ -1,0 +1,70 @@
+{
+  "mode": "Built-in image generation",
+  "assets": [
+    {
+      "name": "01-architectural-a",
+      "source": "C:\\Users\\muham\\.codex\\generated_images\\01a12b63-0620-7a30-813a-1199ccbb8b6d\\exec-8a36b754-e0da-449b-b03e-f1985165241e.png",
+      "prompt": "Use case: logo-brand. Create ONE distinct premium logo concept image for Mohammad Awais Ansari's full-stack developer and AI portfolio. Square canvas, centered generous negative space, flat vector-like graphic with exceptionally crisp edges. Deep neutral charcoal #0B0D0C background, warm ivory #F4F3EF foreground, restrained emerald #00C996 accent. Minimal, sophisticated, engineering-focused, subtly futuristic. No mockups, no textures, no shadows, no gradients, no glow, no photography, no watermarks, no extra captions, no numbered labels. Concept: An architectural letter A monogram built from two precise bold diagonal strokes and a short emerald crossbar. Small custom AWAIS wordmark beneath."
+    },
+    {
+      "name": "02-interlocking-ma",
+      "source": "C:\\Users\\muham\\.codex\\generated_images\\01a12b63-0620-7a30-813a-1199ccbb8b6d\\exec-615a9f42-399d-43d0-9a0d-55a34006c52f.png",
+      "prompt": "Use case: logo-brand. Create ONE distinct premium logo concept image for Mohammad Awais Ansari's full-stack developer and AI portfolio. Square canvas, centered generous negative space, flat vector-like graphic with exceptionally crisp edges. Deep neutral charcoal #0B0D0C background, warm ivory #F4F3EF foreground, restrained emerald #00C996 accent. Minimal, sophisticated, engineering-focused, subtly futuristic. No mockups, no textures, no shadows, no gradients, no glow, no photography, no watermarks, no extra captions, no numbered labels. Concept: An ingenious interlocking M and A monogram using shared diagonal strokes and clear negative space. Monogram in ivory with a single emerald segment. Small AWAIS wordmark beneath."
+    },
+    {
+      "name": "03-awais-wordmark",
+      "source": "C:\\Users\\muham\\.codex\\generated_images\\01a12b63-0620-7a30-813a-1199ccbb8b6d\\exec-be77f947-1c4b-45e1-b077-00645148d727.png",
+      "prompt": "Use case: logo-brand. Create ONE distinct premium logo concept image for Mohammad Awais Ansari's full-stack developer and AI portfolio. Square canvas, centered generous negative space, flat vector-like graphic with exceptionally crisp edges. Deep neutral charcoal #0B0D0C background, warm ivory #F4F3EF foreground, restrained emerald #00C996 accent. Minimal, sophisticated, engineering-focused, subtly futuristic. No mockups, no textures, no shadows, no gradients, no glow, no photography, no watermarks, no extra captions, no numbered labels. Concept: A distinctive typographic logo reading exactly AWAIS, wide geometric bold sans-serif, custom cut at the apex of the first A and a tiny emerald square after the S. Wordmark only, no symbol."
+    },
+    {
+      "name": "04-bracket-a",
+      "source": "C:\\Users\\muham\\.codex\\generated_images\\01a12b63-0620-7a30-813a-1199ccbb8b6d\\exec-dfe3e5a3-2e0b-4660-ab7d-47588125d495.png",
+      "prompt": "Use case: logo-brand. Create ONE distinct premium logo concept image for Mohammad Awais Ansari's full-stack developer and AI portfolio. Square canvas, centered generous negative space, flat vector-like graphic with exceptionally crisp edges. Deep neutral charcoal #0B0D0C background, warm ivory #F4F3EF foreground, restrained emerald #00C996 accent. Minimal, sophisticated, engineering-focused, subtly futuristic. No mockups, no textures, no shadows, no gradients, no glow, no photography, no watermarks, no extra captions, no numbered labels. Concept: A compact developer logo with a solid custom letter A elegantly nested between two minimal code angle brackets. Ivory A, restrained emerald brackets. Small AWAIS wordmark beneath."
+    },
+    {
+      "name": "05-negative-space",
+      "source": "C:\\Users\\muham\\.codex\\generated_images\\01a12b63-0620-7a30-813a-1199ccbb8b6d\\exec-807d2879-e77c-4eb6-9d5b-0e3a9b08a368.png",
+      "prompt": "Use case: logo-brand. Create ONE distinct premium logo concept image for Mohammad Awais Ansari's full-stack developer and AI portfolio. Square canvas, centered generous negative space, flat vector-like graphic with exceptionally crisp edges. Deep neutral charcoal #0B0D0C background, warm ivory #F4F3EF foreground, restrained emerald #00C996 accent. Minimal, sophisticated, engineering-focused, subtly futuristic. No mockups, no textures, no shadows, no gradients, no glow, no photography, no watermarks, no extra captions, no numbered labels. Concept: A solid rounded emerald square with an expertly carved negative-space letter A in charcoal; simple iconic proportions suitable for favicon. Small ivory AWAIS wordmark beneath."
+    },
+    {
+      "name": "06-continuous-ma",
+      "source": "C:\\Users\\muham\\.codex\\generated_images\\01a12b63-0620-7a30-813a-1199ccbb8b6d\\exec-207b002d-3348-408d-9fd0-dc440ff494a5.png",
+      "prompt": "Use case: logo-brand. Create ONE distinct premium logo concept image for Mohammad Awais Ansari's full-stack developer and AI portfolio. Square canvas, centered generous negative space, flat vector-like graphic with exceptionally crisp edges. Deep neutral charcoal #0B0D0C background, warm ivory #F4F3EF foreground, restrained emerald #00C996 accent. Minimal, sophisticated, engineering-focused, subtly futuristic. No mockups, no textures, no shadows, no gradients, no glow, no photography, no watermarks, no extra captions, no numbered labels. Concept: A bold continuous geometric ribbon forming the letters MA with three confident angular turns. Flat ivory, just one emerald endpoint. Small AWAIS wordmark beneath. No 3D."
+    },
+    {
+      "name": "07-modular-a",
+      "source": "C:\\Users\\muham\\.codex\\generated_images\\01a12b63-0620-7a30-813a-1199ccbb8b6d\\exec-c327a873-52e8-4e3b-9e7b-ea78effe579f.png",
+      "prompt": "Use case: logo-brand. Create ONE distinct premium logo concept image for Mohammad Awais Ansari's full-stack developer and AI portfolio. Square canvas, centered generous negative space, flat vector-like graphic with exceptionally crisp edges. Deep neutral charcoal #0B0D0C background, warm ivory #F4F3EF foreground, restrained emerald #00C996 accent. Minimal, sophisticated, engineering-focused, subtly futuristic. No mockups, no textures, no shadows, no gradients, no glow, no photography, no watermarks, no extra captions, no numbered labels. Concept: A compact modular letter A built from five precise geometric rectangular blocks, engineered spacing and a memorable silhouette. Four ivory blocks and one emerald block. Small AWAIS wordmark beneath."
+    },
+    {
+      "name": "08-orbit-a",
+      "source": "C:\\Users\\muham\\.codex\\generated_images\\01a12b63-0620-7a30-813a-1199ccbb8b6d\\exec-803bdb00-9f71-4ac8-a353-ffc14f3ba28b.png",
+      "prompt": "Use case: logo-brand. Create ONE distinct premium logo concept image for Mohammad Awais Ansari's full-stack developer and AI portfolio. Square canvas, centered generous negative space, flat vector-like graphic with exceptionally crisp edges. Deep neutral charcoal #0B0D0C background, warm ivory #F4F3EF foreground, restrained emerald #00C996 accent. Minimal, sophisticated, engineering-focused, subtly futuristic. No mockups, no textures, no shadows, no gradients, no glow, no photography, no watermarks, no extra captions, no numbered labels. Concept: A refined solid ivory A monogram with a single thin incomplete elliptical orbit and tiny emerald node. Restrained and legible, not a generic atom icon. Small AWAIS wordmark beneath."
+    },
+    {
+      "name": "09-terminal-wordmark",
+      "source": "C:\\Users\\muham\\.codex\\generated_images\\01a12b63-0620-7a30-813a-1199ccbb8b6d\\exec-5da4d5ee-0df0-46b6-af21-6ae8a6d27b0e.png",
+      "prompt": "Use case: logo-brand. Create ONE distinct premium logo concept image for Mohammad Awais Ansari's full-stack developer and AI portfolio. Square canvas, centered generous negative space, flat vector-like graphic with exceptionally crisp edges. Deep neutral charcoal #0B0D0C background, warm ivory #F4F3EF foreground, restrained emerald #00C996 accent. Minimal, sophisticated, engineering-focused, subtly futuristic. No mockups, no textures, no shadows, no gradients, no glow, no photography, no watermarks, no extra captions, no numbered labels. Concept: An elegant terminal-inspired wordmark reading exactly AWAIS in a custom sophisticated monospaced typeface, with a short emerald underscore at the right. No extra copy or symbols."
+    },
+    {
+      "name": "10-forward-a",
+      "source": "C:\\Users\\muham\\.codex\\generated_images\\01a12b63-0620-7a30-813a-1199ccbb8b6d\\exec-6163f345-7f3f-4e21-84a3-2ddc703f2358.png",
+      "prompt": "Use case: logo-brand. Create ONE distinct premium logo concept image for Mohammad Awais Ansari's full-stack developer and AI portfolio. Square canvas, centered generous negative space, flat vector-like graphic with exceptionally crisp edges. Deep neutral charcoal #0B0D0C background, warm ivory #F4F3EF foreground, restrained emerald #00C996 accent. Minimal, sophisticated, engineering-focused, subtly futuristic. No mockups, no textures, no shadows, no gradients, no glow, no photography, no watermarks, no extra captions, no numbered labels. Concept: A sculptural but completely flat geometric A monogram incorporating a subtle upward-right arrow through clever negative space. Ivory main symbol, tiny emerald arrow tip. Small AWAIS wordmark beneath."
+    },
+    {
+      "name": "light-logo",
+      "source": "C:\\Users\\muham\\.codex\\generated_images\\01a12b63-0620-7a30-813a-1199ccbb8b6d\\exec-d46ed575-bae4-43a3-b540-74ed3381e320.png",
+      "prompt": "Edit this exact selected AWAIS orbit-A logo for light mode. Preserve exact geometry, orbit path, dot, letter shapes, wordmark AWAIS, composition and placement. Only change ivory A and wordmark to deep charcoal #171717, emerald orbit to #007B5B, and background to flat warm off-white #F4F3EF. No new text or redesign. Same square canvas."
+    },
+    {
+      "name": "dark-icon",
+      "source": "C:\\Users\\muham\\.codex\\generated_images\\01a12b63-0620-7a30-813a-1199ccbb8b6d\\exec-52a7b329-6b27-4c04-bda0-5cf9a0ac6adb.png",
+      "prompt": "Extract only the exact orbit-A symbol from this logo, remove the AWAIS wordmark and all surrounding empty margin. Preserve A silhouette, green elliptical orbit with dot and layering precisely. Create a crisp square favicon image, symbol occupying 86% of canvas with balanced 7% padding. Ivory A #F4F3EF and emerald #00C996 on flat dark charcoal #0B0D0C background. Flat graphic, no texture or glow. Thicken the delicate orbit very slightly so visible at 32 pixels. No text."
+    },
+    {
+      "name": "light-icon",
+      "source": "C:\\Users\\muham\\.codex\\generated_images\\01a12b63-0620-7a30-813a-1199ccbb8b6d\\exec-3a969a1e-3cce-4b4c-aa08-c0ecf2fa23db.png",
+      "prompt": "Extract only the exact orbit-A symbol from this logo, remove the AWAIS wordmark and all surrounding empty margin. Preserve A silhouette, green elliptical orbit with dot and layering precisely. Create a crisp square favicon image, symbol occupying 86% of canvas with balanced 7% padding. Deep charcoal A #171717 and dark emerald #007B5B on flat warm off-white #F4F3EF background. Flat graphic, no texture or glow. Thicken the delicate orbit very slightly so visible at 32 pixels. No text."
+    }
+  ]
+}

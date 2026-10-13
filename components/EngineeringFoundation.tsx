@@ -20,17 +20,19 @@ export const EngineeringFoundation = () => {
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
-    if (isReducedMotion()) return;
 
     const ctx = gsap.context(() => {
+      const reduced = isReducedMotion();
+      if (reduced) return;
+
       // Header reveal
       gsap.fromTo(
         '.eng-header',
-        { opacity: 0, y: 20 },
+        { opacity: 1, y: reduced ? 0 : 24 },
         {
           opacity: 1,
           y: 0,
-          duration: 0.6,
+          duration: 0.65,
           ease: MOTION_EASE.out,
           scrollTrigger: {
             trigger: '.eng-header',
@@ -43,12 +45,12 @@ export const EngineeringFoundation = () => {
       // Staggered cards reveal
       gsap.fromTo(
         '.eng-card',
-        { opacity: 0, y: 24 },
+        { opacity: 1, y: reduced ? 0 : 28 },
         {
           opacity: 1,
           y: 0,
-          duration: 0.55,
-          stagger: 0.06,
+          duration: 0.6,
+          stagger: 0.07,
           ease: MOTION_EASE.out,
           scrollTrigger: {
             trigger: '.eng-grid',

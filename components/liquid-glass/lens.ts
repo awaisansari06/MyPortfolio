@@ -30,10 +30,8 @@ export const DEFAULT_LENS_CONFIG: Omit<LensConfig, 'width' | 'height'> = {
 /** Detect touch/coarse pointer once at module load */
 const isMobile = (): boolean => {
   if (typeof window === 'undefined') return false;
-  return (
-    navigator.maxTouchPoints > 0 ||
-    window.matchMedia('(pointer: coarse)').matches
-  );
+  const hasFinePointer = window.matchMedia('(pointer: fine)').matches;
+  return !hasFinePointer && (navigator.maxTouchPoints > 0 || window.matchMedia('(pointer: coarse)').matches);
 };
 
 const prefersReducedMotion = (): boolean => {

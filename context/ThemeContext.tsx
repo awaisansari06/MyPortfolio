@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useContext } from 'react';
+import React, { createContext, useContext, useEffect } from 'react';
 import { ThemeProvider as NextThemesProvider, useTheme as useNextTheme } from 'next-themes';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -38,6 +38,16 @@ const ThemeSyncProvider = ({ children }: { children: React.ReactNode }) => {
       : false;
 
   const activeTheme = (resolvedTheme || (typeof window !== 'undefined' ? (isClientDark ? 'dark' : 'light') : theme) || 'dark') as ColorMode;
+
+  useEffect(() => {
+    // Follow the site preference, including manual overrides of the OS theme.
+    const icon = document.querySelector<HTMLLinkElement>('link[rel="icon"]');
+    if (icon) {
+      icon.href = `/brand/favicon-${activeTheme}.png?v=orbit-1`;
+      icon.type = 'image/png';
+      icon.sizes.value = '64x64';
+    }
+  }, [activeTheme]);
 
   const toggleTheme = () => {
     setTheme(activeTheme === 'dark' ? 'light' : 'dark');

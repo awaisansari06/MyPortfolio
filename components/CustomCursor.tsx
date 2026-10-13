@@ -30,18 +30,16 @@ export const CustomCursor = () => {
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
-    // Disable on touch / coarse devices
-    const isTouchDevice =
-      'ontouchstart' in window ||
-      navigator.maxTouchPoints > 0 ||
-      window.matchMedia('(pointer: coarse)').matches;
+    // Only disable custom cursor if device is strictly touch-only (no mouse/trackpad pointer)
+    const hasFinePointer = window.matchMedia('(pointer: fine)').matches;
+    const isTouchOnly = !hasFinePointer && window.matchMedia('(pointer: coarse)').matches;
 
-    // Respect user's reduced-motion preference
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    if (isTouchDevice || prefersReducedMotion) {
+    if (isTouchOnly) {
       return;
     }
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const animDuration = prefersReducedMotion ? 0.02 : 0.15;
 
     const cursorEl = cursorRef.current;
     const dotEl = dotRef.current;
@@ -67,6 +65,14 @@ export const CustomCursor = () => {
     let currentBadgeText = '';
 
     const handlePointerMove = (e: PointerEvent) => {
+      // Ignore touch events so taps on touch screens don't trigger custom cursor
+      if (e.pointerType === 'touch') {
+        document.body.classList.remove('has-custom-cursor');
+        cursorEl.style.opacity = '0';
+        isVisible = false;
+        return;
+      }
+
       // Keep anchor positioning independent of GSAP's transform cache and
       // hover animations so every pointer event has an exact viewport position.
       cursorEl.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0)`;
@@ -108,20 +114,20 @@ export const CustomCursor = () => {
           gsap.to(badgeEl, {
             scale: 1,
             opacity: 1,
-            duration: 0.15,
+            duration: animDuration,
             ease: 'power2.out',
             overwrite: 'auto',
           });
           gsap.to(dotEl, {
             scale: 0.4,
             opacity: 0,
-            duration: 0.12,
+            duration: animDuration,
             overwrite: 'auto',
           });
           gsap.to(lensEl, {
             scale: 0.5,
             opacity: 0,
-            duration: 0.12,
+            duration: animDuration,
             overwrite: 'auto',
           });
         }
@@ -142,21 +148,21 @@ export const CustomCursor = () => {
           gsap.to(dotEl, {
             scale: 0.75,
             opacity: 1,
-            duration: 0.15,
+            duration: animDuration,
             ease: 'power2.out',
             overwrite: 'auto',
           });
           gsap.to(lensEl, {
             scale: 1,
             opacity: 1,
-            duration: 0.15,
+            duration: animDuration,
             ease: 'power2.out',
             overwrite: 'auto',
           });
           gsap.to(badgeEl, {
             scale: 0.5,
             opacity: 0,
-            duration: 0.12,
+            duration: animDuration,
             overwrite: 'auto',
           });
         }
@@ -171,21 +177,21 @@ export const CustomCursor = () => {
         gsap.to(dotEl, {
           scale: 1,
           opacity: 1,
-          duration: 0.15,
+          duration: animDuration,
           ease: 'power2.out',
           overwrite: 'auto',
         });
         gsap.to(lensEl, {
           scale: 0.5,
           opacity: 0,
-          duration: 0.14,
+          duration: animDuration,
           ease: 'power2.out',
           overwrite: 'auto',
         });
         gsap.to(badgeEl, {
           scale: 0.5,
           opacity: 0,
-          duration: 0.12,
+          duration: animDuration,
           overwrite: 'auto',
         });
       }

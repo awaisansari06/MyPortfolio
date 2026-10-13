@@ -12,10 +12,11 @@ import {
   Loader2,
   ExternalLink,
 } from 'lucide-react';
-import { LiquidGlassSurface } from '@/components/liquid-glass/LiquidGlassSurface';
 import { MAX_CHAT_MESSAGES } from '@/lib/ai/messages';
 import { getScrollBehavior } from '@/lib/scroll';
 import { useDialogFocus } from '@/hooks/useDialogFocus';
+import { useChatViewport } from '@/hooks/useChatViewport';
+import { MobileAiLauncher } from './MobileAiLauncher';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -159,7 +160,8 @@ export const AskAwaisChat: React.FC = () => {
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const failedRequestRef = useRef<Message[] | null>(null);
   const streamingRef = useRef(false);
-  useDialogFocus(chatContainerRef, isOpen, () => setIsOpen(false), '#ask-ai-launcher', false);
+  const { compact, viewportStyle } = useChatViewport(isOpen);
+  useDialogFocus(chatContainerRef, isOpen, () => setIsOpen(false), compact ? '#ask-ai-launcher-mobile' : '#ask-ai-launcher', compact);
 
   // Listen to external open events (e.g. from Navbar)
   useEffect(() => {
@@ -275,38 +277,18 @@ export const AskAwaisChat: React.FC = () => {
 
   return (
     <>
-      {/* Floating Trigger Button */}
-        <div hidden={isOpen} className="fixed bottom-6 right-6 z-40">
-          <LiquidGlassSurface
-            preset="button"
-            borderRadius={9999}
-            id="ask-ai-launcher-glass"
-          >
-            <button
-              id="ask-ai-launcher"
-              onClick={() => setIsOpen(true)}
-              data-cursor="ASK AI"
-              aria-label="Open Ask Awais AI assistant"
-              className="group inline-flex items-center gap-3 cursor-pointer liquid-glass-floating px-5 py-3.5 text-neutral-950 dark:text-[#F5F3EF] transition-all duration-300"
-            >
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0" />
-              <span className="font-mono-code text-[11px] font-semibold uppercase tracking-wider">
-                ASK AWAIS AI
-              </span>
-              <ArrowUpRight className="w-3.5 h-3.5 text-neutral-400 group-hover:text-neutral-950 dark:group-hover:text-[#F5F3EF] transition-colors" />
-            </button>
-          </LiquidGlassSurface>
-        </div>
-
+      <MobileAiLauncher open={isOpen} onOpen={() => setIsOpen(true)} />
+      {isOpen && compact && <div className="ai-chat-backdrop" aria-hidden="true" onClick={() => setIsOpen(false)} />}
       {/* Floating Chat Panel */}
       {isOpen && (
         <div
           ref={chatContainerRef}
           role="dialog"
           tabIndex={-1}
-          aria-modal="false"
+          aria-modal={compact}
           aria-labelledby="ask-awais-ai-title"
           style={{
+            ...viewportStyle,
             position: 'fixed',
             bottom: 'max(16px, env(safe-area-inset-bottom, 16px))',
             right: 'max(16px, env(safe-area-inset-right, 16px))',
@@ -314,7 +296,7 @@ export const AskAwaisChat: React.FC = () => {
             height: 'min(620px, calc(100dvh - 32px))',
             maxHeight: 'calc(100dvh - 32px)',
           }}
-          className="!fixed z-50 flex flex-col overflow-hidden font-sans liquid-glass-modal shadow-2xl transition-all duration-200 ease-out"
+          className="ai-chat-panel !fixed z-50 flex flex-col overflow-hidden font-sans liquid-glass-modal shadow-2xl"
         >
           {/* Header */}
           <div className="p-4 border-b border-neutral-200 dark:border-[#222222] bg-[#F1F0EC]/80 dark:bg-[#141414] flex items-start justify-between gap-3 shrink-0">
@@ -344,7 +326,7 @@ export const AskAwaisChat: React.FC = () => {
                   disabled={isStreaming}
                   aria-label="Reset conversation"
                   title="Reset conversation"
-                  className="p-1.5 text-neutral-400 hover:text-neutral-950 dark:hover:text-[#F5F3EF] transition-colors disabled:opacity-40 cursor-pointer"
+                  className="min-h-11 min-w-11 flex items-center justify-center p-1.5 text-neutral-500 hover:text-neutral-950 dark:hover:text-[#F5F3EF] transition-colors disabled:opacity-40 cursor-pointer"
                 >
                   <RotateCcw className="w-3.5 h-3.5" />
                 </button>
@@ -352,7 +334,7 @@ export const AskAwaisChat: React.FC = () => {
               <button
                 onClick={() => setIsOpen(false)}
                 aria-label="Close Ask Awais AI assistant"
-                className="p-1.5 text-neutral-400 hover:text-neutral-950 dark:hover:text-[#F5F3EF] transition-colors cursor-pointer"
+                className="min-h-11 min-w-11 flex items-center justify-center p-1.5 text-neutral-500 hover:text-neutral-950 dark:hover:text-[#F5F3EF] transition-colors cursor-pointer"
               >
                 <X className="w-4 h-4" />
               </button>

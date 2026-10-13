@@ -85,15 +85,20 @@ test('chat rejects oversized HTTP bodies even without a Content-Length header', 
 
 test('retry replaces a partial answer and reuses the original question', async () => {
   const harness = createReactHarness();
+  const effects = [];
   const { AskAwaisChat } = loadSource('components/ai/AskAwaisChat.tsx', {
-    react: harness.React,
+    react: { ...harness.React, useEffect: effect => effects.push(effect) },
     'lucide-react': icons,
     '@/components/liquid-glass/LiquidGlassSurface': { LiquidGlassSurface: 'surface' },
     '@/hooks/useDialogFocus': { useDialogFocus() {} },
+    '@/hooks/useChatViewport': { useChatViewport: () => ({ compact: false, viewportStyle: {} }) },
+    './MobileAiLauncher': { MobileAiLauncher: 'mobile-launcher' },
     '@/lib/scroll': { getScrollBehavior: () => 'instant' },
     '@/lib/ai/messages': limits,
   });
   const previousFetch = global.fetch;
+  const previousWindow = global.window;
+  global.window = new EventTarget();
   const previousError = console.error;
   const payloads = [];
   global.fetch = async (_url, options) => {
@@ -109,7 +114,8 @@ test('retry replaces a partial answer and reuses the original question', async (
   console.error = () => {};
   try {
     let tree = harness.render(AskAwaisChat);
-    findElement(tree, node => node.props.id === 'ask-ai-launcher').props.onClick();
+    effects.splice(0).forEach(effect => effect());
+    global.window.dispatchEvent(new Event('open-ask-ai'));
     tree = harness.render(AskAwaisChat);
     findElement(tree, node => node.type === 'textarea').props.onChange({ target: { value: 'Tell me about CareerWise' } });
     tree = harness.render(AskAwaisChat);
@@ -126,6 +132,8 @@ test('retry replaces a partial answer and reuses the original question', async (
     assert.equal(findElement(tree, node => node.props.content === 'Partial answer'), null);
   } finally {
     global.fetch = previousFetch;
+    if (previousWindow === undefined) delete global.window;
+    else global.window = previousWindow;
     console.error = previousError;
   }
 });

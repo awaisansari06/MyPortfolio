@@ -11,17 +11,19 @@ export const About = () => {
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
-    if (isReducedMotion()) return;
 
     const ctx = gsap.context(() => {
+      const reduced = isReducedMotion();
+      if (reduced) return;
+
       // Header reveal
       gsap.fromTo(
         '.about-header',
-        { opacity: 0, y: 20 },
+        { opacity: 1, y: reduced ? 0 : 24 },
         {
           opacity: 1,
           y: 0,
-          duration: 0.6,
+          duration: 0.65,
           ease: MOTION_EASE.out,
           scrollTrigger: {
             trigger: '.about-header',
@@ -34,7 +36,7 @@ export const About = () => {
       // Bio and Profile Cards
       gsap.fromTo(
         '.about-profile-card',
-        { opacity: 0, y: 24 },
+        { opacity: 1, y: reduced ? 0 : 28 },
         {
           opacity: 1,
           y: 0,
@@ -52,12 +54,12 @@ export const About = () => {
       // Education cards
       gsap.fromTo(
         '.about-edu-card',
-        { opacity: 0, y: 20 },
+        { opacity: 1, y: reduced ? 0 : 28 },
         {
           opacity: 1,
           y: 0,
-          duration: 0.5,
-          stagger: 0.06,
+          duration: 0.55,
+          stagger: 0.07,
           ease: MOTION_EASE.out,
           scrollTrigger: {
             trigger: '[data-gsap-id="about-edu-container"]',
@@ -70,12 +72,12 @@ export const About = () => {
       // Certification cards
       gsap.fromTo(
         '.about-cert-card',
-        { opacity: 0, y: 20 },
+        { opacity: 1, y: reduced ? 0 : 28 },
         {
           opacity: 1,
           y: 0,
-          duration: 0.5,
-          stagger: 0.05,
+          duration: 0.55,
+          stagger: 0.06,
           ease: MOTION_EASE.out,
           scrollTrigger: {
             trigger: '[data-gsap-id="about-cert-grid"]',
@@ -123,6 +125,7 @@ export const About = () => {
                 Full-Stack Developer and Computer Science graduate specializing in AI-powered web applications.
               </h3>
               <p className="text-base text-neutral-600 dark:text-[#A3A3A3] leading-relaxed font-normal mb-4">
+                <span className="block mb-2 font-semibold text-neutral-950 dark:text-[#F5F3EF]">Mohammad Awais Ansari</span>
                 {portfolioData.bio}
               </p>
               <p className="text-sm text-neutral-500 dark:text-[#888888] leading-relaxed font-normal">

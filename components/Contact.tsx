@@ -15,8 +15,11 @@ export const Contact = () => {
   const containerRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    if (isReducedMotion()) return;
+    if (typeof window === 'undefined') return;
+
     const ctx = gsap.context(() => {
+      const reduced = isReducedMotion();
+      if (reduced) return;
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: containerRef.current,
@@ -25,42 +28,27 @@ export const Contact = () => {
         },
       });
 
-      tl.from('.contact-header', {
-        y: 20,
-        opacity: 0,
-        duration: 0.6,
-        ease: 'power2.out',
-      })
-        .from(
+      tl.fromTo(
+        '.contact-header',
+        { y: reduced ? 0 : 24, opacity: 1 },
+        { y: 0, opacity: 1, duration: 0.65, ease: 'power2.out' }
+      )
+        .fromTo(
           '.contact-statement',
-          {
-            y: 24,
-            opacity: 0,
-            duration: 0.65,
-            ease: 'power2.out',
-          },
+          { y: reduced ? 0 : 24, opacity: 1 },
+          { y: 0, opacity: 1, duration: 0.65, ease: 'power2.out' },
           '-=0.3'
         )
-        .from(
+        .fromTo(
           '.contact-info',
-          {
-            y: 20,
-            opacity: 0,
-            duration: 0.55,
-            ease: 'power2.out',
-            clearProps: 'all',
-          },
+          { y: reduced ? 0 : 28, opacity: 1 },
+          { y: 0, opacity: 1, duration: 0.6, ease: 'power2.out', clearProps: 'all' },
           '-=0.25'
         )
-        .from(
+        .fromTo(
           '.contact-form',
-          {
-            y: 20,
-            opacity: 0,
-            duration: 0.55,
-            ease: 'power2.out',
-            clearProps: 'all',
-          },
+          { y: reduced ? 0 : 28, opacity: 1 },
+          { y: 0, opacity: 1, duration: 0.6, ease: 'power2.out', clearProps: 'all' },
           '-=0.35'
         );
     }, containerRef);
@@ -97,7 +85,7 @@ export const Contact = () => {
   };
 
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: getScrollBehavior() });
+    document.getElementById('hero')?.scrollIntoView({ behavior: getScrollBehavior() });
   };
 
   return (

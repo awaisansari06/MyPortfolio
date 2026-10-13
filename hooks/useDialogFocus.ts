@@ -83,7 +83,8 @@ export function useDialogFocus(
       if (index >= 0) dialogs.splice(index, 1);
       if (modal && --scrollLocks === 0) document.body.style.overflow = previousOverflow;
       if (shouldRestoreFocus) {
-        const target = previousFocus?.isConnected && previousFocus.getClientRects().length
+        const target = previousFocus?.isConnected && previousFocus.getClientRects().length &&
+          getComputedStyle(previousFocus).visibility !== 'hidden'
           ? previousFocus
           : returnFocusSelector ? document.querySelector<HTMLElement>(returnFocusSelector) : null;
         target?.focus({ preventScroll: true });

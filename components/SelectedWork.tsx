@@ -26,17 +26,19 @@ export const SelectedWork = () => {
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
-    if (isReducedMotion()) return;
 
     const ctx = gsap.context(() => {
+      const reduced = isReducedMotion();
+      if (reduced) return;
+
       // Header reveal
       gsap.fromTo(
         '.work-header',
-        { opacity: 0, y: 20 },
+        { opacity: 1, y: reduced ? 0 : 24 },
         {
           opacity: 1,
           y: 0,
-          duration: 0.6,
+          duration: 0.65,
           ease: MOTION_EASE.out,
           scrollTrigger: {
             trigger: '.work-header',
@@ -55,7 +57,7 @@ export const SelectedWork = () => {
         if (info) {
           gsap.fromTo(
             info,
-            { opacity: 0, y: 30 },
+            { opacity: 1, y: reduced ? 0 : 28 },
             {
               opacity: 1,
               y: 0,
@@ -73,7 +75,7 @@ export const SelectedWork = () => {
         if (visual) {
           gsap.fromTo(
             visual,
-            { opacity: 0, y: 30 },
+            { opacity: 1, y: reduced ? 0 : 28 },
             {
               opacity: 1,
               y: 0,
