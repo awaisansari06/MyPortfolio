@@ -32,6 +32,8 @@ The contact form composes a message in the visitor’s email app; it does not cl
 
 ## Checks
 
+Search metadata, crawl routes, and profile structured data use `https://buildbyawais.tech` as the canonical domain. See [search visibility setup](docs/search-visibility.md) for deployment and Search Console steps.
+
 ```sh
 npm run build
 npm run lint
@@ -53,7 +55,7 @@ Tests cover AI request validation and streaming recovery, contribution dates and
 | `lib/` | Shared AI, GitHub, image, scroll, and animation utilities |
 | `public/` | Portraits, logo, project screenshots, fonts, and résumé |
 | `tests/` | Regression tests |
-| `docs/portrait-assets.md` | Portrait sources and generation prompt |
+| `docs/portrait-assets.md` | Portrait sources and editing notes |
 
 The homepage follows natural document scrolling, supports keyboard access, and respects reduced-motion preferences.
 No custom cursor, optical-refraction engine, hidden legacy sections, or duplicate repository grid is shipped.
@@ -62,6 +64,7 @@ No custom cursor, optical-refraction engine, hidden legacy sections, or duplicat
 
 The hero uses a transparent WebP derivative for efficient delivery.
 The original supplied photographs remain the identity references.
-See [portrait asset notes](docs/portrait-assets.md) for provenance and the generation prompt.
+See [portrait asset notes](docs/portrait-assets.md) for provenance and editing details.
 
 The stack uses a seamless CSS logo ribbon with a manual pause control, hover pause, a single accessible technology list, and a wrapped static layout for reduced-motion preferences. Project previews retain the original live links and detailed case studies.
+

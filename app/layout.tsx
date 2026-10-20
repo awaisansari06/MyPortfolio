@@ -3,46 +3,38 @@ import localFont from 'next/font/local';
 import './globals.css';
 import './editorial.css';
 import { ThemeProvider } from '@/context/ThemeContext';
+import { absoluteUrl, isPreview, site } from '@/lib/site';
 
 const jakarta = localFont({ src: '../public/fonts/plus-jakarta-sans.ttf', weight: '200 800', variable: '--font-jakarta', display: 'swap' });
 const jetBrainsMono = localFont({ src: '../public/fonts/jetbrains-mono.ttf', weight: '100 800', variable: '--font-jetbrains-mono', display: 'swap' });
 
 export const metadata: Metadata = {
-  title: 'Mohammad Awais Ansari — Full-Stack Developer',
-  description:
-    'Computer Science graduate and postgraduate student building AI-powered full-stack web applications and intelligent digital products.',
-  keywords: [
-    'Mohammad Awais Ansari',
-    'Full-Stack Developer',
-    'AI Engineer',
-    'Next.js',
-    'TypeScript',
-    'React',
-    'PostgreSQL',
-    'Software Engineer',
-    'Portfolio',
-  ],
-  authors: [{ name: 'Mohammad Awais Ansari' }],
+  metadataBase: new URL(site.url),
+  title: site.title,
+  description: site.description,
+  authors: [{ name: site.name, url: site.url }],
+  creator: site.name,
+  verification: { google: process.env.GOOGLE_SITE_VERIFICATION },
   openGraph: {
-    title: 'Mohammad Awais Ansari — Full-Stack Developer',
-    description:
-      'Computer Science graduate and postgraduate student building AI-powered full-stack web applications and intelligent digital products.',
+    title: site.title,
+    description: site.description,
+    url: absoluteUrl('/'),
     type: 'website',
     locale: 'en_US',
-    siteName: 'Mohammad Awais Ansari Portfolio',
+    siteName: `${site.name} Portfolio`,
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Mohammad Awais Ansari — Full-Stack Developer',
-    description:
-      'Computer Science graduate and postgraduate student building AI-powered full-stack web applications and intelligent digital products.',
+    title: site.title,
+    description: site.description,
+    images: [{ url: absoluteUrl('/opengraph-image'), alt: `${site.name} — Developer Portfolio` }],
   },
   robots: {
-    index: true,
+    index: !isPreview,
     follow: true,
+    googleBot: { index: !isPreview, follow: true, 'max-image-preview': 'large', 'max-snippet': -1, 'max-video-preview': -1 },
   },
 };
-
 export const viewport: Viewport = {
   themeColor: [
     { media: '(prefers-color-scheme: dark)', color: '#0D0F10' },
