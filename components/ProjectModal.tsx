@@ -6,7 +6,7 @@ import { projectImages } from '@/lib/projectImages';
 import { ProjectCaseStudy } from '@/data/portfolio';
 import { TechIcon } from './TechIcon';
 import { X, ExternalLink, Github, CheckCircle2, Terminal, ArrowRight } from 'lucide-react';
-import { LiquidGlassSurface } from '@/components/liquid-glass/LiquidGlassSurface';
+
 import { useDialogFocus } from '@/hooks/useDialogFocus';
 
 interface ProjectModalProps {
@@ -30,22 +30,17 @@ export const ProjectModal = ({ project, onClose }: ProjectModalProps) => {
       tabIndex={-1}
       className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 md:p-10 bg-black/80 backdrop-blur-sm animate-fade-in"
     >
-      <LiquidGlassSurface
-        preset="modal"
-        borderRadius={16}
-        id="project-modal-glass"
-        className="w-full max-w-4xl"
-      >
+      <div className="w-full max-w-4xl">
         <div
-          className="relative w-full max-h-[90vh] overflow-y-auto text-neutral-950 dark:text-[#F5F3EF] p-6 sm:p-10 transition-all duration-300 rounded-2xl border border-neutral-300/80 dark:border-[#333333] bg-[var(--glass-surface-tint)] backdrop-blur-xl shadow-[0_24px_64px_rgba(0,0,0,0.4),inset_0_1px_0_var(--glass-edge-highlight)]"
+          className="relative w-full max-h-[90vh] overflow-y-auto text-neutral-950 dark:text-[#F5F3EF] p-6 sm:p-10 transition-all duration-300 rounded-2xl border border-neutral-300/80 dark:border-[#333333] bg-[var(--surface)] backdrop-blur-xl shadow-2xl"
           onClick={(e) => e.stopPropagation()}
         >
 
           <button
             onClick={onClose}
             aria-label="Close modal"
-            data-cursor="CLOSE"
-            className="absolute top-6 right-6 p-2 transition-all cursor-pointer rounded-full border border-neutral-300/80 dark:border-[#333333] bg-white/60 dark:bg-[#181818]/60 shadow-[inset_0_1px_0_var(--glass-edge-highlight)] hover:scale-105"
+
+            className="absolute top-6 right-6 p-2 transition-all cursor-pointer rounded-full border border-neutral-300/80 dark:border-[#333333] bg-white/60 dark:bg-[#181818]/60 hover:scale-105"
           >
             <X className="w-4 h-4 text-neutral-700 dark:text-[#A3A3A3]" />
           </button>
@@ -78,7 +73,7 @@ export const ProjectModal = ({ project, onClose }: ProjectModalProps) => {
                 href={project.githubUrl || 'https://github.com/awaisansari06'}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-2.5 font-mono-code text-xs tracking-wider transition-all text-neutral-900 dark:text-[#F5F3EF] cursor-pointer rounded-full border border-neutral-300/80 dark:border-[#333333] bg-white/60 dark:bg-[#181818]/60 shadow-[inset_0_1px_0_var(--glass-edge-highlight)] hover:scale-[1.02]"
+                className="inline-flex items-center gap-2 px-4 py-2.5 font-mono-code text-xs tracking-wider transition-all text-neutral-900 dark:text-[#F5F3EF] cursor-pointer rounded-full border border-neutral-300/80 dark:border-[#333333] bg-white/60 dark:bg-[#181818]/60 hover:scale-[1.02]"
               >
                 <Github className="w-3.5 h-3.5" />
                 <span>{project.githubUrl ? 'VIEW GITHUB REPOSITORY' : 'VIEW GITHUB PROFILE'}</span>
@@ -86,7 +81,7 @@ export const ProjectModal = ({ project, onClose }: ProjectModalProps) => {
             </div>
           </div>
 
-          <div className="mb-10 rounded-xl p-3 sm:p-4 transition-all duration-300 liquid-glass-card-frame bg-white/60 dark:bg-[#111111]/70 backdrop-blur-md">
+          <div className="mb-10 rounded-xl p-3 sm:p-4 transition-all duration-300 detail-surface bg-white/60 dark:bg-[#111111]/70 backdrop-blur-md">
             <div className="flex items-center justify-between pb-3 mb-3 border-b border-neutral-300 dark:border-[#2A2A2A] font-mono-code text-[11px] text-neutral-500 dark:text-[#888888]">
               <div className="flex items-center gap-2">
                 <div className="flex items-center gap-1.5">
@@ -98,7 +93,7 @@ export const ProjectModal = ({ project, onClose }: ProjectModalProps) => {
                   {project.liveUrl.replace('https://', '').replace(/\/$/, '')}
                 </span>
               </div>
-              <span className="text-[10px] uppercase tracking-wider font-medium flex items-center gap-1.5 font-mono-code liquid-glass-badge text-emerald-600 dark:text-emerald-400">
+              <span className="text-[10px] uppercase tracking-wider font-medium flex items-center gap-1.5 font-mono-code detail-chip text-emerald-600 dark:text-emerald-400">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
                 PROJECT PREVIEW
               </span>
@@ -214,7 +209,7 @@ export const ProjectModal = ({ project, onClose }: ProjectModalProps) => {
               <div className="flex flex-wrap items-center gap-2 text-xs font-mono-code">
                 {project.flowSteps.map((step, idx) => (
                   <React.Fragment key={step}>
-                    <span className="px-2.5 py-1 font-medium transition-all duration-200 liquid-glass-badge text-neutral-900 dark:text-[#F5F3EF]">
+                    <span className="px-2.5 py-1 font-medium transition-all duration-200 detail-chip text-neutral-900 dark:text-[#F5F3EF]">
                       {step}
                     </span>
                     {idx < project.flowSteps.length - 1 && (
@@ -233,7 +228,7 @@ export const ProjectModal = ({ project, onClose }: ProjectModalProps) => {
                 {project.technologies.map((tech) => (
                   <span
                     key={tech}
-                    className="font-mono-code text-xs px-3 py-1.5 font-medium inline-flex items-center gap-2 transition-all duration-200 liquid-glass-chip text-neutral-900 dark:text-[#F5F3EF]"
+                    className="font-mono-code text-xs px-3 py-1.5 font-medium inline-flex items-center gap-2 transition-all duration-200 detail-chip text-neutral-900 dark:text-[#F5F3EF]"
                   >
                     <TechIcon name={tech} className="w-3.5 h-3.5 shrink-0" />
                     <span>{tech}</span>
@@ -258,7 +253,7 @@ export const ProjectModal = ({ project, onClose }: ProjectModalProps) => {
             )}
           </div>
         </div>
-      </LiquidGlassSurface>
+      </div>
     </div>
   );
 };

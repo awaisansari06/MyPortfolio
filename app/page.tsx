@@ -1,41 +1,12 @@
 'use client';
-
-import React from 'react';
 import { Navbar } from '@/components/Navbar';
-import { CustomCursor } from '@/components/CustomCursor';
 import { Hero } from '@/components/Hero';
-import { WhatIBuild } from '@/components/WhatIBuild';
 import { SelectedWork } from '@/components/SelectedWork';
 import { TechStack } from '@/components/TechStack';
-import { EngineeringFoundation } from '@/components/EngineeringFoundation';
 import { About } from '@/components/About';
 import { GitHubContributions } from '@/components/github/GitHubContributions';
 import { Contact } from '@/components/Contact';
 import { AskAwaisChat } from '@/components/ai/AskAwaisChat';
-import { useResponsiveScroll } from '@/hooks/useResponsiveScroll';
-
 export default function Home() {
-  useResponsiveScroll();
-
-  return (
-    <main id="portfolio-scroll" className="relative min-h-screen bg-[#F1F0EC] dark:bg-[#0A0A0A] text-[#171717] dark:text-[#F5F3EF] selection:bg-[#171717] selection:text-white dark:selection:bg-neutral-100 dark:selection:text-neutral-950 font-sans overflow-x-hidden">
-      {/* Subtle Environmental Ambient Light */}
-      <div className="liquid-env-light" aria-hidden="true" />
-      {/* Subtle Architectural Grid Pattern */}
-      <div className="fixed inset-0 bg-grid-pattern pointer-events-none z-0 opacity-70 dark:opacity-40" aria-hidden="true" />
-
-      <a className="portfolio-skip-link" href="#work">Skip to selected work</a>
-      <CustomCursor />
-      <Navbar />
-      <Hero />
-      <WhatIBuild />
-      <SelectedWork />
-      <TechStack />
-      <EngineeringFoundation />
-      <About />
-      <GitHubContributions />
-      <Contact />
-      <AskAwaisChat />
-    </main>
-  );
+ return <main id="portfolio-scroll" className="editorial-page"><a className="portfolio-skip-link" href="#work">Skip to selected work</a><Navbar/><Hero/><SelectedWork/><TechStack/><About/><section id="contact" className="editorial-section activity-contact" aria-labelledby="contact-heading"><p className="eyebrow">05 / Activity & contact</p><GitHubContributions/><Contact/></section><AskAwaisChat/></main>;
 }

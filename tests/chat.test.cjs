@@ -91,10 +91,8 @@ test('retry replaces a partial answer and reuses the original question', async (
   const { AskAwaisChat } = loadSource('components/ai/AskAwaisChat.tsx', {
     react: { ...harness.React, useEffect: effect => effects.push(effect) },
     'lucide-react': icons,
-    '@/components/liquid-glass/LiquidGlassSurface': { LiquidGlassSurface: 'surface' },
     '@/hooks/useDialogFocus': { useDialogFocus() {} },
     '@/hooks/useChatViewport': { useChatViewport: () => ({ compact: false, viewportStyle: {} }) },
-    './MobileAiLauncher': { MobileAiLauncher: 'mobile-launcher' },
     '@/lib/ai/stream': loadSource('lib/ai/stream.ts'),
     '@/lib/scroll': { getScrollBehavior: () => 'instant' },
     '@/lib/ai/messages': limits,

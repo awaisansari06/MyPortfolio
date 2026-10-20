@@ -76,7 +76,7 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
       attribute="class"
       defaultTheme="system"
       enableSystem={true}
-      disableTransitionOnChange={true}
+      disableTransitionOnChange={false}
     >
       <ThemeSyncProvider>{children}</ThemeSyncProvider>
     </NextThemesProvider>

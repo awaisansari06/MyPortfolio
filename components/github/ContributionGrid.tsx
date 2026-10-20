@@ -68,34 +68,34 @@ export const ContributionGrid: React.FC<ContributionGridProps> = ({ calendar }) 
   const dayLabels = ['', 'MON', '', 'WED', '', 'FRI', ''];
 
   return (
-    <div className="relative w-full">
+    <div className="contribution-calendar relative w-full">
       <ContributionTooltip day={hoveredDay} position={tooltipPos} />
 
       <div
-        className="w-full overflow-x-auto pb-3 pt-1 custom-scrollbar overscroll-x-contain touch-pan-x"
+        className="contribution-scroll"
         onScroll={handleScroll}
       >
-        <div className="inline-flex flex-col min-w-max mx-auto">
-          <div className="flex gap-2 items-start">
+        <div className="contribution-layout">
+          <div className="contribution-grid-body">
 
-            <div className="flex flex-col gap-1 sm:gap-1.5 text-[8px] font-mono-code text-neutral-400 dark:text-[#666666] select-none pt-[22px] shrink-0">
+            <div className="contribution-day-labels">
               {dayLabels.map((label, idx) => (
                 <span
                   key={idx}
-                  className="h-3 sm:h-3.5 leading-none flex items-center pr-1 justify-end min-w-[20px]"
+                  className="contribution-day-label"
                 >
                   {label}
                 </span>
               ))}
             </div>
 
-            <div className="flex flex-col">
+            <div className="contribution-weeks-area" style={{ '--week-count': weeks.length, '--calendar-max-width': `${weeks.length * 14 + (weeks.length - 1) * 4}px`, '--calendar-mobile-width': `${weeks.length * 12 + (weeks.length - 1) * 3}px` } as React.CSSProperties}>
 
-              <div className="flex gap-1 sm:gap-1.5 mb-1.5 h-4 select-none">
+              <div className="contribution-months">
                 {weeks.map((week) => (
-                  <div key={week.weekIndex} className="w-3 sm:w-3.5 relative shrink-0">
+                  <div key={week.weekIndex} className="contribution-month-week">
                     {week.monthLabel && (
-                      <span className="absolute left-0 top-0 text-[9px] font-mono-code font-semibold tracking-wider text-neutral-500 dark:text-[#888888] whitespace-nowrap">
+                      <span className="contribution-month-label">
                         {week.monthLabel}
                       </span>
                     )}
@@ -104,7 +104,7 @@ export const ContributionGrid: React.FC<ContributionGridProps> = ({ calendar }) 
               </div>
 
               <div
-                className="flex gap-1 sm:gap-1.5"
+                className="contribution-weeks"
                 role="grid"
                 aria-label="GitHub Contribution Heatmap"
                 onKeyDown={navigate}
@@ -112,7 +112,7 @@ export const ContributionGrid: React.FC<ContributionGridProps> = ({ calendar }) 
                 {weeks.map((week) => (
                   <div
                     key={week.weekIndex}
-                    className="flex flex-col gap-1 sm:gap-1.5 w-3 sm:w-3.5 shrink-0"
+                    className="contribution-week-column"
                     role="row"
                   >
                     {week.days.map((day, weekdayIdx) =>
@@ -128,7 +128,7 @@ export const ContributionGrid: React.FC<ContributionGridProps> = ({ calendar }) 
                       ) : (
                         <div
                           key={`pad-${weekdayIdx}`}
-                          className="w-3 h-3 sm:w-3.5 sm:h-3.5 opacity-0 pointer-events-none"
+                          className="contribution-cell opacity-0 pointer-events-none"
                           aria-hidden="true"
                         />
                       )
@@ -141,7 +141,7 @@ export const ContributionGrid: React.FC<ContributionGridProps> = ({ calendar }) 
         </div>
       </div>
 
-      <div className="mt-4 pt-3.5 border-t border-neutral-200 dark:border-[#222222] flex flex-col sm:flex-row sm:items-center justify-between gap-3 font-mono-code text-[11px] text-neutral-500 dark:text-[#888888]">
+      <div className="contribution-legend mt-4 pt-3.5 border-t border-neutral-200 dark:border-[#222222] flex flex-col sm:flex-row sm:items-center justify-between gap-3 font-mono-code text-[11px]">
         <div className="flex items-center gap-1.5">
           <span className="text-neutral-900 dark:text-[#F5F3EF] font-bold">
             {processed.totalContributions}
@@ -150,7 +150,7 @@ export const ContributionGrid: React.FC<ContributionGridProps> = ({ calendar }) 
         </div>
 
         <div className="flex items-center gap-2 text-[10px]">
-          <span className="text-neutral-400 dark:text-[#666666]">LESS</span>
+          <span>LESS</span>
           <div className="flex items-center gap-1">
             <span
               title="0 contributions"
@@ -173,7 +173,7 @@ export const ContributionGrid: React.FC<ContributionGridProps> = ({ calendar }) 
               className="w-2.5 h-2.5 rounded-[2px] bg-[#216E39] dark:bg-[#39D353] border border-[#1A5A2E] dark:border-[#39D353]"
             />
           </div>
-          <span className="text-neutral-400 dark:text-[#666666]">MORE</span>
+          <span>MORE</span>
         </div>
       </div>
     </div>

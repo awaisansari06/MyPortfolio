@@ -1,8 +1,7 @@
 node_modules/
 .npm-cache/
 .verification/
-.next/
-.next-verify/
+.next*/
 coverage/
 tsconfig.tsbuildinfo
 .DS_Store

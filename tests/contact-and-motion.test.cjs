@@ -8,8 +8,8 @@ test('clipboard denial displays an error and never reports COPIED', async () => 
     react: harness.React,
     'lucide-react': icons,
     '@/data/portfolio': { portfolioData: { email: 'test@example.com', socials: {} } },
-    '@/lib/motion': { gsap: {}, isReducedMotion: () => true },
     '@/lib/scroll': { getScrollBehavior: () => 'instant' },
+    '@/hooks/useEditorialMotion': { useEditorialMotion() {} },
   });
   const descriptor = Object.getOwnPropertyDescriptor(globalThis, 'navigator');
   Object.defineProperty(globalThis, 'navigator', { configurable: true, value: {
@@ -17,12 +17,11 @@ test('clipboard denial displays an error and never reports COPIED', async () => 
   } });
   try {
     let tree = harness.render(Contact);
-    const copy = findElement(tree, node => node.type === 'button' &&
-      findElement(node, child => child.type === 'span' && child.children.includes('COPY EMAIL')));
+    const copy = findElement(tree, node => node.type === 'button' && node.props['aria-label'] === 'Copy email address');
     await copy.props.onClick();
     tree = harness.render(Contact);
     assert.equal(findElement(tree, node => node.type === 'span' && node.children.includes('COPIED')), null);
-    assert.ok(findElement(tree, node => node.props.role === 'status'));
+    assert.ok(findElement(tree, node => node.props.role === 'status' && node.children.some(child => typeof child === 'string' && child.includes('Copy unavailable'))));
   } finally {
     if (descriptor) Object.defineProperty(globalThis, 'navigator', descriptor);
     else delete globalThis.navigator;

@@ -83,7 +83,7 @@ const ContributionCellComponent: React.FC<ContributionCellProps> = ({ day, onHov
       onBlur={onLeave}
       onClick={(e) => onHover(day, e.currentTarget)}
       onKeyDown={handleKeyDown}
-      className="w-3 h-3 sm:w-3.5 sm:h-3.5 relative flex items-center justify-center cursor-pointer outline-none group/cell focus:z-20 shrink-0"
+      className="contribution-cell relative flex items-center justify-center cursor-pointer outline-none group/cell focus:z-20"
     >
       <div
         className={`w-full h-full rounded-[2px] border transition-transform duration-100 ease-out pointer-events-none group-hover/cell:scale-115 group-focus/cell:ring-1.5 group-focus/cell:ring-emerald-500 group-hover/cell:z-10 ${getCellColorClass(

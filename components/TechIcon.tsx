@@ -4,16 +4,12 @@ import React from 'react';
 import Image from 'next/image';
 import {
   Code2,
-  Terminal,
   Cpu,
   Database,
-  Layers,
   Globe,
-  Binary,
   Workflow,
   Shield,
   Sparkles,
-  Server,
   Zap,
 } from 'lucide-react';
 
@@ -60,10 +56,7 @@ const VECTOR_ICONS: Record<string, React.FC<{ className?: string }>> = {
   typescript: ({ className }) => (
     <svg viewBox="0 0 24 24" fill="none" className={className}>
       <rect width="24" height="24" rx="4" fill="#3178C6" />
-      <path
-        d="M12.8 13.5h-2.1v6.5h-1.6v-6.5H7v-1.3h5.8v1.3zm3.7 4.1c.4.3.9.5 1.5.5.7 0 1.1-.3 1.1-.8 0-.5-.4-.7-1.3-1.1-1.2-.5-2-1.1-2-2.3 0-1.3 1-2.3 2.6-2.3 1 0 1.8.3 2.4.8l-.6 1.2c-.4-.3-1-.6-1.7-.6-.6 0-1 .3-1 .7 0 .4.3.7 1.2 1 1.3.5 2.1 1.1 2.1 2.3 0 1.4-1.1 2.4-2.8 2.4-1.2 0-2.1-.4-2.7-.9l.7-1.1z"
-        fill="#FFFFFF"
-      />
+      <text x="3.4" y="18.7" fill="#FFFFFF" fontFamily="Arial, sans-serif" fontSize="12.6" fontWeight="800" letterSpacing="-.9">TS</text>
     </svg>
   ),
   react: ({ className }) => (

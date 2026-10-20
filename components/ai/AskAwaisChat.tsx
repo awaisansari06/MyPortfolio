@@ -17,7 +17,7 @@ import { streamChat } from '@/lib/ai/stream';
 import { getScrollBehavior } from '@/lib/scroll';
 import { useDialogFocus } from '@/hooks/useDialogFocus';
 import { useChatViewport } from '@/hooks/useChatViewport';
-import { MobileAiLauncher } from './MobileAiLauncher';
+
 
 interface Message {
   role: 'user' | 'assistant';
@@ -35,9 +35,6 @@ const SUGGESTED_QUESTIONS = [
 
 // Helper to parse simple markdown bold, inline code, and links into JSX
 function FormattedMessage({ content }: { content: string }) {
-  // Regex to extract markdown links: [label](url)
-  const linkRegex = /\[([^\]]+)\]\(([^)]+)\)/g;
-
   // Split lines
   const lines = content.split('\n');
 
@@ -167,7 +164,7 @@ export const AskAwaisChat: React.FC = () => {
     setIsOpen(false);
   }, []);
   const { compact, viewportStyle } = useChatViewport(isOpen);
-  useDialogFocus(chatContainerRef, isOpen, closeChat, compact ? '#ask-ai-launcher-mobile' : '#ask-ai-launcher', compact);
+  useDialogFocus(chatContainerRef, isOpen, closeChat, compact ? '#mobile-nav-toggle' : '#ask-ai-launcher', compact);
   useEffect(() => () => requestRef.current?.abort(), []);
 
   // Listen to external open events (e.g. from Navbar)
@@ -263,7 +260,7 @@ export const AskAwaisChat: React.FC = () => {
 
   return (
     <>
-      <MobileAiLauncher open={isOpen} onOpen={() => setIsOpen(true)} />
+
       {isOpen && compact && <div className="ai-chat-backdrop" aria-hidden="true" onClick={closeChat} />}
 
       {isOpen && (
@@ -282,7 +279,7 @@ export const AskAwaisChat: React.FC = () => {
             height: 'min(620px, calc(100dvh - 32px))',
             maxHeight: 'calc(100dvh - 32px)',
           }}
-          className="ai-chat-panel !fixed z-50 flex flex-col overflow-hidden font-sans liquid-glass-modal shadow-2xl"
+          className="ai-chat-panel !fixed z-50 flex flex-col overflow-hidden font-sans assistant-surface shadow-2xl"
         >
 
           <div className="p-4 border-b border-neutral-200 dark:border-[#222222] bg-[#F1F0EC]/80 dark:bg-[#141414] flex items-start justify-between gap-3 shrink-0">
@@ -354,7 +351,7 @@ export const AskAwaisChat: React.FC = () => {
                         key={q}
                         onClick={() => handleSend(q)}
                         disabled={isStreaming}
-                        className="text-left p-2.5 text-xs text-neutral-800 dark:text-[#D5D4D0] font-medium flex items-center justify-between group cursor-pointer liquid-glass-node"
+                        className="text-left p-2.5 text-xs text-neutral-800 dark:text-[#D5D4D0] font-medium flex items-center justify-between group cursor-pointer assistant-suggestion"
                       >
                         <span className="line-clamp-1">{q}</span>
                         <ArrowUpRight className="w-3.5 h-3.5 text-neutral-400 group-hover:text-neutral-950 dark:group-hover:text-white transition-colors shrink-0 ml-2" />
@@ -388,7 +385,7 @@ export const AskAwaisChat: React.FC = () => {
                   className={`max-w-[90%] p-3.5 rounded-xl border ${
                     msg.role === 'user'
                       ? 'bg-neutral-900 text-white dark:bg-[#1E1E1E] dark:text-[#F5F3EF] border-neutral-900 dark:border-[#333333]'
-                      : 'liquid-glass-card text-neutral-900 dark:text-[#E0DFDC]'
+                      : 'assistant-message text-neutral-900 dark:text-[#E0DFDC]'
                   }`}
                 >
                   {msg.content ? (

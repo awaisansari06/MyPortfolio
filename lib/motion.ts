@@ -8,19 +8,3 @@ if (typeof window !== 'undefined') {
 
 export { gsap, ScrollTrigger };
 
-/**
- * Returns true if the client has requested reduced motion.
- */
-export function isReducedMotion(): boolean {
-  if (typeof window === 'undefined') return false;
-  return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-}
-
-/**
- * Standardized easing curves for fluid UI motion
- */
-export const MOTION_EASE = {
-  out: 'power2.out',
-  inOut: 'power2.inOut',
-  expressive: 'power3.out',
-};

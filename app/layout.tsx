@@ -1,10 +1,10 @@
 import type { Metadata, Viewport } from 'next';
 import localFont from 'next/font/local';
 import './globals.css';
+import './editorial.css';
 import { ThemeProvider } from '@/context/ThemeContext';
 
 const jakarta = localFont({ src: '../public/fonts/plus-jakarta-sans.ttf', weight: '200 800', variable: '--font-jakarta', display: 'swap' });
-const spaceGrotesk = localFont({ src: '../public/fonts/space-grotesk.ttf', weight: '300 700', variable: '--font-space-grotesk', display: 'swap' });
 const jetBrainsMono = localFont({ src: '../public/fonts/jetbrains-mono.ttf', weight: '100 800', variable: '--font-jetbrains-mono', display: 'swap' });
 
 export const metadata: Metadata = {
@@ -45,8 +45,8 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: '(prefers-color-scheme: dark)', color: '#0A0A0A' },
-    { media: '(prefers-color-scheme: light)', color: '#F1F0EC' },
+    { media: '(prefers-color-scheme: dark)', color: '#0D0F10' },
+    { media: '(prefers-color-scheme: light)', color: '#F7F6F2' },
   ],
 };
 
@@ -56,7 +56,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" data-material="liquid" className={`${jakarta.variable} ${spaceGrotesk.variable} ${jetBrainsMono.variable}`} suppressHydrationWarning>
+    <html lang="en" className={`${jakarta.variable} ${jetBrainsMono.variable}`} suppressHydrationWarning>
       <head>
         <script
           dangerouslySetInnerHTML={{
@@ -66,7 +66,7 @@ export default function RootLayout({
       </head>
       <body
         suppressHydrationWarning
-        className="min-h-screen bg-[#F1F0EC] dark:bg-[#0A0A0A] text-[#171717] dark:text-[#F5F3EF] antialiased selection:bg-[#171717] selection:text-white dark:selection:bg-[#F5F3EF] dark:selection:text-neutral-950 transition-colors duration-300"
+        className="min-h-screen bg-[#F7F6F2] dark:bg-[#0D0F10] text-[#171717] dark:text-[#F5F3EF] antialiased selection:bg-[#171717] selection:text-white dark:selection:bg-[#F5F3EF] dark:selection:text-neutral-950 transition-colors duration-300"
       >
         <ThemeProvider>{children}</ThemeProvider>
       </body>
