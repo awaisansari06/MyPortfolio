@@ -12,7 +12,7 @@ The design pairs editorial typography with a transparent portrait composition, p
 5. GitHub activity and contact
 
 Project descriptions, case studies, education, and links come from `data/portfolio.ts`.
-The detailed project dialog, résumé, theme preference, contribution graph, and streaming Ask Awais AI assistant are retained.
+The detailed project dialog, resume, theme preference, contribution graph, and streaming Ask Awais AI assistant are retained.
 
 ## Development
 
@@ -32,7 +32,7 @@ The contact form composes a message in the visitor’s email app; it does not cl
 
 ## Checks
 
-Search metadata, crawl routes, and profile structured data use `https://buildbyawais.tech` as the canonical domain. See [search visibility setup](docs/search-visibility.md) for deployment and Search Console steps.
+Search metadata, crawl routes, and profile structured data use `https://www.awaisansari.tech` as the canonical domain. See [search visibility setup](docs/search-visibility.md) for deployment and Search Console steps.
 
 ```sh
 npm run build
@@ -53,7 +53,7 @@ Tests cover AI request validation and streaming recovery, contribution dates and
 | `data/portfolio.ts` | Existing portfolio facts and project records |
 | `hooks/` | Editorial motion, dialog focus, and keyboard-aware chat sizing |
 | `lib/` | Shared AI, GitHub, image, scroll, and animation utilities |
-| `public/` | Portraits, logo, project screenshots, fonts, and résumé |
+| `public/` | Portraits, logo, project screenshots, fonts, and resume |
 | `tests/` | Regression tests |
 | `docs/portrait-assets.md` | Portrait sources and editing notes |
 
@@ -68,3 +68,10 @@ See [portrait asset notes](docs/portrait-assets.md) for provenance and editing d
 
 The stack uses a seamless CSS logo ribbon with a manual pause control, hover pause, a single accessible technology list, and a wrapped static layout for reduced-motion preferences. Project previews retain the original live links and detailed case studies.
 
+## Offline arcade
+
+Offline Arcade (https://github.com/jagubuilds/offline-arcade) provides Runner, Snake, Flappy and Breakout when a navigation fails or takes more than six seconds. The offline banner also offers Play when a visitor loses their connection. The games use the portfolio colors and remain self-contained; APIs are excluded from slow-page replacement.
+
+Visitors must open the site once online to cache the games. Production requires HTTPS. For a local production build, enable it in the browser console with `localStorage.setItem("arcade-dev", "1")`, reload online, then switch DevTools Network to Offline and reload. Restore the connection to use Continue.
+
+Files are in `public/arcade*`, with the upstream MIT license in `public/arcade-LICENSE.txt`. Increment `VERSION` in `public/arcade-sw.js` whenever the games page changes. The integration assumes the configured canonical domain, `www.awaisansari.tech`; any additional www domain needs a separate worker setup. To remove it, use the upstream service worker removal instructions before deleting the worker file.

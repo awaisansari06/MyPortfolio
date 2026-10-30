@@ -50,6 +50,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${jakarta.variable} ${jetBrainsMono.variable}`} suppressHydrationWarning>
       <head>
+        <script src="/arcade.js" async />
         <script
           dangerouslySetInnerHTML={{
             __html: `(function(){try{var k='theme';var s=localStorage.getItem(k);var m=window.matchMedia('(prefers-color-scheme: dark)').matches;var d=s==='dark'||(s!=='light'&&m);var r=document.documentElement;if(d){r.classList.add('dark');r.style.colorScheme='dark';}else{r.classList.remove('dark');r.style.colorScheme='light';}}catch(e){}})();`,

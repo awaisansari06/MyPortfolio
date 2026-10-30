@@ -11,7 +11,7 @@ test('profile identity links resolve consistently to the real canonical domain',
   const graph = buildProfileStructuredData()['@graph'];
   const person = graph.find(node => node['@type'] === 'Person');
   const page = graph.find(node => node['@type'] === 'ProfilePage');
-  assert.equal(person.url, 'https://buildbyawais.tech/');
+  assert.equal(person.url, 'https://www.awaisansari.tech/');
   assert.equal(person.name, 'Mohammad Awais Ansari');
   assert.ok(person.alternateName.includes('Awais Ansari'));
   assert.deepEqual(person.sameAs, [portfolioData.socials.github, portfolioData.socials.linkedin]);
@@ -40,8 +40,8 @@ test('only the production homepage is advertised for indexing', () => {
       assert.deepEqual(sitemap, []);
       assert.equal(robots.sitemap, undefined);
     } else {
-      assert.equal(robots.sitemap, 'https://buildbyawais.tech/sitemap.xml');
-      assert.deepEqual(sitemap, [{ url: 'https://buildbyawais.tech/' }]);
+      assert.equal(robots.sitemap, 'https://www.awaisansari.tech/sitemap.xml');
+      assert.deepEqual(sitemap, [{ url: 'https://www.awaisansari.tech/' }]);
     }
   }
 });

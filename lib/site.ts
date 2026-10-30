@@ -1,5 +1,5 @@
 export const site = {
-  url: 'https://buildbyawais.tech',
+  url: 'https://www.awaisansari.tech',
   name: 'Mohammad Awais Ansari',
   alternateNames: ['Awais Ansari', 'Mohammad Awais'],
   title: 'Mohammad Awais Ansari | Full-Stack & AI Developer',

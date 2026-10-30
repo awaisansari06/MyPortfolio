@@ -9,7 +9,7 @@ import { useEditorialMotion } from '@/hooks/useEditorialMotion';
 
 const projectPresentation = [
   { id: 'buildstack', name: 'BuildStack', category: 'AI application builder', description: 'Turn natural-language prompts into web applications with AI agents and live previews.' },
-  { id: 'careerwise', name: 'CareerWise', category: 'Career preparation', description: 'AI-powered career preparation, from résumé feedback to interview practice and career roadmaps.' },
+  { id: 'careerwise', name: 'CareerWise', category: 'Career preparation', description: 'AI-powered career preparation, from resume feedback to interview practice and career roadmaps.' },
   { id: 'tripcraft', name: 'TripCraft', category: 'Travel planning', description: 'Personalized travel itineraries, connected to real places and interactive maps.' },
 ];
 

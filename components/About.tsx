@@ -24,7 +24,7 @@ export const About = () => {
             <p data-reveal><span>02 / The craft</span>Thoughtful interfaces, dependable backend systems, and AI where it makes a useful difference.</p>
           </div>
           <div className="education-highlight" data-reveal><span>Still learning. Still building.</span><h3>{portfolioData.education[0].degree}</h3><p>{portfolioData.education[0].institution} · {portfolioData.education[0].year}</p></div>
-          <a className="editorial-button" href="/AwaisCV.pdf" target="_blank" rel="noreferrer">View résumé <ArrowUpRight size={15} /></a>
+          <a className="editorial-button" href="/AwaisCV.pdf" target="_blank" rel="noreferrer">View resume <ArrowUpRight size={15} /></a>
           <details className="editorial-details">
             <summary>Education & credentials <span>+</span></summary>
             <div className="credential-list">
