@@ -520,3 +520,35 @@ body { height:auto; overflow-x:clip; background:var(--background); }
 @media (prefers-reduced-motion:reduce) {
  .work-image:hover img,.work-image:focus-visible img { transform:none; }
 }
+
+/* Phone portrait-first composition with room for the face and shoulders. */
+.hero-role-detail { font:inherit; }
+@media (max-width:599px) {
+ .editorial-hero { padding-top:78px; padding-bottom:34px; }
+ .editorial-hero > .portrait-composition {
+  width:calc(100% + 2 * var(--page-gutter));
+  height:clamp(290px,82vw,460px);
+  mask-image:linear-gradient(to bottom,#000 78%,transparent 100%);
+ }
+ .editorial-hero > .portrait-composition .portrait-main {
+  width:120vw; max-width:650px; height:auto; aspect-ratio:4/3;
+  top:0; right:-7vw;
+  mask-image:linear-gradient(to bottom,#000 80%,transparent 100%);
+ }
+ .hero-copy { display:block; margin-top:36px; }
+ #hero-heading { text-align:left; margin:14px 0 24px; }
+ #hero-heading > span { font-size:clamp(39px,10.6vw,57px); }
+ #hero-heading > strong { font-size:clamp(74px,19vw,99px); margin-top:8px; }
+ .editorial-actions .editorial-button { min-height:44px; }
+}
+
+.ask-awais-corner { position:fixed; z-index:45; right:max(20px,env(safe-area-inset-right)); bottom:max(20px,env(safe-area-inset-bottom)); min-height:48px; background:var(--foreground); color:var(--background); box-shadow:0 6px 24px #0003; }
+@media (max-width:599px) {
+ .editorial-hero { padding-top:88px; isolation:auto; }
+ .portrait-crown { display:block; position:absolute; inset:0; z-index:41; pointer-events:none; clip-path:inset(0 0 calc(100% - 78px)); }
+ .portrait-crown .portrait-composition { position:absolute; top:88px; left:0; right:0; bottom:auto; width:100%; height:clamp(290px,82vw,460px); overflow:visible; mask-image:none; }
+ .portrait-crown .portrait-main { width:120vw; max-width:650px; height:auto; aspect-ratio:4/3; top:0; right:-7vw; mask-image:none; }
+ .editorial-page:has(.editorial-nav.is-scrolled) .portrait-crown { opacity:0; }
+ #main-navigation > a,.nav-controls { position:relative; z-index:2; }
+ .ask-awais-corner { right:max(14px,env(safe-area-inset-right)); bottom:max(14px,env(safe-area-inset-bottom)); padding:12px 18px; }
+}

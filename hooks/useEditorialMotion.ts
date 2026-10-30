@@ -5,14 +5,15 @@ import { gsap, ScrollTrigger } from '@/lib/motion';
 export function useEditorialMotion(ref: RefObject<HTMLElement | null>, hero = false) {
   useEffect(() => {
     const media = gsap.matchMedia();
-    media.add('(prefers-reduced-motion: no-preference)', () => {
+    media.add({ motion: '(prefers-reduced-motion: no-preference)', parallax: '(min-width: 600px)' }, (match) => {
+      if (!match.conditions?.motion) return;
       const context = gsap.context(() => {
         const elements = gsap.utils.toArray<HTMLElement>('[data-reveal]');
         if (hero) {
           gsap.fromTo(elements, { y: 22, opacity: 0 }, { y: 0, opacity: 1, duration: .9, stagger: .11, delay: .18, ease: 'power3.out' });
           gsap.fromTo('[data-cutout]', { clipPath: 'inset(0 0 100% 0)' }, { clipPath: 'inset(0 0 0% 0)', duration: 1.35, ease: 'power3.inOut' });
           gsap.fromTo('.portrait-print', { y: 28, opacity: 0 }, { y: 0, opacity: 1, duration: 1.1, stagger: .14, delay: .45, ease: 'power3.out' });
-          gsap.to('[data-parallax]', { y: 30, ease: 'none', scrollTrigger: { trigger: ref.current, start: 'top top', end: 'bottom top', scrub: 1 } });
+          if (match.conditions?.parallax) gsap.to('[data-parallax]', { y: 30, ease: 'none', scrollTrigger: { trigger: ref.current, start: 'top top', end: 'bottom top', scrub: 1 } });
           gsap.utils.toArray<HTMLElement>('.portrait-print').forEach((print, index) => {
             gsap.to(print, { y: -18 - index * 12, ease: 'none', scrollTrigger: { trigger: ref.current, start: 'top top', end: 'bottom top', scrub: 1.2 } });
           });
@@ -29,4 +30,3 @@ export function useEditorialMotion(ref: RefObject<HTMLElement | null>, hero = fa
     return () => media.revert();
   }, [ref, hero]);
 }
-

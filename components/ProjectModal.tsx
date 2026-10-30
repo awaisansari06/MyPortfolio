@@ -101,20 +101,20 @@ export const ProjectModal = ({ project, onClose }: ProjectModalProps) => {
             <div className="rounded-lg border border-neutral-300/80 dark:border-[#2A2A2A] overflow-hidden bg-neutral-950/5 dark:bg-black/50">
               {project.id === 'careerwise' && (
                 <>
-                  <Image src={projectImages.careerwise.dark} sizes="(min-width: 1024px) 800px, 100vw" alt="CareerWise Platform" className="w-full h-auto hidden dark:block" />
-                  <Image src={projectImages.careerwise.light} sizes="(min-width: 1024px) 800px, 100vw" alt="CareerWise Platform" className="w-full h-auto block dark:hidden" />
+                  <Image src={projectImages.careerwise.dark} sizes="(min-width: 1024px) 800px, 100vw" alt="CareerWise application screenshot in dark mode" className="w-full h-auto hidden dark:block" />
+                  <Image src={projectImages.careerwise.light} sizes="(min-width: 1024px) 800px, 100vw" alt="CareerWise application screenshot in light mode" className="w-full h-auto block dark:hidden" />
                 </>
               )}
               {(project.id === 'buildstack' || project.id === 'buildstack') && (
                 <>
-                  <Image src={projectImages.buildstack.dark} sizes="(min-width: 1024px) 800px, 100vw" alt="BuildStack Platform" className="w-full h-auto hidden dark:block" />
-                  <Image src={projectImages.buildstack.light} sizes="(min-width: 1024px) 800px, 100vw" alt="BuildStack Platform" className="w-full h-auto block dark:hidden" />
+                  <Image src={projectImages.buildstack.dark} sizes="(min-width: 1024px) 800px, 100vw" alt="BuildStack application screenshot in dark mode" className="w-full h-auto hidden dark:block" />
+                  <Image src={projectImages.buildstack.light} sizes="(min-width: 1024px) 800px, 100vw" alt="BuildStack application screenshot in light mode" className="w-full h-auto block dark:hidden" />
                 </>
               )}
               {(project.id === 'tripcraft' || project.id === 'tripcraft') && (
                 <>
-                  <Image src={projectImages.tripcraft.dark} sizes="(min-width: 1024px) 800px, 100vw" alt="TripCraft Platform" className="w-full h-auto hidden dark:block" />
-                  <Image src={projectImages.tripcraft.light} sizes="(min-width: 1024px) 800px, 100vw" alt="TripCraft Platform" className="w-full h-auto block dark:hidden" />
+                  <Image src={projectImages.tripcraft.dark} sizes="(min-width: 1024px) 800px, 100vw" alt="TripCraft application screenshot in dark mode" className="w-full h-auto hidden dark:block" />
+                  <Image src={projectImages.tripcraft.light} sizes="(min-width: 1024px) 800px, 100vw" alt="TripCraft application screenshot in light mode" className="w-full h-auto block dark:hidden" />
                 </>
               )}
             </div>

@@ -164,7 +164,7 @@ export const AskAwaisChat: React.FC = () => {
     setIsOpen(false);
   }, []);
   const { compact, viewportStyle } = useChatViewport(isOpen);
-  useDialogFocus(chatContainerRef, isOpen, closeChat, compact ? '#mobile-nav-toggle' : '#ask-ai-launcher', compact);
+  useDialogFocus(chatContainerRef, isOpen, closeChat, '#ask-awais-corner', compact);
   useEffect(() => () => requestRef.current?.abort(), []);
 
   // Listen to external open events (e.g. from Navbar)
@@ -261,6 +261,7 @@ export const AskAwaisChat: React.FC = () => {
   return (
     <>
 
+      {!isOpen && <button id="ask-awais-corner" className="ask-awais-corner editorial-button" onClick={() => setIsOpen(true)} aria-label="Ask Awais" aria-haspopup="dialog"><span className="status-dot" />Ask Awais ↗</button>}
       {isOpen && compact && <div className="ai-chat-backdrop" aria-hidden="true" onClick={closeChat} />}
 
       {isOpen && (

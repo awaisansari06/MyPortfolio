@@ -22,7 +22,7 @@ export const Hero = () => {
         <div className="portrait-photographs" aria-hidden="true">
           {photographs.map(photo => (
             <div key={photo.image} className={`portrait-print ${photo.className}`}>
-              <Image src={photo.image} alt="" width={400} height={533} sizes="170px" />
+              <Image src={photo.image} alt="" aria-hidden="true" width={400} height={533} sizes="170px" />
             </div>
           ))}
         </div>
@@ -33,7 +33,7 @@ export const Hero = () => {
             width={1448}
             height={1086}
             priority
-            sizes="(min-width: 1440px) 920px, (min-width: 900px) 64vw, (min-width: 600px) 650px, 480px"
+            sizes="(min-width: 1440px) 920px, (min-width: 900px) 64vw, (min-width: 600px) 650px, 125vw"
           />
         </div>
         <span className="portrait-signature" aria-hidden="true">Awais</span>
@@ -42,12 +42,12 @@ export const Hero = () => {
       <div className="portrait-crown" aria-hidden="true">
         <div className="portrait-composition">
           <div className="portrait-main" data-cutout data-parallax>
-            <Image src="/portraits/hero-thoughtful.webp" alt="" width={1448} height={1086} priority sizes="(min-width: 1440px) 920px, (min-width: 900px) 64vw, (min-width: 600px) 650px, 480px" />
+            <Image src="/portraits/hero-thoughtful.webp" alt="" aria-hidden="true" width={1448} height={1086} priority sizes="(min-width: 1440px) 920px, (min-width: 900px) 64vw, (min-width: 600px) 650px, 125vw" />
           </div>
         </div>
       </div>
       <div className="hero-copy">
-        <p className="eyebrow" data-reveal><span />Full-stack developer / AI applications</p>
+        <p className="eyebrow" data-reveal><span />Full-stack developer<small className="hero-role-detail"> / AI applications</small></p>
         <h1 id="hero-heading" data-reveal>
           <span>Mohammad</span>
           <strong>Awais</strong>
