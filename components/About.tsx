@@ -18,7 +18,7 @@ export const About = () => {
         <div className="about-copy">
           <p className="eyebrow" data-reveal>04 / The person behind the work</p>
           <h2 id="about-heading" data-reveal>Curious by nature.<br />A builder by choice.</h2>
-          <p data-reveal>I’m Mohammad Awais Ansari, also known as Awais Ansari, a full-stack developer based in Virar, Maharashtra, India. I build web applications and practical AI integrations, from a first idea to something people can actually use.</p>
+          <p data-reveal>I’m Mohammad Awais Ansari, also known as Awais Ansari, a software developer specializing in full-stack development, based in Virar, Maharashtra, in the Mumbai Metropolitan Region. I build web applications and practical AI integrations, from a first idea to something people can actually use.</p>
           <div className="about-story">
             <p data-reveal><span>01 / The curiosity</span>Computer science gives me the foundations. Building things is how I put them into practice.</p>
             <p data-reveal><span>02 / The craft</span>Thoughtful interfaces, dependable backend systems, and AI where it makes a useful difference.</p>
